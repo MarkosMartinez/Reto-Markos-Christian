@@ -12,4 +12,4 @@ CREATE TABLE Equipamiento (
 );
 
 - Añadir los PKs en Habitaciones, Empleados, Equipamiento (creo q ya esta), Credenciales.
-- Terminar de crear el SQL, faltan Historial_Cliente y Telefonos
+- Terminar de crear el SQL, faltan Historial_Cliente y Telefonos.
