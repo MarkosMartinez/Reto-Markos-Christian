@@ -1,0 +1,15 @@
+Borrar antes de entregar esto!
+
+- Plantilla crear tabla:
+CREATE TABLE Equipamiento (
+    ID_Equip int NOT NULL AUTO_INCREMENT,
+    Nombre_Equip varchar(255) NOT NULL,
+    Precio int(6),
+    Stock int (7),
+    ID_Clinica int (11),
+    PRIMARY KEY (ID_Equip),
+    FOREIGN KEY (ID_Clinica) REFERENCES clinica(ID_Clinica)
+);
+
+- Añadir los PKs en Habitaciones, Empleados, Equipamiento (creo q ya esta), Credenciales.
+- Terminar de crear el SQL, faltan Historial_Cliente y Telefonos
