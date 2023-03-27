@@ -11,5 +11,4 @@ CREATE TABLE Equipamiento (
     FOREIGN KEY (ID_Clinica) REFERENCES clinica(ID_Clinica)
 );
 
-- Añadir los PKs en Habitaciones, Empleados, Equipamiento (creo q ya esta), Credenciales.
-- Terminar de crear el SQL, faltan Historial_Cliente y Telefonos.
+- Comprobar el SQL.

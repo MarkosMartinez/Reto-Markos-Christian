@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-03-2023 a las 14:21:57
+-- Tiempo de generación: 27-03-2023 a las 17:55:13
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -46,6 +46,18 @@ CREATE TABLE `clinica` (
   `Nombre_Clinica` varchar(255) NOT NULL,
   `Direccion` varchar(255) NOT NULL,
   `Telefono` int(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `credencialescliente`
+--
+
+CREATE TABLE `credencialescliente` (
+  `Usuario` varchar(255) NOT NULL,
+  `Contrasena` varchar(255) NOT NULL,
+  `DNI_Cliente` varchar(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -101,7 +113,19 @@ CREATE TABLE `habitaciones` (
   `ID_Habitacion` int(11) NOT NULL,
   `Num_Habitacion` int(3) NOT NULL,
   `Especialidad` varchar(255) NOT NULL,
-  `ID_Clinica` int(11) DEFAULT NULL
+  `ID_Clinica` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `historial_cliente`
+--
+
+CREATE TABLE `historial_cliente` (
+  `DNI` varchar(9) NOT NULL,
+  `Fecha_Revision` date NOT NULL,
+  `Observaciones` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -116,6 +140,17 @@ CREATE TABLE `realizacitas` (
   `DNI_Cliente` varchar(255) NOT NULL,
   `Fecha_Cita` date NOT NULL,
   `Hora_Cita` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `telefonos`
+--
+
+CREATE TABLE `telefonos` (
+  `DNI` varchar(9) NOT NULL,
+  `Telefono` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -133,6 +168,13 @@ ALTER TABLE `cliente`
 --
 ALTER TABLE `clinica`
   ADD PRIMARY KEY (`ID_Clinica`);
+
+--
+-- Indices de la tabla `credencialescliente`
+--
+ALTER TABLE `credencialescliente`
+  ADD PRIMARY KEY (`Usuario`),
+  ADD KEY `DNI_Cliente` (`DNI_Cliente`);
 
 --
 -- Indices de la tabla `credencialesempleados`
@@ -159,8 +201,14 @@ ALTER TABLE `equipamiento`
 -- Indices de la tabla `habitaciones`
 --
 ALTER TABLE `habitaciones`
-  ADD PRIMARY KEY (`ID_Habitacion`),
+  ADD PRIMARY KEY (`ID_Habitacion`,`ID_Clinica`),
   ADD KEY `ID_Clinica` (`ID_Clinica`);
+
+--
+-- Indices de la tabla `historial_cliente`
+--
+ALTER TABLE `historial_cliente`
+  ADD PRIMARY KEY (`DNI`,`Fecha_Revision`);
 
 --
 -- Indices de la tabla `realizacitas`
@@ -169,6 +217,12 @@ ALTER TABLE `realizacitas`
   ADD PRIMARY KEY (`ID_Clinica`,`ID_Habitacion`,`Fecha_Cita`,`Hora_Cita`),
   ADD KEY `ID_Habitacion` (`ID_Habitacion`),
   ADD KEY `DNI_Cliente` (`DNI_Cliente`);
+
+--
+-- Indices de la tabla `telefonos`
+--
+ALTER TABLE `telefonos`
+  ADD PRIMARY KEY (`DNI`,`Telefono`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -197,6 +251,12 @@ ALTER TABLE `habitaciones`
 --
 
 --
+-- Filtros para la tabla `credencialescliente`
+--
+ALTER TABLE `credencialescliente`
+  ADD CONSTRAINT `credencialescliente_ibfk_1` FOREIGN KEY (`DNI_Cliente`) REFERENCES `cliente` (`DNI`);
+
+--
 -- Filtros para la tabla `credencialesempleados`
 --
 ALTER TABLE `credencialesempleados`
@@ -221,12 +281,24 @@ ALTER TABLE `habitaciones`
   ADD CONSTRAINT `habitaciones_ibfk_1` FOREIGN KEY (`ID_Clinica`) REFERENCES `clinica` (`ID_Clinica`);
 
 --
+-- Filtros para la tabla `historial_cliente`
+--
+ALTER TABLE `historial_cliente`
+  ADD CONSTRAINT `historial_cliente_ibfk_1` FOREIGN KEY (`DNI`) REFERENCES `cliente` (`DNI`);
+
+--
 -- Filtros para la tabla `realizacitas`
 --
 ALTER TABLE `realizacitas`
   ADD CONSTRAINT `realizacitas_ibfk_1` FOREIGN KEY (`ID_Clinica`) REFERENCES `clinica` (`ID_Clinica`),
   ADD CONSTRAINT `realizacitas_ibfk_2` FOREIGN KEY (`ID_Habitacion`) REFERENCES `habitaciones` (`ID_Habitacion`),
   ADD CONSTRAINT `realizacitas_ibfk_3` FOREIGN KEY (`DNI_Cliente`) REFERENCES `cliente` (`DNI`);
+
+--
+-- Filtros para la tabla `telefonos`
+--
+ALTER TABLE `telefonos`
+  ADD CONSTRAINT `telefonos_ibfk_1` FOREIGN KEY (`DNI`) REFERENCES `cliente` (`DNI`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
