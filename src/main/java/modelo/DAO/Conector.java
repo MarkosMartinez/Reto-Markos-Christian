@@ -1,4 +1,4 @@
-package modelo;
+package modelo.DAO;
 
 public class Conector {
 
