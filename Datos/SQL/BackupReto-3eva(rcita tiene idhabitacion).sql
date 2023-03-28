@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-03-2023 a las 12:39:09
+-- Tiempo de generación: 28-03-2023 a las 12:06:56
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -47,13 +47,6 @@ CREATE TABLE `clinica` (
   `Direccion` varchar(255) NOT NULL,
   `Telefono` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `clinica`
---
-
-INSERT INTO `clinica` (`ID_Clinica`, `Nombre_Clinica`, `Direccion`, `Telefono`) VALUES
-(1, 'Clinica Etxaide', ' Paseo Fanderia 5', 617606457);
 
 -- --------------------------------------------------------
 
@@ -153,6 +146,7 @@ CREATE TABLE `puestos` (
 
 CREATE TABLE `realizacitas` (
   `ID_Clinica` int(11) NOT NULL,
+  `ID_Habitacion` int(11) NOT NULL,
   `DNI_Cliente` varchar(255) NOT NULL,
   `Fecha_Cita` date NOT NULL,
   `Hora_Cita` time NOT NULL
@@ -237,7 +231,8 @@ ALTER TABLE `puestos`
 -- Indices de la tabla `realizacitas`
 --
 ALTER TABLE `realizacitas`
-  ADD PRIMARY KEY (`ID_Clinica`,`Fecha_Cita`,`Hora_Cita`),
+  ADD PRIMARY KEY (`ID_Clinica`,`ID_Habitacion`,`Fecha_Cita`,`Hora_Cita`),
+  ADD KEY `ID_Habitacion` (`ID_Habitacion`),
   ADD KEY `DNI_Cliente` (`DNI_Cliente`);
 
 --
@@ -255,7 +250,7 @@ ALTER TABLE `telefonos`
 -- AUTO_INCREMENT de la tabla `clinica`
 --
 ALTER TABLE `clinica`
-  MODIFY `ID_Clinica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_Clinica` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `equipamiento`
@@ -320,6 +315,7 @@ ALTER TABLE `historial_cliente`
 --
 ALTER TABLE `realizacitas`
   ADD CONSTRAINT `realizacitas_ibfk_1` FOREIGN KEY (`ID_Clinica`) REFERENCES `clinica` (`ID_Clinica`),
+  ADD CONSTRAINT `realizacitas_ibfk_2` FOREIGN KEY (`ID_Habitacion`) REFERENCES `habitaciones` (`ID_Habitacion`),
   ADD CONSTRAINT `realizacitas_ibfk_3` FOREIGN KEY (`DNI_Cliente`) REFERENCES `cliente` (`DNI`);
 
 --
