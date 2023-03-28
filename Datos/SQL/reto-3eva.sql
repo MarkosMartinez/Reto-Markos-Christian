@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-03-2023 a las 17:55:13
+-- Tiempo de generación: 28-03-2023 a las 10:44:27
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -80,12 +80,11 @@ CREATE TABLE `credencialesempleados` (
 
 CREATE TABLE `empleados` (
   `DNI_Emp` varchar(9) NOT NULL,
-  `Num_Habitacion` int(3) NOT NULL,
   `Nombre` varchar(255) NOT NULL,
   `Apellidos` varchar(255) NOT NULL,
   `Correo` varchar(255) NOT NULL,
   `Fecha_Nacimiento` date NOT NULL,
-  `Puesto` varchar(255) NOT NULL,
+  `ID_Puesto` int(3) NOT NULL,
   `ID_Clinica` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -126,6 +125,17 @@ CREATE TABLE `historial_cliente` (
   `DNI` varchar(9) NOT NULL,
   `Fecha_Revision` date NOT NULL,
   `Observaciones` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `puestos`
+--
+
+CREATE TABLE `puestos` (
+  `ID_Puesto` int(3) NOT NULL,
+  `Nombre_Puesto` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -188,7 +198,8 @@ ALTER TABLE `credencialesempleados`
 --
 ALTER TABLE `empleados`
   ADD PRIMARY KEY (`DNI_Emp`),
-  ADD KEY `ID_Clinica` (`ID_Clinica`);
+  ADD KEY `ID_Clinica` (`ID_Clinica`),
+  ADD KEY `ID_Puesto` (`ID_Puesto`);
 
 --
 -- Indices de la tabla `equipamiento`
@@ -209,6 +220,12 @@ ALTER TABLE `habitaciones`
 --
 ALTER TABLE `historial_cliente`
   ADD PRIMARY KEY (`DNI`,`Fecha_Revision`);
+
+--
+-- Indices de la tabla `puestos`
+--
+ALTER TABLE `puestos`
+  ADD PRIMARY KEY (`ID_Puesto`);
 
 --
 -- Indices de la tabla `realizacitas`
@@ -245,6 +262,12 @@ ALTER TABLE `equipamiento`
 --
 ALTER TABLE `habitaciones`
   MODIFY `ID_Habitacion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `puestos`
+--
+ALTER TABLE `puestos`
+  MODIFY `ID_Puesto` int(3) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
