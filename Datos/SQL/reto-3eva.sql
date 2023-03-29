@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-03-2023 a las 12:39:09
+-- Tiempo de generación: 29-03-2023 a las 13:18:47
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -34,6 +34,13 @@ CREATE TABLE `cliente` (
   `Correo` varchar(255) NOT NULL,
   `Fecha_Nacimiento` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`DNI`, `Nombre`, `Apellidos`, `Correo`, `Fecha_Nacimiento`) VALUES
+('12345678A', 'Aitor', 'Etxaide Baroja', 'aitoretxaide@a.com', '2023-10-15');
 
 -- --------------------------------------------------------
 
