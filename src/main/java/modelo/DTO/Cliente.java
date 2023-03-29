@@ -8,7 +8,7 @@ public class Cliente {
 	private String nombre;
 	private String apellidos;
 	private String correo;
-	private Date fecha_Nacimineto;
+	private Date fecha_Nacimiento;
 	
 	
 	
@@ -36,11 +36,11 @@ public class Cliente {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public Date getFecha_nacimineto() {
-		return fecha_Nacimineto;
+	public Date getFecha_nacimiento() {
+		return fecha_Nacimiento;
 	}
-	public void setFecha_nacimineto(Date fecha_nacimineto) {
-		this.fecha_Nacimineto = fecha_nacimineto;
+	public void setFecha_nacimiento(Date fecha_nacimineto) {
+		this.fecha_Nacimiento = fecha_nacimineto;
 	}
 
 }

@@ -4,35 +4,36 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import modelo.DTO.Cliente;
+
 public class ModeloCliente {
 
 	public ModeloCliente() {
 		
 	}
 
-	public String getCliente(String dni) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/*	public Usuario getUsuario(int id) throws SQLException {
-		Usuario usuario = new Usuario();
+	public Cliente getCliente(String dni) throws SQLException {
+		Cliente cliente = new Cliente();
 		Conector conector = new Conector();
 		conector.conectar();
 	
-		PreparedStatement gettear =conector.getCon().prepareStatement("SELECT * FROM usuarios WHERE id=?");
-		gettear.setInt(1, id);
+		PreparedStatement gettear =conector.getCon().prepareStatement("SELECT * FROM cliente WHERE DNI = ?");
+		gettear.setString(1, dni);
 		ResultSet resultado=gettear.executeQuery();
 		if(resultado.next()) {
-		usuario.setId(resultado.getInt("id"));
-		usuario.setNombre(resultado.getString("nombre_apellido"));
-		usuario.setFechaNacimineto(resultado.getDate("fecha_nacimiento"));
-		usuario.setPassword(resultado.getString("password"));
+		cliente.setDni(resultado.getString("DNI"));
+		cliente.setNombre(resultado.getString("Nombre"));	
+		cliente.setApellidos(resultado.getString("Apellidos"));	
+		cliente.setCorreo(resultado.getString("Correo"));
+		cliente.setFecha_nacimiento(resultado.getDate("Fecha_Nacimiento"));
+		
+		}else {
+			cliente.setDni("-1");	
 		}
 		gettear.close();
 		conector.cerrar();
-		return usuario;
+		return cliente;
 		
-	}*/
+	}
 	
 }

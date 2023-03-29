@@ -2,6 +2,7 @@
 <%@ page import="modelo.DTO.Clinica"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +15,10 @@
 <%
 ArrayList<Clinica> clinicas = (ArrayList<Clinica>) request.getAttribute("clinicas");
 %>
+
+<c:if test = "${aviso == 'dninoregistrado'}">
+        <div class='alert alert-danger' role='alert'>El usuario no esta registrado! Prueba a registrarte <a href="">aqui</a>!</div>
+</c:if>
 
 <form class="form-inline" action="RealizarCita" method="POST">   
 <div class="mb-3">
