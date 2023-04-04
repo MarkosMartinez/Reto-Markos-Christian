@@ -19,17 +19,18 @@ ArrayList<Clinica> clinicas = (ArrayList<Clinica>) request.getAttribute("clinica
 <c:if test = "${aviso == 'dninoregistrado'}">
         <div class='alert alert-danger' role='alert'>El usuario no esta registrado! Prueba a registrarte <a href="">aqui</a>!</div>
 </c:if>
+<c:if test = "${aviso == 'demasiadascitas'}">
+        <div class='alert alert-danger' role='alert'>Hay demasiadas citas ese dia a esa hora, prueba otro dia!</div>
+</c:if>
 
 <form class="form-inline" action="RealizarCita" method="POST">   
 <div class="mb-3">
     <label for="ID_Clinica" class="form-label">Clinicas Disponibles:</label>
     	<select class="form-control form-control-sm" name="ID_Clinica" required="required">
-    	<%
-    	for(Clinica clinica:clinicas){
-    		out.print("<option value='" + clinica.getId_clinica() + "'>" + clinica.getNombre_clinica() + "</option>");
-    	}
-    	%>
-		</select>
+    <c:forEach var="clinica" items="${clinicas}">
+        <option value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
+    </c:forEach>
+	</select>
   </div>
   <div class="mb-3">
     <label for="dni" class="form-label">DNI:</label>

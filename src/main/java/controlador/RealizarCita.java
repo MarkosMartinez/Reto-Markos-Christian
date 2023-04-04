@@ -2,7 +2,6 @@ package controlador;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -17,8 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import modelo.DAO.ModeloCliente;
 import modelo.DAO.ModeloClinica;
+import modelo.DAO.ModeloCitas;
 import modelo.DTO.Cliente;
 import modelo.DTO.Clinica;
+import modelo.DTO.Citas;
 
 /**
  * Servlet implementation class realizarCita
@@ -52,7 +53,7 @@ public class RealizarCita extends HttpServlet {
 		}
 		request.setAttribute("aviso", aviso);
 		request.setAttribute("clinicas", clinicas);
-		//TODO a la hora de ver la listya, mostrar tambien el telefono
+		//TODO a la hora de ver la lista, mostrar tambien el telefono o direccion.
 		request.getRequestDispatcher("realizarCita.jsp").forward(request, response);
 	}
 
@@ -64,13 +65,7 @@ public class RealizarCita extends HttpServlet {
 		String dni = request.getParameter("dni");
 		ModeloCliente mcliente = new ModeloCliente();
 		Cliente cliente = new Cliente();
-		try {
-			cliente = mcliente.getCliente(dni);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		cliente = mcliente.getCliente(dni);
 		if(cliente.getDni() == "-1") {
 			response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=dninoregistrado");
 		}else {
@@ -82,7 +77,19 @@ public class RealizarCita extends HttpServlet {
 				e.printStackTrace();
 			}
 			 LocalTime hora = LocalTime.parse(request.getParameter("hora"));
-			 //TODO aqui ahora creara la cita.
+			 
+			 ModeloCitas modeloCitas = new ModeloCitas();
+			 ArrayList<Citas> citas = new ArrayList<>();
+			 citas = modeloCitas.getCitas();
+			 if(modeloCitas.disponible(id_Clinica, fecha, hora)) {
+			 modeloCitas.crearCita(id_Clinica, dni, fecha, hora);
+			 //TODO redirigir despues de crear la cita
+			 }else{
+				 response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=demasiadascitas");
+			 }
+			 //TODO Cambiar todas las cosas de cita a Cita? por ejemplo el modelo solo o asi. Tipo Modelo_Realizar_Citas, el de ver... a Modelo_Citas.java.
+			 //TODO Redirigir dependiendo si esta logueado?
+			 //TODO Comprobar si hay muchas citas en esa fecha?
 		}
 		
 	}
