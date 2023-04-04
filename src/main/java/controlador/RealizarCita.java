@@ -41,12 +41,7 @@ public class RealizarCita extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Clinica> clinicas = new ArrayList<>();
 		ModeloClinica mclinica = new ModeloClinica();
-		try {
-			clinicas = mclinica.getClinicas();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+		clinicas = mclinica.getClinicas();	
 		String aviso = request.getParameter("aviso");
 		if(aviso == null) {
 			aviso = "ninguno";

@@ -91,9 +91,11 @@ public class ModeloCitas {
 	            ResultSet resultado = pSt.executeQuery();
 	            resultado.next();
 	            numCitas = resultado.getInt(1);
+	            pSt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			conector.cerrar();
 		
         if(numCitas < 4) {
         	disponible = true;
