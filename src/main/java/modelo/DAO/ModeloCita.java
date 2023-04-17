@@ -35,14 +35,15 @@ public class ModeloCita {
 		
 	}
 
-	public ArrayList<Cita> getCitas() {
+	public ArrayList<Cita> getCitas(int id_Clinica) {
 		ArrayList<Cita> citas = new ArrayList<>();
 		Conector conector = new Conector();
 		conector.conectar();
 	
 		PreparedStatement pSt;
 		try {
-			pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas");
+			pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE ID_Clinica = ?");
+			pSt.setInt(1, id_Clinica);
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
 				Cita cita = new Cita();

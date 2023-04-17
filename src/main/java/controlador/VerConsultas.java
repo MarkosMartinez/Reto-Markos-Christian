@@ -1,6 +1,8 @@
 package controlador;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.DAO.ModeloCita;
+import modelo.DTO.Cita;
 import modelo.DTO.Cliente;
 import modelo.DTO.Empleado;
 
@@ -35,6 +39,15 @@ public class VerConsultas extends HttpServlet {
 			if(clienteLogueado == null && empleadoLogueado == null) {
 				response.sendRedirect("Principal");
 			}
+			
+			ArrayList<Cita> citas = new ArrayList<>();
+			
+			if(empleadoLogueado != null) {
+				ModeloCita mcita = new ModeloCita();
+				citas = mcita.getCitas(empleadoLogueado.getId_clinica());
+			}//TODO Comprobar!
+		
+		request.setAttribute("citas", citas);
 		request.getRequestDispatcher("verCitas.jsp").forward(request, response);
 	}
 
