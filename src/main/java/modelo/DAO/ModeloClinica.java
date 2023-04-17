@@ -10,6 +10,7 @@ import modelo.DTO.Clinica;
 public class ModeloClinica {
 	
 	public ModeloClinica() {
+		
 	}
 
 		public ArrayList<Clinica> getClinicas() {

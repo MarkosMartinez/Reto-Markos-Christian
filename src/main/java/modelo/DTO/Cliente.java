@@ -9,7 +9,7 @@ public class Cliente {
 	private String apellidos;
 	private String correo;
 	private Date fecha_Nacimiento;
-	
+	//TODO ArrayList de los telefonos?
 	
 	
 	public String getDni() {

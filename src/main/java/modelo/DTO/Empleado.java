@@ -2,7 +2,7 @@ package modelo.DTO;
 
 import java.util.Date;
 
-public class Empleados {
+public class Empleado {
 	
 	private String dni_Emp;
 	private String nombre;

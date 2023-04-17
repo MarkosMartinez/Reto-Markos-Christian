@@ -1,6 +1,6 @@
 package modelo.DTO;
 
-public class Credenciales_Cliente {
+public class Credencial_Cliente {
 
 	private String usuario;
 	private String contrasena;

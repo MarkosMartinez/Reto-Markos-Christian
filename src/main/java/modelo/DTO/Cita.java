@@ -3,7 +3,7 @@ package modelo.DTO;
 import java.time.LocalTime;
 import java.util.Date;
 
-public class Citas {
+public class Cita {
 
 	private int id_Clinica;
 	private String dni_Cliente;

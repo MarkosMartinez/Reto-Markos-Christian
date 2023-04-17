@@ -13,13 +13,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import modelo.DAO.ModeloCliente;
 import modelo.DAO.ModeloClinica;
-import modelo.DAO.ModeloCitas;
+import modelo.DAO.ModeloHabitacion;
+import modelo.DAO.ModeloCita;
 import modelo.DTO.Cliente;
 import modelo.DTO.Clinica;
-import modelo.DTO.Citas;
+import modelo.DTO.Empleado;
+import modelo.DTO.Cita;
 
 /**
  * Servlet implementation class realizarCita
@@ -73,18 +76,26 @@ public class RealizarCita extends HttpServlet {
 			}
 			 LocalTime hora = LocalTime.parse(request.getParameter("hora"));
 			 
-			 ModeloCitas modeloCitas = new ModeloCitas();
-			 ArrayList<Citas> citas = new ArrayList<>();
-			 citas = modeloCitas.getCitas();
-			 if(modeloCitas.disponible(id_Clinica, fecha, hora)) {
-			 modeloCitas.crearCita(id_Clinica, dni, fecha, hora);
-			 //TODO redirigir despues de crear la cita
+			 ModeloCita modeloCita = new ModeloCita();
+			 ModeloHabitacion modeloHabitacion = new ModeloHabitacion();
+			 int cantidadDeHabitaciones = modeloHabitacion.getCantHabitaciones(id_Clinica); //TODO check o algo en las habitaciones para no poder crear mismo num en la misma clinica. PK no vale.
+			 if(modeloCita.disponible(id_Clinica, fecha, hora, cantidadDeHabitaciones)) {
+			 modeloCita.crearCita(id_Clinica, dni, fecha, hora);
+			HttpSession session = request.getSession();
+			Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
+			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado"); //TODO Hacer un refactor de las clases y la BBDD de plural/singular. Ej: Empleado/s...
+				if(clienteLogueado == null) {
+					if(empleadoLogueado == null) {
+						response.sendRedirect("Principal");
+					}else {
+						response.sendRedirect("VerConsultas"); //TODO Cambiar esto?
+					}
+				}else {
+					response.sendRedirect("VerConsultas");
+				}
 			 }else{
 				 response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=demasiadascitas");
 			 }
-			 //TODO Cambiar todas las cosas de cita a Cita? por ejemplo el modelo solo o asi. Tipo Modelo_Realizar_Citas, el de ver... a Modelo_Citas.java.
-			 //TODO Redirigir dependiendo si esta logueado?
-			 //TODO Comprobar si hay muchas citas en esa fecha?
 		}
 		
 	}

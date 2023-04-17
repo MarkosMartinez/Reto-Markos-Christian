@@ -1,27 +1,18 @@
 package modelo.DAO;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-/*import java.util.Date;*/
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.sql.Time;
 
 
-import modelo.DTO.Citas;
+import modelo.DTO.Cita;
 
-public class ModeloCitas {
+public class ModeloCita {
 	
-	public ModeloCitas() {
+	public ModeloCita() {
 		
 	}
 
@@ -44,8 +35,8 @@ public class ModeloCitas {
 		
 	}
 
-	public ArrayList<Citas> getCitas() {
-		ArrayList<Citas> citas = new ArrayList<>();
+	public ArrayList<Cita> getCitas() {
+		ArrayList<Cita> citas = new ArrayList<>();
 		Conector conector = new Conector();
 		conector.conectar();
 	
@@ -54,7 +45,7 @@ public class ModeloCitas {
 			pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas");
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
-				Citas cita = new Citas();
+				Cita cita = new Cita();
 				cita.setId_Clinica(resultado.getInt("ID_Clinica"));
 				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
 				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
@@ -69,7 +60,7 @@ public class ModeloCitas {
 		return citas;
 	}
 
-	public boolean disponible(int id_Clinica, java.util.Date fecha, LocalTime hora) {
+	public boolean disponible(int id_Clinica, java.util.Date fecha, LocalTime hora, int cantidadDeHabitaciones) {
 		Conector conector = new Conector();
 		conector.conectar();
 		
@@ -97,7 +88,7 @@ public class ModeloCitas {
 			}
 			conector.cerrar();
 		
-        if(numCitas < 4) {
+        if(numCitas < cantidadDeHabitaciones) {
         	disponible = true;
         }
         
