@@ -41,11 +41,13 @@ public class VerCitas extends HttpServlet {
 			} else {
 				
 				ArrayList<Cita> citas = new ArrayList<>();
-
+				ModeloCita mcita = new ModeloCita();
+				
 				if (empleadoLogueado != null) {
-					ModeloCita mcita = new ModeloCita();
 					citas = mcita.getCitas(empleadoLogueado.getId_Clinica());
-				} // TODO Comprobar!
+				}else if(clienteLogueado != null) {
+					citas = mcita.getCitasCliente(clienteLogueado.getDni());
+				}
 
 				request.setAttribute("citas", citas);
 				request.getRequestDispatcher("verCitas.jsp").forward(request, response);

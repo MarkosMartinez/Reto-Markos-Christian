@@ -21,7 +21,6 @@ import modelo.DAO.ModeloCita;
 import modelo.DTO.Cliente;
 import modelo.DTO.Clinica;
 import modelo.DTO.Empleado;
-import modelo.DTO.Cita;
 
 /**
  * Servlet implementation class realizarCita
@@ -45,10 +44,16 @@ public class RealizarCita extends HttpServlet {
 		ModeloClinica mclinica = new ModeloClinica();
 		clinicas = mclinica.getClinicas();	
 		String aviso = request.getParameter("aviso");
-		if(aviso == null) {
-			aviso = "ninguno";
-		}
+		String clinica = request.getParameter("clinica");
+		String dni = request.getParameter("dni");
+		String fecha = request.getParameter("fecha");
+		String hora = request.getParameter("hora");
+		
 		request.setAttribute("aviso", aviso);
+		request.setAttribute("clinica", clinica);
+		request.setAttribute("dni", dni);
+		request.setAttribute("fecha", fecha);
+		request.setAttribute("hora", hora);
 		request.setAttribute("clinicas", clinicas);
 		//TODO a la hora de ver la lista, mostrar tambien el telefono o direccion.
 		request.getRequestDispatcher("realizarCita.jsp").forward(request, response);
@@ -82,7 +87,7 @@ public class RealizarCita extends HttpServlet {
 			 modeloCita.crearCita(id_Clinica, dni, fecha, hora);
 			HttpSession session = request.getSession();
 			Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
-			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado"); //TODO Hacer un refactor de las clases y la BBDD de plural/singular. Ej: Empleado/s...
+			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 				if(clienteLogueado == null) {
 					if(empleadoLogueado == null) {
 						response.sendRedirect("Principal");
@@ -93,7 +98,7 @@ public class RealizarCita extends HttpServlet {
 					response.sendRedirect("VerConsultas");
 				}
 			 }else{
-				 response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=demasiadascitas");
+				 response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=demasiadascitas&clinica=" + id_Clinica + "&dni=" + dni + "&fecha=" + fechaSinFormato + "&hora=" + hora);
 			 }
 		}
 		

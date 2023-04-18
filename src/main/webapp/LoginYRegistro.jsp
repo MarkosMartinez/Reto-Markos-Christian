@@ -53,6 +53,12 @@
 	      <c:if test = "${fechanacimiento != null}">
          	 <input type="date" placeholder="Fecha de Nacimiento" name="fechanacimiento" value="${fechanacimiento}" required="required">
 	      </c:if>
+	      <c:if test = "${telefono == -1}">
+         	<input type="number" min="600000000" max="999999999" placeholder="Telefono (Principal)" name="telefono" required="required">
+	      </c:if>
+	      <c:if test = "${telefono != -1}">
+         	 <input type="tel" placeholder="Telefono (Principal)" name="telefono" value="${telefono}" required="required">
+	      </c:if>
            <input type="password" placeholder="Contraseña" name="pass" required="required">
            <input type="password" placeholder="Confirma la contraseña" name="confpass" required="required">
            <input type="submit" class="submit" value="Registrarse">

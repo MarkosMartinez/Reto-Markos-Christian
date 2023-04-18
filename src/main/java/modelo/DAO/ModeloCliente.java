@@ -3,9 +3,11 @@ package modelo.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import modelo.DTO.Cliente;
+import modelo.DTO.Telefonos;
 
 public class ModeloCliente {
 
@@ -117,10 +119,29 @@ public class ModeloCliente {
 
 	public boolean comprobarPass(String pass) {
 		boolean valido = false;
-		if(pass.length() >= 8) {
+		if(pass.length() >= 6) {
 		valido = true;
 	}
 	return valido;
 	
 }
+
+	public void addTel(String dni, ArrayList<Telefonos> telefonos) {
+		Conector conector = new Conector();
+		conector.conectar();
+		PreparedStatement insertar;
+		
+		for (Telefonos telefono : telefonos) {
+			try {
+				insertar = conector.getCon().prepareStatement("INSERT INTO `telefonos`(`DNI`, `Telefono`) VALUES (?, ?)");
+				insertar.setString(1, dni);
+				insertar.setInt(2, telefono.getTelefono());
+				insertar.execute();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		conector.cerrar();	
+	}
 }

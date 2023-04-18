@@ -5,6 +5,15 @@ public class Telefonos {
 	private String dni;
 	private int telefono;
 	
+	public Telefonos() {
+		
+	}
+	
+	public Telefonos(String dni, int telefono) {
+		this.dni = dni;
+		this.telefono = telefono;
+	}
+	
 	public String getDni() {
 		return dni;
 	}

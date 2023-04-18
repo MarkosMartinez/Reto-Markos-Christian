@@ -1,5 +1,6 @@
 package modelo.DTO;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Cliente {
@@ -10,7 +11,9 @@ public class Cliente {
 	private String correo;
 	private String contrasena;
 	private Date fecha_Nacimiento;
+	private ArrayList<Telefonos> telefonos;
 	//TODO ArrayList de los telefonos?
+	//TODO Falta añadir telefono en todos los sitios
 	
 	
 	public String getDni() {
@@ -48,6 +51,12 @@ public class Cliente {
 	}
 	public void setFecha_Nacimiento(Date fecha_Nacimiento) {
 		this.fecha_Nacimiento = fecha_Nacimiento;
+	}
+	public ArrayList<Telefonos> getTelefonos() {
+		return telefonos;
+	}
+	public void setTelefonos(ArrayList<Telefonos> telefonos) {
+		this.telefonos = telefonos;
 	}
 
 }

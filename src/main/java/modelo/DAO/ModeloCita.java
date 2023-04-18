@@ -39,10 +39,8 @@ public class ModeloCita {
 		ArrayList<Cita> citas = new ArrayList<>();
 		Conector conector = new Conector();
 		conector.conectar();
-	
-		PreparedStatement pSt;
 		try {
-			pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE ID_Clinica = ?");
+			PreparedStatement pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE ID_Clinica = ?");
 			pSt.setInt(1, id_Clinica);
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
@@ -72,7 +70,6 @@ public class ModeloCita {
 		  LocalTime horaInicio = hora.minusMinutes(30);
 	      LocalTime horaFin = hora.plusMinutes(30);
          
-        // Ejecutar la consulta y comprobar si hay resultados
              PreparedStatement pSt;
 			try {
 				pSt = conector.getCon().prepareStatement("SELECT COUNT(*) FROM realizacitas WHERE ID_Clinica =? AND Fecha_Cita = ? AND Hora_Cita BETWEEN ? AND ?");
@@ -94,6 +91,33 @@ public class ModeloCita {
         }
         
 		return disponible;
+	}
+
+	public ArrayList<Cita> getCitasCliente(String dni) {
+		ArrayList<Cita> citas = new ArrayList<>();
+		Conector conector = new Conector();
+		conector.conectar();
+		
+		PreparedStatement pSt;
+		try {
+			pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE DNI_Cliente = ?");
+			pSt.setString(1, dni);
+			ResultSet resultado = pSt.executeQuery();
+			while(resultado.next()) {
+				Cita cita = new Cita();
+				cita.setId_Clinica(resultado.getInt("ID_Clinica"));
+				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
+				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
+				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
+				citas.add(cita);
+			}
+			pSt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		conector.cerrar();
+		return citas;
 	}
 
 }

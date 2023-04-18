@@ -26,7 +26,12 @@ ArrayList<Clinica> clinicas = (ArrayList<Clinica>) request.getAttribute("clinica
 <form class="form-inline" action="RealizarCita" method="POST">   
 <div class="mb-3">
     <label for="ID_Clinica" class="form-label">Clinicas Disponibles:</label>
-    	<select class="form-control form-control-sm" name="ID_Clinica" required="required">
+    <c:if test = "${clinica == null}">
+       <select class="form-control form-control-sm" name="ID_Clinica" required="required">
+	</c:if>
+	<c:if test = "${clinica != null}">
+      	 <select class="form-control form-control-sm" name="ID_Clinica" value="${clinica}" required="required">
+	</c:if>
     <c:forEach var="clinica" items="${clinicas}">
         <option value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
     </c:forEach>
@@ -34,15 +39,30 @@ ArrayList<Clinica> clinicas = (ArrayList<Clinica>) request.getAttribute("clinica
   </div>
   <div class="mb-3">
     <label for="dni" class="form-label">DNI:</label>
-    <input type="text" class="form-control" id="dni" name="dni" required="required">
+    <c:if test = "${dni == null}">
+       <input type="text" class="form-control" id="dni" name="dni" required="required">
+	</c:if>
+	<c:if test = "${dni != null}">
+      	 <input type="text" class="form-control" id="dni" name="dni" value="${dni}" required="required">
+	</c:if>
   </div>
   <div class="mb-3">
     <label for="fecha" class="form-label">Fecha:</label>
-    <input type="date" class="form-control" id="fecha" name="fecha" required="required">
+    <c:if test = "${fecha == null}">
+       <input type="date" class="form-control" id="fecha" name="fecha" required="required">
+	</c:if>
+	<c:if test = "${fecha != null}">
+      	 <input type="date" class="form-control" id="fecha" name="fecha" value="${fecha}" required="required">
+	</c:if>
   </div>
   <div class="mb-3">
     <label for="hora" class="form-label">Hora:</label>
-    <input type="time" class="form-control" id="hora" name="hora" required="required">
+    <c:if test = "${hora == null}">
+       <input type="time" class="form-control" id="hora" name="hora" required="required">
+	</c:if>
+	<c:if test = "${hora != null}">
+      	 <input type="time" class="form-control" id="hora" name="hora" value="${hora}" required="required">
+	</c:if>
   </div>
   <button type="submit" class="btn btn-primary">Realizar la Cita</button>
 </form>

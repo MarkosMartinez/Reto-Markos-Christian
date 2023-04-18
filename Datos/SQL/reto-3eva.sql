@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2023 a las 10:04:15
+-- Tiempo de generación: 18-04-2023 a las 13:06:09
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -41,7 +41,9 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`DNI`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`) VALUES
-('12345678A', 'Aitor', 'Etxaide Baroja', 'aitoretxaide@a.com', '2be88ca4242c76e8253ac62474851065032d6833', '2023-10-15');
+('11111111A', 'a', 'a', 'aaa@aaa.com', '895b317c76b8e504c2fb32dbb4420178f60ce321', '2004-10-15'),
+('12345678A', 'Aitor', 'Etxaide Baroja', 'aitoretxaide@a.com', '2be88ca4242c76e8253ac62474851065032d6833', '2023-10-15'),
+('22222222A', 'Pepe', 'Perez', 'pperez@hotmail.com', '895b317c76b8e504c2fb32dbb4420178f60ce321', '2004-04-23');
 
 -- --------------------------------------------------------
 
@@ -165,6 +167,7 @@ CREATE TABLE `realizacitas` (
 --
 
 INSERT INTO `realizacitas` (`ID_Clinica`, `DNI_Cliente`, `Fecha_Cita`, `Hora_Cita`) VALUES
+(1, '11111111A', '2023-10-15', '11:30:00'),
 (1, '12345678A', '2023-10-15', '12:00:00'),
 (1, '12345678A', '2023-10-15', '12:01:00'),
 (1, '12345678A', '2023-10-15', '12:02:00'),
@@ -181,6 +184,13 @@ CREATE TABLE `telefonos` (
   `DNI` varchar(9) NOT NULL,
   `Telefono` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `telefonos`
+--
+
+INSERT INTO `telefonos` (`DNI`, `Telefono`) VALUES
+('22222222A', 617658745);
 
 --
 -- Índices para tablas volcadas
