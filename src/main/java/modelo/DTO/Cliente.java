@@ -8,6 +8,7 @@ public class Cliente {
 	private String nombre;
 	private String apellidos;
 	private String correo;
+	private String contrasena;
 	private Date fecha_Nacimiento;
 	//TODO ArrayList de los telefonos?
 	
@@ -36,11 +37,17 @@ public class Cliente {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public Date getFecha_nacimiento() {
+	public String getContrasena() {
+		return contrasena;
+	}
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+	public Date getFecha_Nacimiento() {
 		return fecha_Nacimiento;
 	}
-	public void setFecha_nacimiento(Date fecha_nacimineto) {
-		this.fecha_Nacimiento = fecha_nacimineto;
+	public void setFecha_Nacimiento(Date fecha_Nacimiento) {
+		this.fecha_Nacimiento = fecha_Nacimiento;
 	}
 
 }

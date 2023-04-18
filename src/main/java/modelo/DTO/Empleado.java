@@ -8,17 +8,18 @@ public class Empleado {
 	private String nombre;
 	private String apellidos;
 	private String correo;
+	private String contrasena;
 	private Date fecha_Nacimiento;
 	private int id_Puesto;
 	private int id_Clinica;
 	
 	
 	
-	public String getDni_emp() {
+	public String getDni_Emp() {
 		return dni_Emp;
 	}
-	public void setDni_emp(String dni_emp) {
-		this.dni_Emp = dni_emp;
+	public void setDni_Emp(String dni_Emp) {
+		this.dni_Emp = dni_Emp;
 	}
 	public String getNombre() {
 		return nombre;
@@ -38,23 +39,29 @@ public class Empleado {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public Date getFecha_nacimiento() {
+	public String getContrasena() {
+		return contrasena;
+	}
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+	public Date getFecha_Nacimiento() {
 		return fecha_Nacimiento;
 	}
-	public void setFecha_nacimiento(Date fecha_nacimiento) {
-		this.fecha_Nacimiento = fecha_nacimiento;
+	public void setFecha_Nacimiento(Date fecha_Nacimiento) {
+		this.fecha_Nacimiento = fecha_Nacimiento;
 	}
-	public int getId_puesto() {
+	public int getId_Puesto() {
 		return id_Puesto;
 	}
-	public void setId_puesto(int id_puesto) {
-		this.id_Puesto = id_puesto;
+	public void setId_Puesto(int id_Puesto) {
+		this.id_Puesto = id_Puesto;
 	}
-	public int getId_clinica() {
+	public int getId_Clinica() {
 		return id_Clinica;
 	}
-	public void setId_clinica(int id_clinica) {
-		this.id_Clinica = id_clinica;
+	public void setId_Clinica(int id_Clinica) {
+		this.id_Clinica = id_Clinica;
 	}
 	
 }

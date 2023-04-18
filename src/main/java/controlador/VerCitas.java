@@ -18,14 +18,14 @@ import modelo.DTO.Empleado;
 /**
  * Servlet implementation class VerConsultas
  */
-@WebServlet("/VerConsultas")
-public class VerConsultas extends HttpServlet {
+@WebServlet("/VerCitas")
+public class VerCitas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VerConsultas() {
+    public VerCitas() {
         super();
     }
 
@@ -37,18 +37,20 @@ public class VerConsultas extends HttpServlet {
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado"); //TODO Hacer un refactor de las clases y la BBDD de plural/singular. Ej: Empleado/s...
 			if(clienteLogueado == null && empleadoLogueado == null) {
-				response.sendRedirect("Principal");
+				response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
+			} else {
+				
+				ArrayList<Cita> citas = new ArrayList<>();
+
+				if (empleadoLogueado != null) {
+					ModeloCita mcita = new ModeloCita();
+					citas = mcita.getCitas(empleadoLogueado.getId_Clinica());
+				} // TODO Comprobar!
+
+				request.setAttribute("citas", citas);
+				request.getRequestDispatcher("verCitas.jsp").forward(request, response);
 			}
 			
-			ArrayList<Cita> citas = new ArrayList<>();
-			
-			if(empleadoLogueado != null) {
-				ModeloCita mcita = new ModeloCita();
-				citas = mcita.getCitas(empleadoLogueado.getId_clinica());
-			}//TODO Comprobar!
-		
-		request.setAttribute("citas", citas);
-		request.getRequestDispatcher("verCitas.jsp").forward(request, response);
 	}
 
 	/**

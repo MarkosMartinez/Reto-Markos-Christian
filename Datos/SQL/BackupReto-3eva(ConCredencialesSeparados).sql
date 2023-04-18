@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2023 a las 10:04:15
+-- Tiempo de generación: 17-04-2023 a las 10:58:26
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -32,7 +32,6 @@ CREATE TABLE `cliente` (
   `Nombre` varchar(255) NOT NULL,
   `Apellidos` varchar(255) NOT NULL,
   `Correo` varchar(255) NOT NULL,
-  `Contraseña` varchar(255) NOT NULL,
   `Fecha_Nacimiento` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -40,8 +39,8 @@ CREATE TABLE `cliente` (
 -- Volcado de datos para la tabla `cliente`
 --
 
-INSERT INTO `cliente` (`DNI`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`) VALUES
-('12345678A', 'Aitor', 'Etxaide Baroja', 'aitoretxaide@a.com', '2be88ca4242c76e8253ac62474851065032d6833', '2023-10-15');
+INSERT INTO `cliente` (`DNI`, `Nombre`, `Apellidos`, `Correo`, `Fecha_Nacimiento`) VALUES
+('12345678A', 'Aitor', 'Etxaide Baroja', 'aitoretxaide@a.com', '2023-10-15');
 
 -- --------------------------------------------------------
 
@@ -66,6 +65,30 @@ INSERT INTO `clinica` (`ID_Clinica`, `Nombre_Clinica`, `Direccion`, `Telefono`) 
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `credencialescliente`
+--
+
+CREATE TABLE `credencialescliente` (
+  `Usuario` varchar(255) NOT NULL,
+  `Contrasena` varchar(255) NOT NULL,
+  `DNI_Cliente` varchar(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `credencialesempleados`
+--
+
+CREATE TABLE `credencialesempleados` (
+  `Usuario` varchar(255) NOT NULL,
+  `Contraseña` varchar(255) NOT NULL,
+  `DNI_Emp` varchar(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `empleados`
 --
 
@@ -74,18 +97,10 @@ CREATE TABLE `empleados` (
   `Nombre` varchar(255) NOT NULL,
   `Apellidos` varchar(255) NOT NULL,
   `Correo` varchar(255) NOT NULL,
-  `Contraseña` varchar(255) NOT NULL,
   `Fecha_Nacimiento` date NOT NULL,
   `ID_Puesto` int(3) NOT NULL,
   `ID_Clinica` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `empleados`
---
-
-INSERT INTO `empleados` (`DNI_Emp`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`, `ID_Puesto`, `ID_Clinica`) VALUES
-('12345678B', 'Julen', 'Cano', 'jcano@gmail.com', '2be88ca4242c76e8253ac62474851065032d6833', '2004-11-17', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -199,6 +214,20 @@ ALTER TABLE `clinica`
   ADD PRIMARY KEY (`ID_Clinica`);
 
 --
+-- Indices de la tabla `credencialescliente`
+--
+ALTER TABLE `credencialescliente`
+  ADD PRIMARY KEY (`Usuario`),
+  ADD KEY `DNI_Cliente` (`DNI_Cliente`);
+
+--
+-- Indices de la tabla `credencialesempleados`
+--
+ALTER TABLE `credencialesempleados`
+  ADD PRIMARY KEY (`Usuario`),
+  ADD KEY `DNI_Emp` (`DNI_Emp`);
+
+--
 -- Indices de la tabla `empleados`
 --
 ALTER TABLE `empleados`
@@ -277,6 +306,18 @@ ALTER TABLE `puestos`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `credencialescliente`
+--
+ALTER TABLE `credencialescliente`
+  ADD CONSTRAINT `credencialescliente_ibfk_1` FOREIGN KEY (`DNI_Cliente`) REFERENCES `cliente` (`DNI`);
+
+--
+-- Filtros para la tabla `credencialesempleados`
+--
+ALTER TABLE `credencialesempleados`
+  ADD CONSTRAINT `credencialesempleados_ibfk_1` FOREIGN KEY (`DNI_Emp`) REFERENCES `empleados` (`DNI_Emp`);
 
 --
 -- Filtros para la tabla `empleados`

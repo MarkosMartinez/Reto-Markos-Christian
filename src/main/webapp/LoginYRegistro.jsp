@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,14 +22,39 @@
        <div class="register">
          <h2>Registrarse</h2>
          <form action="LoginYRegistro" method="POST">
-         <input type="text" value="registro" hidden>
-           <input type="text" placeholder="DNI" name="DNI">
-           <input type="text" placeholder="Nombre y Apellido" name="nombreyapellido">
-           <input type="text" placeholder="Nombre de Usuario" name="username">
-           <input type="email" placeholder="Correo" name="correo">
-           <input type="date" placeholder="Fecha de Nacimiento" name="fechanacimiento">
-           <input type="password" placeholder="Contraseña" name="pass">
-           <input type="password" placeholder="Confirma la contraseña" class="confpass">
+         <input type="text" value="registro" name="tipo" hidden>
+          <c:if test = "${dni == null}">
+         	<input type="text" placeholder="DNI" name="dni" required="required">
+	      </c:if>
+	      <c:if test = "${dni != null}">
+         	 <input type="text" placeholder="DNI" name="dni" value="${dni}" required="required">
+	      </c:if>
+           <c:if test = "${nombre != null}">
+         	 <input type="text" placeholder="Nombre" name="nombre" value="${nombre}" required="required">
+	      </c:if>
+	      <c:if test = "${nombre == null}">
+         	 <input type="text" placeholder="Nombre" name="nombre" required="required">
+	      </c:if>
+	      <c:if test = "${apellido == null}">
+         	<input type="text" placeholder="Apellidos" name="apellido" required="required">
+	      </c:if>
+	      <c:if test = "${apellido != null}">
+         	<input type="text" placeholder="Apellidos" name="apellido" value="${apellido}" required="required">
+	      </c:if>
+	      <c:if test = "${correo == null}">
+         	<input type="email" placeholder="Correo" name="correo" required="required">
+	      </c:if>
+	      <c:if test = "${correo != null}">
+         	 <input type="email" placeholder="Correo" name="correo" value="${correo}" required="required">
+	      </c:if>
+	      <c:if test = "${fechanacimiento == null}">
+         	<input type="date" placeholder="Fecha de Nacimiento" name="fechanacimiento" required="required">
+	      </c:if>
+	      <c:if test = "${fechanacimiento != null}">
+         	 <input type="date" placeholder="Fecha de Nacimiento" name="fechanacimiento" value="${fechanacimiento}" required="required">
+	      </c:if>
+           <input type="password" placeholder="Contraseña" name="pass" required="required">
+           <input type="password" placeholder="Confirma la contraseña" name="confpass" required="required">
            <input type="submit" class="submit" value="Registrarse">
          </form>
        </div>
@@ -36,9 +62,9 @@
          <h2>Iniciar Sesión</h2>
          <div class="login-items">
            <form action="LoginYRegistro" method="POST">
-           <input type="text" value="login" hidden>
-           <input type="text" placeholder="DNI" name="DNI">
-           <input type="password" placeholder="Contraseña" name="pass">
+           <input type="text" value="login" name="tipo" hidden>
+           <input type="text" placeholder="DNI" name="dni" required="required">
+           <input type="password" placeholder="Contraseña" name="pass" required="required">
            <input type="submit" class="submit" value="Iniciar Sesion">
          </form>
          </div>
