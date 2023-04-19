@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="css/verCitas.css">
 </head>
 
-<header>
+  <header>
     <nav>
       <input type="checkbox" id="check" />
       <label for="check" class="botonmenu">
@@ -38,13 +38,18 @@
         <img src="img/logoProv.png" class="logo" />
       </a>
       <ul class="opciones">
-        <li><a href="inicio.html">Inicio</a></li>
+        <li><a href="">Inicio</a></li>
         <li><a href="nuestroEquipo.html">Nuestro equipo</a></li>
         <li><a href="">Tratamientos</a></li>
-        <li><a href="">Iniciar sesión/Registrarse</a></li>
-        <li><a href="">Pedir Cita</a></li>
-        <li><a href="">Contáctanos</a></li>
-        <li><a class="activo" href="verCitas.html">Consultar Citas</a></li>
+        <c:if test="${tipoLogin eq 'ninguno'}">
+        	<li><a href="LoginYRegistro">Iniciar sesión/Registrarse</a></li>
+        </c:if>
+        <li><a href="RealizarCita">Pedir Cita</a></li>
+        <li><a href="">Contactanos</a></li>
+        <li><a class="activo" href="VerCitas">Consultar Citas</a></li>
+        <c:if test="${tipoLogin eq 'cliente'}">
+        <li><a href="">Editar Perfil</a></li>
+        </c:if>
       </ul>
     </nav>
   </header>

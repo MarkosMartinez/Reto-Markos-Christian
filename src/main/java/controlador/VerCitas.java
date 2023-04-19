@@ -74,6 +74,14 @@ public class VerCitas extends HttpServlet {
 					}
 				}
 				
+				String tipoLogin = "ninguno";
+				if(clienteLogueado != null) {
+					tipoLogin = "cliente";
+				} else if(empleadoLogueado != null) {
+					tipoLogin = "empleado";
+				}
+				request.setAttribute("tipoLogin", tipoLogin);
+				
 				request.setAttribute("telefonos", listatelefonos);
 				request.setAttribute("horas", horas);
 				request.setAttribute("clinicas", clinicas);

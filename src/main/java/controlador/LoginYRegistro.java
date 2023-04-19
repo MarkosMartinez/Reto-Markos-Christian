@@ -61,7 +61,7 @@ public class LoginYRegistro extends HttpServlet {
 		request.setAttribute("correo", correo);
 		request.setAttribute("telefono", telefono);
 		request.setAttribute("fechanacimiento", fechanacimiento);
-		request.getRequestDispatcher("LoginYRegistro.jsp").forward(request, response);
+		request.getRequestDispatcher("LoginYRegistro.jsp").forward(request, response); //TODO Minusculas?
 	}
 
 	/**

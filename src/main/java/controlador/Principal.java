@@ -6,6 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import modelo.DTO.Cliente;
+import modelo.DTO.Empleado;
 
 /**
  * Servlet implementation class Principal
@@ -25,7 +29,17 @@ public class Principal extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("inicio.html").forward(request, response);
+		HttpSession session = request.getSession();
+		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
+		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
+		String tipoLogin = "ninguno";
+			if(clienteLogueado != null) {
+				tipoLogin = "cliente";
+			} else if(empleadoLogueado != null) {
+				tipoLogin = "empleado";
+			}
+			request.setAttribute("tipoLogin", tipoLogin);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	/**

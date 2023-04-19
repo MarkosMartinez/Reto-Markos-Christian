@@ -55,7 +55,7 @@ public class RealizarCita extends HttpServlet {
 		request.setAttribute("fecha", fecha);
 		request.setAttribute("hora", hora);
 		request.setAttribute("clinicas", clinicas);
-		//TODO a la hora de ver la lista, mostrar tambien el telefono o direccion.
+		//TODO evitar que el mismo cliente pueda crear mas de una cita a la misma hora
 		request.getRequestDispatcher("realizarCita.jsp").forward(request, response);
 	}
 

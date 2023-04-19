@@ -1,5 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -32,10 +35,15 @@
         <li><a class="activo" href="">Inicio</a></li>
         <li><a href="nuestroEquipo.html">Nuestro equipo</a></li>
         <li><a href="">Tratamientos</a></li>
-        <li><a href="">Iniciar sesión/Registrarse</a></li>
-        <li><a href="">Pedir Cita</a></li>
-        <li><a href="">Contáctanos</a></li>
+        <c:if test="${tipoLogin eq 'ninguno'}">
+        	<li><a href="LoginYRegistro">Iniciar sesi�n/Registrarse</a></li>
+        </c:if>
+        <li><a href="RealizarCita">Pedir Cita</a></li>
+        <li><a href="">Contactanos</a></li>
         <li><a href="VerCitas">Consultar Citas</a></li>
+        <c:if test="${tipoLogin eq 'cliente'}">
+        <li><a href="">Editar Perfil</a></li>
+        </c:if>
       </ul>
     </nav>
   </header>

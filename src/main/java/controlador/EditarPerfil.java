@@ -12,16 +12,16 @@ import modelo.DTO.Cliente;
 import modelo.DTO.Empleado;
 
 /**
- * Servlet implementation class eliminarCita
+ * Servlet implementation class EditarPerfil
  */
-@WebServlet("/eliminarCita")
-public class EliminarCita extends HttpServlet {
+@WebServlet("/EditarPerfil")
+public class EditarPerfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EliminarCita() {
+    public EditarPerfil() {
         super();
     }
 
@@ -32,14 +32,20 @@ public class EliminarCita extends HttpServlet {
 		HttpSession session = request.getSession();
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
-		String dni = request.getParameter("dni");
-			if(clienteLogueado == null && empleadoLogueado == null) {
-				response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
-			} else {
-				
+		if(clienteLogueado == null) { //TODO El empleado no se puede editar el perfil, pero podra editar la de los usuarios?
+			response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
+		}else {
+		String tipoLogin = "ninguno";
+			if(clienteLogueado != null) {
+				tipoLogin = "cliente";
+			} else if(empleadoLogueado != null) {
+				tipoLogin = "empleado";
 			}
-		//TODO poner IDCita (Autoincremental) para poder eliminar las citas mas facilmente!
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+			
+		request.setAttribute("tipoLogin", tipoLogin);
+		request.setAttribute("cliente", clienteLogueado);
+		request.getRequestDispatcher("editarPerfil.jsp").forward(request, response);
+		}
 	}
 
 	/**
