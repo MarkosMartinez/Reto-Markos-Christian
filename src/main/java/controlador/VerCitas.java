@@ -11,9 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.DAO.ModeloCita;
+import modelo.DAO.ModeloCliente;
+import modelo.DAO.ModeloClinica;
 import modelo.DTO.Cita;
 import modelo.DTO.Cliente;
+import modelo.DTO.Clinica;
 import modelo.DTO.Empleado;
+import modelo.DTO.Telefonos;
 
 /**
  * Servlet implementation class VerConsultas
@@ -42,14 +46,39 @@ public class VerCitas extends HttpServlet {
 				
 				ArrayList<Cita> citas = new ArrayList<>();
 				ModeloCita mcita = new ModeloCita();
-				
+				ArrayList<Clinica> clinicas = new ArrayList<>();
+				ModeloClinica mclinica = new ModeloClinica();
+				clinicas = mclinica.getClinicas();
+				ModeloCliente mcliente = new ModeloCliente();
+				ArrayList<Cliente> clientes = new ArrayList<>();
+				clientes = mcliente.getClientes();
 				if (empleadoLogueado != null) {
 					citas = mcita.getCitas(empleadoLogueado.getId_Clinica());
 				}else if(clienteLogueado != null) {
 					citas = mcita.getCitasCliente(clienteLogueado.getDni());
 				}
-
+				
+				ArrayList<String> horas = new ArrayList<>();
+				for (Cita cita : citas) {
+					horas.add(cita.getHora_Cita().toString());
+					
+				}
+				ArrayList<Telefonos> telefonos = new ArrayList<>();
+				ArrayList<String> listatelefonos = new ArrayList<>();
+				telefonos = mcliente.cargarTelefonos();
+				for (Cita cita : citas) {
+					for (Telefonos telefono : telefonos) {
+						if(cita.getDni_Cliente().equals(telefono.getDni())) {
+							listatelefonos.add(Integer.toString(telefono.getTelefono()));
+						}
+					}
+				}
+				
+				request.setAttribute("telefonos", listatelefonos);
+				request.setAttribute("horas", horas);
+				request.setAttribute("clinicas", clinicas);
 				request.setAttribute("citas", citas);
+				request.setAttribute("clientes", clientes);
 				request.getRequestDispatcher("verCitas.jsp").forward(request, response);
 			}
 			

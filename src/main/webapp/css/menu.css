@@ -1,0 +1,410 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+
+/*Barra del menu (bastante responsive por ahora)*/
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-family: 'Oswald';
+  z-index: 999;
+}
+
+nav{
+    background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgba(40,106,255,1) 100%);
+    height: 80px;
+    width: 100%;
+    position: fixed;
+}
+
+.enlaceLogo{
+    position: absolute;
+    padding: 20px 50px;
+}
+
+.logo{
+    height: 40px;
+}
+
+.nav{
+    position: absolute;
+    z-index: 999;
+}
+
+nav ul{
+    float: right;
+    margin-right: 20px;
+}
+
+nav ul li{
+    display: inline-block;
+    margin-top: 25px;
+    margin-left: 20px;
+    transition:0.5s;
+}
+
+nav ul li a{
+    color: white;
+    text-decoration: none;
+}
+
+.activo{
+    text-decoration: underline;
+}
+
+.botonmenu{
+    font-size: 30px;
+    float: right;
+    margin-top: 13px;
+    margin-right: 20px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    display: none;
+    transition: all ease-in-out 0.5s;
+}
+
+#check{
+    visibility: hidden;
+}
+
+.menu{
+    display: none;
+}
+
+a {
+    box-shadow: inset 0 0 0 0 white;
+    padding: 0 .25rem;
+    margin: 0 -.25rem;
+    transition: all ease-in-out 0.7s;
+  }
+  .opciones a:hover {
+    color: rgba(40,106,255,1);
+    box-shadow: inset 200px 0 0 0 rgb(255, 255, 255);
+  }
+/*hacer responsive el menu*/
+@media(max-width: 952px){
+    .enlaceLogo{
+        padding-left: 20px;
+    }
+
+    nav ul li a{
+        color: white;
+        font-size: 16px;
+    }
+
+    .iconos ul {
+      margin-left: 1000px;
+    }
+
+    body{
+      padding-bottom: 10em;
+    }
+}
+
+@media(max-width: 858px){
+
+    .botonmenu{
+        display: block;
+    }
+
+    .opciones{
+        position: fixed;
+        width: 100%;
+        height: 65vh;
+        background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgba(40,106,255,1) 100%);
+        top: -100%;
+        text-align: center;
+        transition: all ease-in-out 0.5s;
+        z-index: -1;
+    }
+
+    nav ul li{
+        display: block;
+        margin: 50px;
+        margin-top: 20px;
+    }
+
+    nav ul li a{
+        font-size: 20px;
+    }
+
+    nav ul li a{
+        color: white;
+    }
+
+    #check:checked ~ ul{
+        top: 80px;
+    }
+
+    #check:checked ~ .botonmenu{
+        transform: rotate(-270deg);
+    }
+}
+
+/*footer*/
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  background-color: rgb(0, 119, 255);
+  color: white;
+  width: 100%;
+  text-align: left;
+  font-size: 16px;
+  padding: 50px 50px 0px 50px;
+  margin-bottom: -10px;
+}
+
+.footer .footer-izquierda,
+.footer .footer-centro,
+.footer .footer-derecha {
+  display: inline-block;
+  vertical-align: top;
+}
+
+
+/* footer parte izquierda*/
+
+.footer .footer-izquierda {
+  width: 33%;
+  padding-right: 15px;
+}
+
+.footer .about {
+  line-height: 20px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.footer .about span {
+  display: block;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* footer centro*/
+
+.footer .footer-centro {
+  width: 30%;
+}
+
+.footer .footer-centro i {
+  background-color: #ffffff;
+  color: #00a2ff;
+  font-size: 25px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 42px;
+  margin: 10px 15px;
+  vertical-align: middle;
+}
+
+.footer .footer-centro p {
+  display: inline-block;
+  color: #ffffff;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.footer .footer-centro p span {
+  display: block;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.footer .footer-centro p a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer .footer-centro p a:hover{
+  color: rgba(40,106,255,1);
+  box-shadow: inset 200px 0 0 0 rgb(255, 255, 255);
+}
+
+
+/* footer derecha*/
+
+.footer .footer-derecha {
+  width: 35%;
+}
+
+.footer .menu {
+  color: #ffffff;
+  margin: 20px 0 12px;
+  padding: 0;
+}
+
+.footer .menu a {
+  display: inline-block;
+  line-height: 1.8;
+  text-decoration: none;
+  color: inherit;
+}
+
+
+
+.footer .name {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: normal;
+  margin: 0;
+}
+
+@media(max-width: 1599px){
+  .footer{
+    margin-bottom: -5%;
+  }
+}
+
+@media(max-width: 1243px){
+
+  .footer{
+    margin-bottom: -15%;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer {
+    font-size: 14px;
+    margin-bottom: -40px;
+  }
+  .footer .footer-izquierda,
+  .footer .footer-centro,
+  .footer .footer-derecha {
+    display: block;
+    width: 100%;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .footer .footer-centro i {
+    margin-left: 0;
+  }
+
+  body{
+    padding-bottom: 41em;
+  }
+
+
+  .iconos{
+    margin-left: 25%;
+  }
+}
+
+@media (max-width: 618px) {
+
+  .iconos{
+    margin-left: 80px;
+  }
+
+}
+
+@media (max-width: 530px) {
+
+  .iconos{
+    margin-left: 40px;
+  }
+
+}
+
+@media (max-width: 470px) {
+
+  .iconos{
+    margin-left: 10px;
+  }
+
+}
+
+@media (max-width: 390px) {
+
+  .iconos{
+    margin-left: -15px;
+  }
+
+}
+
+
+/*iconos redes footer*/
+.iconos ul {
+  display: flex;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin-top: 50px;
+  margin-left: -20px;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.iconos ul li {
+  list-style: none;
+}
+
+.iconos ul li a {
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  text-align: center;
+  line-height: 60px;
+  font-size: 26px;
+  margin: 0 10px;
+  display: block;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #fff;
+  z-index: 1;
+}
+
+.iconos ul li a .icon {
+  position: relative;
+  color: #262626;
+  transition: .5s;
+  z-index: 3;
+}
+
+.iconos ul li a:hover .icon {
+  color: #fff;
+  transform: rotateY(360deg);
+}
+
+.iconos ul li a:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f00;
+  transition: .5s;
+  z-index: 2;
+}
+
+.iconos ul li a:hover:before {
+  top: 0;
+}
+
+.iconos ul li:nth-child(1) a:before{
+  background: #3b5999;
+}
+
+.iconos ul li:nth-child(2) a:before{
+  background: #55acee;
+}
+
+.iconos ul li:nth-child(3) a:before {
+  background: #0077b5;
+}
+
+.iconos ul li:nth-child(4) a:before {
+  background: #dd399e;
+}

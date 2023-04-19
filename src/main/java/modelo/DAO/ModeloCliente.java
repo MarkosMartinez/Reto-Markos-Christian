@@ -144,4 +144,54 @@ public class ModeloCliente {
 		
 		conector.cerrar();	
 	}
+
+	public ArrayList<Cliente> getClientes() {
+		Conector conector = new Conector();
+		conector.conectar();
+		ArrayList<Cliente> clientes = new ArrayList<>();
+	
+		PreparedStatement gettear;
+		try {
+			gettear = conector.getCon().prepareStatement("SELECT * FROM cliente");
+			ResultSet resultado=gettear.executeQuery();
+			while(resultado.next()) {
+			Cliente cliente = new Cliente();
+			cliente.setDni(resultado.getString("DNI"));
+			cliente.setNombre(resultado.getString("Nombre"));	
+			cliente.setApellidos(resultado.getString("Apellidos"));	
+			cliente.setCorreo(resultado.getString("Correo"));
+			cliente.setFecha_Nacimiento(resultado.getDate("Fecha_Nacimiento"));
+			clientes.add(cliente);
+			}
+			gettear.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		conector.cerrar();
+		return clientes;
+	}
+
+	public ArrayList<Telefonos> cargarTelefonos() {
+		Conector conector = new Conector();
+		conector.conectar();
+		ArrayList<Telefonos> telefonos = new ArrayList<>();
+		
+		PreparedStatement gettear;
+		try {
+			gettear = conector.getCon().prepareStatement("SELECT * FROM telefonos");
+			ResultSet resultado=gettear.executeQuery();
+			while(resultado.next()) {
+			Telefonos telefono = new Telefonos();
+			telefono.setDni(resultado.getString("DNI"));
+			telefono.setTelefono(resultado.getInt("Telefono"));	
+			telefonos.add(telefono);
+			}
+			gettear.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		conector.cerrar();
+		
+		return telefonos;
+	}
 }
