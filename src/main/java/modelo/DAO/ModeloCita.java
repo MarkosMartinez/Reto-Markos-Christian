@@ -3,8 +3,16 @@ package modelo.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.sql.Date;
 import java.sql.Time;
 
 
@@ -58,6 +66,46 @@ public class ModeloCita {
 		conector.cerrar();
 		return citas;
 	}
+	
+	public static ArrayList<Cita> ordenarCitas(ArrayList<Cita> citas) {
+        Comparator<Cita> citaComparator = new Comparator<Cita>() {
+            @Override
+            public int compare(Cita c1, Cita c2) {
+                int fechaComparacion = c1.getFecha_Cita().compareTo(c2.getFecha_Cita());
+                if (fechaComparacion != 0) {
+                    return fechaComparacion;
+                } else {
+                    return c1.getHora_Cita().compareTo(c2.getHora_Cita());
+                }
+            }
+        };
+        Collections.sort(citas, citaComparator);
+        return citas;
+    }
+	
+	    /*public ArrayList<Cita> citasPosteriores(ArrayList<Cita> citasOrdenadas) {
+	    	ArrayList<Cita> citas = new ArrayList<>();
+	    	for (Cita cita : citasOrdenadas) {
+				citas.add(cita);
+			}
+	    	ArrayList<Cita> citasPosterior = new ArrayList<>();
+	        java.util.Date ahora = new  java.util.Date();
+	        for (Cita cita : citas) {
+	        	java.util.Date fechaCita = cita.getFecha_Cita();
+	            LocalTime horaCita = cita.getHora_Cita();
+	            
+	            
+	            
+	            System.out.println(ahora.getDate());
+	            if (fechaCita.after(ahora)) {
+	            	citasPosterior.add(cita);
+	            }else if((fechaCita.getDate() == ahora.getDate())) { //TODO Comparar la hora
+	            	
+	            }
+	        }
+	        return citasPosterior;
+	    }*/
+
 
 	public boolean disponible(int id_Clinica, java.util.Date fecha, LocalTime hora, int cantidadDeHabitaciones) {
 		Conector conector = new Conector();
@@ -118,6 +166,24 @@ public class ModeloCita {
 		
 		conector.cerrar();
 		return citas;
+	}
+
+	public void borrarCita(int id_clinica, String dni, java.util.Date fecha, LocalTime hora) {
+		Conector conector = new Conector();
+		conector.conectar();
+		PreparedStatement pstDelete;
+		try {
+			pstDelete = conector.getCon().prepareStatement("DELETE FROM realizacitas WHERE ID_clinica = ? AND DNI_Cliente = ? AND Fecha_Cita = ? AND Hora_Cita =?");
+			pstDelete.setInt(1, id_clinica);
+			pstDelete.setString(2, dni);
+			pstDelete.setDate(3, new Date(fecha.getTime()));
+			pstDelete.setTime(4, Time.valueOf(hora));
+			pstDelete.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		conector.cerrar();
+		
 	}
 
 }

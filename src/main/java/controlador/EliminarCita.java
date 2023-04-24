@@ -1,6 +1,11 @@
 package controlador;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,13 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.DAO.ModeloCita;
 import modelo.DTO.Cliente;
 import modelo.DTO.Empleado;
 
 /**
  * Servlet implementation class eliminarCita
  */
-@WebServlet("/eliminarCita")
+@WebServlet("/EliminarCita")
 public class EliminarCita extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -32,14 +38,44 @@ public class EliminarCita extends HttpServlet {
 		HttpSession session = request.getSession();
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
-		String dni = request.getParameter("dni");
 			if(clienteLogueado == null && empleadoLogueado == null) {
 				response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
 			} else {
-				
+				int id_clinica = -1;
+				if(request.getParameter("id_clinica") != null) {
+					id_clinica = Integer.parseInt(request.getParameter("id_clinica"));
+				}
+				String dni = request.getParameter("dni");
+				if(clienteLogueado != null) {
+					if(dni != clienteLogueado.getDni()) {
+						response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=errorpermisos");
+						//TODO Despues de esto, tiene que salir!
+						//TODO Arreglar el Bug de que deje de funconar despues de esto!
+					}
+				}else {
+				String fechaSinFormato = request.getParameter("fecha");
+				SimpleDateFormat formatoFecha=new SimpleDateFormat("yyyy-MM-dd");
+				Date fecha = null;
+				if(fechaSinFormato != null) {
+					try {
+						fecha=formatoFecha.parse(fechaSinFormato);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+				}
+			    LocalTime hora = null;
+			    if(request.getParameter("hora") != null) {
+			    	hora = LocalTime.parse(request.getParameter("hora"));
+			    }
+			    if(id_clinica == -1 || dni == null || fecha == null || hora == null) {
+			    	response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=borradoincorrecto");
+			    }else {
+			    	ModeloCita mcita = new ModeloCita();
+			    	mcita.borrarCita(id_clinica, dni, fecha, hora);
+			    	response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=borradocorrecto");
+			    }
+			  }
 			}
-		//TODO poner IDCita (Autoincremental) para poder eliminar las citas mas facilmente!
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

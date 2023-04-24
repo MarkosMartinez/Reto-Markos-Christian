@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2023 a las 13:06:09
+-- Tiempo de generación: 24-04-2023 a las 14:21:48
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -167,8 +167,9 @@ CREATE TABLE `realizacitas` (
 --
 
 INSERT INTO `realizacitas` (`ID_Clinica`, `DNI_Cliente`, `Fecha_Cita`, `Hora_Cita`) VALUES
-(1, '11111111A', '2023-10-15', '11:30:00'),
-(1, '12345678A', '2023-10-15', '12:00:00'),
+(1, '11111111A', '2023-04-24', '12:45:00'),
+(1, '11111111A', '2023-10-16', '11:30:00'),
+(1, '12345678A', '2023-04-20', '12:00:00'),
 (1, '12345678A', '2023-10-15', '12:01:00'),
 (1, '12345678A', '2023-10-15', '12:02:00'),
 (1, '12345678A', '2023-10-15', '12:03:00'),
@@ -190,6 +191,8 @@ CREATE TABLE `telefonos` (
 --
 
 INSERT INTO `telefonos` (`DNI`, `Telefono`) VALUES
+('11111111A', 33),
+('12345678A', 666666666),
 ('22222222A', 617658745);
 
 --
