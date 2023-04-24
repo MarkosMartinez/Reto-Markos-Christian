@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="css/menu.css" />
   </head>
 
-    <header>
+<header>
     <nav>
       <input type="checkbox" id="check" />
       <label for="check" class="botonmenu">
@@ -33,7 +33,7 @@
         <img src="img/logoProv.png" class="logo" />
       </a>
       <ul class="opciones">
-        <li><a class="activo" href="">Inicio</a></li>
+        <li><a class="activo" href="Principal">Inicio</a></li>
         <li><a href="nuestroEquipo.html">Nuestro equipo</a></li>
         <li><a href="">Tratamientos</a></li>
         <c:if test="${tipoLogin eq 'ninguno'}">
@@ -43,7 +43,7 @@
         <li><a href="">Contactanos</a></li>
         <li><a href="VerCitas">Consultar Citas</a></li>
         <c:if test="${tipoLogin eq 'cliente'}">
-        <li><a href="">Editar Perfil</a></li>
+        <li><a href="EditarPerfil">Editar Perfil</a></li>
         </c:if>
       </ul>
     </nav>

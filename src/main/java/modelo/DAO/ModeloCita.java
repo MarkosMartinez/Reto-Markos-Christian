@@ -3,15 +3,8 @@ package modelo.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.sql.Date;
 import java.sql.Time;
 
@@ -43,7 +36,7 @@ public class ModeloCita {
 		
 	}
 
-	public ArrayList<Cita> getCitas(int id_Clinica) {
+	public ArrayList<Cita> getCitas(int id_Clinica) { //TODO Eliminar esto?
 		ArrayList<Cita> citas = new ArrayList<>();
 		Conector conector = new Conector();
 		conector.conectar();
@@ -66,46 +59,6 @@ public class ModeloCita {
 		conector.cerrar();
 		return citas;
 	}
-	
-	public static ArrayList<Cita> ordenarCitas(ArrayList<Cita> citas) {
-        Comparator<Cita> citaComparator = new Comparator<Cita>() {
-            @Override
-            public int compare(Cita c1, Cita c2) {
-                int fechaComparacion = c1.getFecha_Cita().compareTo(c2.getFecha_Cita());
-                if (fechaComparacion != 0) {
-                    return fechaComparacion;
-                } else {
-                    return c1.getHora_Cita().compareTo(c2.getHora_Cita());
-                }
-            }
-        };
-        Collections.sort(citas, citaComparator);
-        return citas;
-    }
-	
-	    /*public ArrayList<Cita> citasPosteriores(ArrayList<Cita> citasOrdenadas) {
-	    	ArrayList<Cita> citas = new ArrayList<>();
-	    	for (Cita cita : citasOrdenadas) {
-				citas.add(cita);
-			}
-	    	ArrayList<Cita> citasPosterior = new ArrayList<>();
-	        java.util.Date ahora = new  java.util.Date();
-	        for (Cita cita : citas) {
-	        	java.util.Date fechaCita = cita.getFecha_Cita();
-	            LocalTime horaCita = cita.getHora_Cita();
-	            
-	            
-	            
-	            System.out.println(ahora.getDate());
-	            if (fechaCita.after(ahora)) {
-	            	citasPosterior.add(cita);
-	            }else if((fechaCita.getDate() == ahora.getDate())) { //TODO Comparar la hora
-	            	
-	            }
-	        }
-	        return citasPosterior;
-	    }*/
-
 
 	public boolean disponible(int id_Clinica, java.util.Date fecha, LocalTime hora, int cantidadDeHabitaciones) {
 		Conector conector = new Conector();
@@ -141,7 +94,7 @@ public class ModeloCita {
 		return disponible;
 	}
 
-	public ArrayList<Cita> getCitasCliente(String dni) {
+	public ArrayList<Cita> getCitasCliente(String dni) { //TODO Eliminar esto?
 		ArrayList<Cita> citas = new ArrayList<>();
 		Conector conector = new Conector();
 		conector.conectar();
@@ -184,6 +137,108 @@ public class ModeloCita {
 		}
 		conector.cerrar();
 		
+	}
+
+	public ArrayList<Cita> citasPosteriores(int id_Clinica) {
+		ArrayList<Cita> citas = new ArrayList<>();
+		Conector conector = new Conector();
+		conector.conectar();
+		try {
+			PreparedStatement pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE ID_Clinica = ? AND (Fecha_Cita > CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) > TIME(NOW()))) ORDER BY Fecha_Cita, Hora_Cita;");
+			pSt.setInt(1, id_Clinica);
+			ResultSet resultado = pSt.executeQuery();
+			while(resultado.next()) {
+				Cita cita = new Cita();
+				cita.setId_Clinica(resultado.getInt("ID_Clinica"));
+				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
+				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
+				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
+				citas.add(cita);
+			}
+			pSt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		conector.cerrar();
+		return citas;
+	}
+
+	public ArrayList<Cita> citasAnteriores(int id_Clinica) {
+		ArrayList<Cita> citas = new ArrayList<>();
+		Conector conector = new Conector();
+		conector.conectar();
+		try {
+			PreparedStatement pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE ID_Clinica = ? AND (Fecha_Cita < CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) < TIME(NOW())))ORDER BY Fecha_Cita, Hora_Cita;");
+			pSt.setInt(1, id_Clinica);
+			ResultSet resultado = pSt.executeQuery();
+			while(resultado.next()) {
+				Cita cita = new Cita();
+				cita.setId_Clinica(resultado.getInt("ID_Clinica"));
+				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
+				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
+				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
+				citas.add(cita);
+			}
+			pSt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		conector.cerrar();
+		return citas;
+	}
+
+	public ArrayList<Cita> getCitasClientePosteriores(String dni) {
+		ArrayList<Cita> citas = new ArrayList<>();
+		Conector conector = new Conector();
+		conector.conectar();
+		
+		PreparedStatement pSt;
+		try {
+			pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE DNI_Cliente = ? AND (Fecha_Cita > CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) > TIME(NOW()))) ORDER BY Fecha_Cita, Hora_Cita;");
+			pSt.setString(1, dni);
+			ResultSet resultado = pSt.executeQuery();
+			while(resultado.next()) {
+				Cita cita = new Cita();
+				cita.setId_Clinica(resultado.getInt("ID_Clinica"));
+				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
+				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
+				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
+				citas.add(cita);
+			}
+			pSt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		conector.cerrar();
+		return citas;
+	}
+	
+	public ArrayList<Cita> getCitasClienteAnteriores(String dni) {
+		ArrayList<Cita> citas = new ArrayList<>();
+		Conector conector = new Conector();
+		conector.conectar();
+		
+		PreparedStatement pSt;
+		try {
+			pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE DNI_Cliente = ? AND (Fecha_Cita < CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) < TIME(NOW()))) ORDER BY Fecha_Cita, Hora_Cita;");
+			pSt.setString(1, dni);
+			ResultSet resultado = pSt.executeQuery();
+			while(resultado.next()) {
+				Cita cita = new Cita();
+				cita.setId_Clinica(resultado.getInt("ID_Clinica"));
+				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
+				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
+				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
+				citas.add(cita);
+			}
+			pSt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		conector.cerrar();
+		return citas;
 	}
 
 }

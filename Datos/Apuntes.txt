@@ -1,6 +1,6 @@
-Borrar antes de entregar esto!
+Borrar esto antes de entregar!
 
-- Plantilla crear tabla:
+- Plantilla para crear tabla en MySQL:
 CREATE TABLE Equipamiento (
     ID_Equip int NOT NULL AUTO_INCREMENT,
     Nombre_Equip varchar(255) NOT NULL,
@@ -10,5 +10,3 @@ CREATE TABLE Equipamiento (
     PRIMARY KEY (ID_Equip),
     FOREIGN KEY (ID_Clinica) REFERENCES clinica(ID_Clinica)
 );
-
-- Comprobar el SQL.

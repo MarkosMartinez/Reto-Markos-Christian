@@ -1,10 +1,7 @@
 package controlador;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,7 +44,8 @@ public class VerCitas extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
 			} else {
 				
-				ArrayList<Cita> citasSinOrden = new ArrayList<>();
+				ArrayList<Cita> citasPosteriores = new ArrayList<>();
+				ArrayList<Cita> citasAnteriores = new ArrayList<>();
 				ModeloCita mcita = new ModeloCita();
 				ArrayList<Clinica> clinicas = new ArrayList<>();
 				ModeloClinica mclinica = new ModeloClinica();
@@ -56,27 +54,39 @@ public class VerCitas extends HttpServlet {
 				ArrayList<Cliente> clientes = new ArrayList<>();
 				clientes = mcliente.getClientes();
 				if (empleadoLogueado != null) {
-					citasSinOrden = mcita.getCitas(empleadoLogueado.getId_Clinica());
+					citasPosteriores = mcita.citasPosteriores(empleadoLogueado.getId_Clinica());
+					citasAnteriores = mcita.citasAnteriores(empleadoLogueado.getId_Clinica());
 				}else if(clienteLogueado != null) {
-					citasSinOrden = mcita.getCitasCliente(clienteLogueado.getDni());
+					citasPosteriores = mcita.getCitasClientePosteriores(clienteLogueado.getDni());
+					citasAnteriores = mcita.getCitasClienteAnteriores(clienteLogueado.getDni());
 				}
-				ArrayList<Cita> citasOrdenadas = mcita.ordenarCitas(citasSinOrden);
-				/*ArrayList<Cita> citasPosteriores = mcita.citasPosteriores(citasOrdenadas);
-				//TODO obtener citas ateriores*/
-				//TODO Intentar obtener las citas anteriores, y las posteriores con SQL: SELECT * FROM citas WHERE fecha > NOW();
 				
-				ArrayList<String> horas = new ArrayList<>();
-				for (Cita cita : citasOrdenadas) {
-					horas.add(cita.getHora_Cita().toString());
+				ArrayList<String> horasPosteriores = new ArrayList<>();
+				for (Cita cita : citasPosteriores) {
+					horasPosteriores.add(cita.getHora_Cita().toString());
 					
 				}
+				ArrayList<String> horasAnteriores = new ArrayList<>();
+				for (Cita cita : citasAnteriores) {
+					horasAnteriores.add(cita.getHora_Cita().toString());
+					
+				}
+				
 				ArrayList<Telefonos> telefonos = new ArrayList<>();
-				ArrayList<String> listatelefonos = new ArrayList<>();
+				ArrayList<String> listaTelefonosPosteriores = new ArrayList<>();
+				ArrayList<String> listaTelefonosAnteriores = new ArrayList<>();
 				telefonos = mcliente.cargarTelefonos();
-				for (Cita cita : citasOrdenadas) {
+				for (Cita cita : citasPosteriores) {
 					for (Telefonos telefono : telefonos) {
 						if(cita.getDni_Cliente().equals(telefono.getDni())) {
-							listatelefonos.add(Integer.toString(telefono.getTelefono()));
+							listaTelefonosPosteriores.add(Integer.toString(telefono.getTelefono()));
+						}
+					}
+				}
+				for (Cita cita : citasAnteriores) {
+					for (Telefonos telefono : telefonos) {
+						if(cita.getDni_Cliente().equals(telefono.getDni())) {
+							listaTelefonosAnteriores.add(Integer.toString(telefono.getTelefono()));
 						}
 					}
 				}
@@ -89,10 +99,13 @@ public class VerCitas extends HttpServlet {
 				}
 				request.setAttribute("tipoLogin", tipoLogin);
 				
-				request.setAttribute("telefonos", listatelefonos);
-				request.setAttribute("horas", horas);
+				request.setAttribute("telefonosPosteriores", listaTelefonosPosteriores);
+				request.setAttribute("telefonosAnteriores", listaTelefonosAnteriores);
+				request.setAttribute("horasPosteriores", horasPosteriores);
+				request.setAttribute("horasAnteriores", horasAnteriores);
 				request.setAttribute("clinicas", clinicas);
-				request.setAttribute("citas", citasOrdenadas);
+				request.setAttribute("citasPosteriores", citasPosteriores);
+				request.setAttribute("citasAnteriores", citasAnteriores);
 				request.setAttribute("clientes", clientes);
 				request.getRequestDispatcher("verCitas.jsp").forward(request, response);
 			}

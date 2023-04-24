@@ -38,7 +38,7 @@
         <img src="img/logoProv.png" class="logo" />
       </a>
       <ul class="opciones">
-        <li><a href="">Inicio</a></li>
+        <li><a href="Principal">Inicio</a></li>
         <li><a href="nuestroEquipo.html">Nuestro equipo</a></li>
         <li><a href="">Tratamientos</a></li>
         <c:if test="${tipoLogin eq 'ninguno'}">
@@ -48,7 +48,7 @@
         <li><a href="">Contactanos</a></li>
         <li><a class="activo" href="VerCitas">Consultar Citas</a></li>
         <c:if test="${tipoLogin eq 'cliente'}">
-        <li><a href="">Editar Perfil</a></li>
+        <li><a href="EditarPerfil">Editar Perfil</a></li>
         </c:if>
       </ul>
     </nav>
@@ -70,7 +70,7 @@
         <div class="ag-courses_box">
         <c:set var="actual" value="0"/>
             
-               <c:forEach var="cita" items="${citas}">
+               <c:forEach var="cita" items="${citasPosteriores}">
            	 <c:forEach var="clinica" items="${clinicas}">
            		 <c:if test="${clinica.getId_clinica() eq cita.getId_Clinica()}">
             		 <c:forEach var="cliente" items="${clientes}">
@@ -83,17 +83,17 @@
                 <p>Clínica: ${clinica.getNombre_clinica()}</p>
                 <p style="font-size: 16px;">Dirección: ${clinica.getDireccion()}</p>
                 <p>Nombre: ${cliente.getNombre()} ${cliente.getApellidos()}</p>
-                <p style="font-size: 16px;">Teléfono: ${telefonos.get(actual)}</p>
+                <p style="font-size: 16px;">Teléfono: ${telefonosPosteriores.get(actual)}</p>
               </div>
 
               <div class="ag-courses-item_date-box">
                 Fecha:
                <span class="ag-courses-item_date">
-                      <fmt:formatDate value="${cita.getFecha_Cita()}" pattern="dd/MM/yyyy" /> ${horas.get(actual)}
+                      <fmt:formatDate value="${cita.getFecha_Cita()}" pattern="dd/MM/yyyy" /> ${horasPosteriores.get(actual)}
                 </span>
 
                 <span>
-                  <a href="EliminarCita?id_clinica=${cita.getId_Clinica()}&dni=${cita.getDni_Cliente()}&fecha=${cita.getFecha_Cita()}&hora=${horas.get(actual)}">
+                  <a href="EliminarCita?id_clinica=${cita.getId_Clinica()}&dni=${cita.getDni_Cliente()}&fecha=${cita.getFecha_Cita()}&hora=${horasPosteriores.get(actual)}">
                     <button class="primary-button">
                       <i class="fas fa-trash"></i>
                     </button>
@@ -103,11 +103,11 @@
               </div>
             </div>
           </div>
-				</c:if>
+				   </c:if>
               		</c:forEach>
-              	  </c:if>
-              	 	</c:forEach>
-             	 </c:forEach>
+              	</c:if>
+              </c:forEach>
+             	</c:forEach>
 
         </div>
       </div>

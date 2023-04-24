@@ -40,6 +40,8 @@ public class RealizarCita extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		ArrayList<Clinica> clinicas = new ArrayList<>();
 		ModeloClinica mclinica = new ModeloClinica();
 		clinicas = mclinica.getClinicas();	
@@ -49,13 +51,17 @@ public class RealizarCita extends HttpServlet {
 		String fecha = request.getParameter("fecha");
 		String hora = request.getParameter("hora");
 		
+		if(clienteLogueado != null) {
+			dni = clienteLogueado.getDni();
+		}
+		
 		request.setAttribute("aviso", aviso);
 		request.setAttribute("clinica", clinica);
 		request.setAttribute("dni", dni);
 		request.setAttribute("fecha", fecha);
 		request.setAttribute("hora", hora);
 		request.setAttribute("clinicas", clinicas);
-		//TODO evitar que el mismo cliente pueda crear mas de una cita a la misma hora
+		//TODO evitar que el mismo cliente pueda crear mas de una cita a la misma hora (y que una vez logueado pida citas con otros users, si ponemos lo del correo?) 
 		request.getRequestDispatcher("realizarCita.jsp").forward(request, response);
 	}
 
@@ -90,12 +96,12 @@ public class RealizarCita extends HttpServlet {
 			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 				if(clienteLogueado == null) {
 					if(empleadoLogueado == null) {
-						response.sendRedirect("Principal");
+						response.sendRedirect(request.getContextPath() + "/Principal");
 					}else {
-						response.sendRedirect("VerConsultas"); //TODO Cambiar esto?
+						response.sendRedirect(request.getContextPath() + "/VerCitas"); //TODO Cambiar esto?
 					}
 				}else {
-					response.sendRedirect("VerConsultas");
+					response.sendRedirect(request.getContextPath() + "/VerCitas");
 				}
 			 }else{
 				 response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=demasiadascitas&clinica=" + id_Clinica + "&dni=" + dni + "&fecha=" + fechaSinFormato + "&hora=" + hora);
