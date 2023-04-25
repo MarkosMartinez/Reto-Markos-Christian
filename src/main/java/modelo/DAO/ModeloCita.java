@@ -121,23 +121,25 @@ public class ModeloCita {
 		return citas;
 	}
 
-	public void borrarCita(int id_clinica, String dni, java.util.Date fecha, LocalTime hora) {
-		Conector conector = new Conector();
-		conector.conectar();
-		PreparedStatement pstDelete;
-		try {
-			pstDelete = conector.getCon().prepareStatement("DELETE FROM realizacitas WHERE ID_clinica = ? AND DNI_Cliente = ? AND Fecha_Cita = ? AND Hora_Cita =?");
-			pstDelete.setInt(1, id_clinica);
-			pstDelete.setString(2, dni);
-			pstDelete.setDate(3, new Date(fecha.getTime()));
-			pstDelete.setTime(4, Time.valueOf(hora));
-			pstDelete.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		conector.cerrar();
-		
+	public boolean borrarCita(int id_clinica, String dni, java.util.Date fecha, LocalTime hora) {
+	    Conector conector = new Conector();
+	    conector.conectar();
+	    boolean eliminado = false;
+	    PreparedStatement pstDelete;
+	    try {
+	        pstDelete = conector.getCon().prepareStatement("DELETE FROM realizacitas WHERE ID_clinica = ? AND DNI_Cliente = ? AND Fecha_Cita = ? AND Hora_Cita =?");
+	        pstDelete.setInt(1, id_clinica);
+	        pstDelete.setString(2, dni);
+	        pstDelete.setDate(3, new Date(fecha.getTime()));
+	        pstDelete.setTime(4, Time.valueOf(hora));
+	        eliminado = pstDelete.executeUpdate() > 0; // Comprueba si se ha eliminado alguna fila
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    conector.cerrar();
+	    return eliminado;
 	}
+
 
 	public ArrayList<Cita> citasPosteriores(int id_Clinica) {
 		ArrayList<Cita> citas = new ArrayList<>();

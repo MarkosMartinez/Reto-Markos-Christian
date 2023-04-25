@@ -46,6 +46,7 @@ public class VerCitas extends HttpServlet {
 				
 				ArrayList<Cita> citasPosteriores = new ArrayList<>();
 				ArrayList<Cita> citasAnteriores = new ArrayList<>();
+				String aviso = request.getParameter("aviso");
 				ModeloCita mcita = new ModeloCita();
 				ArrayList<Clinica> clinicas = new ArrayList<>();
 				ModeloClinica mclinica = new ModeloClinica();
@@ -104,6 +105,7 @@ public class VerCitas extends HttpServlet {
 				request.setAttribute("horasPosteriores", horasPosteriores);
 				request.setAttribute("horasAnteriores", horasAnteriores);
 				request.setAttribute("clinicas", clinicas);
+				request.setAttribute("aviso", aviso);
 				request.setAttribute("citasPosteriores", citasPosteriores);
 				request.setAttribute("citasAnteriores", citasAnteriores);
 				request.setAttribute("clientes", clientes);

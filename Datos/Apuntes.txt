@@ -10,3 +10,7 @@ CREATE TABLE Equipamiento (
     PRIMARY KEY (ID_Equip),
     FOREIGN KEY (ID_Clinica) REFERENCES clinica(ID_Clinica)
 );
+
+Web Alertas: https://codepen.io/antoniasymeonidou/pen/OJjYzGE - https://codepen.io/alvarotrigo/pen/poKzROr
+Web HR: https://codepen.io/gcyrillus/pen/nRVgOq
+Mas webs: https://flowbite.com/docs/forms/floating-label/ - https://mdbootstrap.com/docs/standard/utilities/close-button/

@@ -21,7 +21,7 @@
       crossorigin="anonymous"
     />
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/menu.css" />
@@ -49,23 +49,42 @@
         <li><a class="activo" href="VerCitas">Consultar Citas</a></li>
         <c:if test="${tipoLogin eq 'cliente'}">
         <li><a href="EditarPerfil">Editar Perfil</a></li>
+        <li><a href="LoginYRegistro">Cerrar Sesion</a></li> <%//TODO Arreglarlo, porque ala añadir mas se sale. %>
         </c:if>
       </ul>
     </nav>
   </header>
 
   <body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <main>
+    
+    
       <div class="ag-format-container">
-        <h1
-          style="
-            text-align: center;
-            padding-top: 100px;
-            color: rgb(40, 105, 255);
-          "
-        >
-          Lista de citas
-        </h1>
+      
+      <h1 class="listaCitas">Lista de citas</h1>
+        <c:if test="${aviso eq 'borradocorrecto'}">
+        	<div class="alerta">
+	  <div class="alert alert-success check alert-dismissible fade show" role="alert">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <i class="fas fa-trash fa-shake fa-lg" style="color: #ffffff;"></i> &nbsp; &nbsp;
+  <span>Cita cancelada correctamente!</span>
+</div>
+</div>
+        </c:if>
+        
+        <c:if test="${aviso eq 'borradoincorrecto'}">
+        <div class="alerta">
+        	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ <i class="fa-solid fa-triangle-exclamation fa-bounce" style="color: #ffffff;"></i>
+  &nbsp; &nbsp;
+  <span>Error no se ha podido eliminar la cita!</span>
+</div>
+        </div>
+
+        </c:if>
+
 
         <div class="ag-courses_box">
         <c:set var="actual" value="0"/>
@@ -111,6 +130,44 @@
 
         </div>
       </div>
+      
+      <div class="ag-courses_box">
+        <c:set var="actual" value="0"/>
+            
+               <c:forEach var="cita" items="${citasAnteriores}">
+           	 <c:forEach var="clinica" items="${clinicas}">
+           		 <c:if test="${clinica.getId_clinica() eq cita.getId_Clinica()}">
+            		 <c:forEach var="cliente" items="${clientes}">
+            		  <c:if test="${cliente.getDni() eq cita.getDni_Cliente()}">
+          <div class="ag-courses_item">
+            <div class="ag-courses-item_link">
+              <div class="ag-courses-item_bg2"></div>
+
+              <div class="ag-courses-item_title">
+                <p>Clínica: ${clinica.getNombre_clinica()}</p>
+                <p style="font-size: 16px;">Dirección: ${clinica.getDireccion()}</p>
+                <p>Nombre: ${cliente.getNombre()} ${cliente.getApellidos()}</p>
+                <p style="font-size: 16px;">Teléfono: ${telefonosAnteriores.get(actual)}</p>
+              </div>
+
+              <div class="ag-courses-item_date-box2">
+                Fecha:
+               <span class="ag-courses-item_date">
+                      <fmt:formatDate value="${cita.getFecha_Cita()}" pattern="dd/MM/yyyy" /> ${horasAnteriores.get(actual)}
+                </span>
+                <c:set var="actual" value="${actual + 1}"/>
+              </div>
+            </div>
+          </div>
+				   </c:if>
+              		</c:forEach>
+              	</c:if>
+              </c:forEach>
+             	</c:forEach>
+
+        </div>
+      </div>
+      
     </main>
   </body>
   <footer class="footer">
@@ -160,4 +217,6 @@
       <p class="name">Smiling &copy; 2023</p>
     </div>
   </footer>
+
+
 </html>

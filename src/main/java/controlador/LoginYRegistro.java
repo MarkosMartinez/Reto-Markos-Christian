@@ -43,6 +43,7 @@ public class LoginYRegistro extends HttpServlet {
 		session.invalidate();
 		String aviso = request.getParameter("aviso");
 		String dni = request.getParameter("dni");
+		String dnilogin = request.getParameter("dnilogin");
 		String nombre = request.getParameter("nombre");
 		String apellido = request.getParameter("apellido");
 		String correo = request.getParameter("correo");
@@ -54,6 +55,7 @@ public class LoginYRegistro extends HttpServlet {
 		telefono = Integer.parseInt(request.getParameter("telefono"));
 		}
 		
+		request.setAttribute("dnilogin", dnilogin);
 		request.setAttribute("aviso", aviso);
 		request.setAttribute("dni", dni);
 		request.setAttribute("nombre", nombre);
@@ -82,7 +84,7 @@ public class LoginYRegistro extends HttpServlet {
 			if(cliente.getDni() == "-1") {
 				empleado = mempleado.comprobarLogin(dni, password); 
 				if(empleado.getDni_Emp() == "-1") {
-					response.sendRedirect(request.getContextPath() + "/LoginYRegistro?aviso=error");
+					response.sendRedirect(request.getContextPath() + "/LoginYRegistro?aviso=error&dnilogin=" + dni);
 				}else {
 					session.setAttribute("empleadoLogueado", empleado);
 					response.sendRedirect(request.getContextPath() + "/VerCitas");
