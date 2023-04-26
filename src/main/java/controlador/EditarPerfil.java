@@ -28,6 +28,7 @@ public class EditarPerfil extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings("unused") /*Para quitar el warning de clases que no se usan (aunque si se usan)*/
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");

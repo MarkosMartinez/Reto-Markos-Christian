@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -37,7 +37,7 @@
         <li><a href="nuestroEquipo.html">Nuestro equipo</a></li>
         <li><a href="">Tratamientos</a></li>
         <c:if test="${tipoLogin eq 'ninguno'}">
-        	<li><a href="LoginYRegistro">Iniciar sesiÛn/Registrarse</a></li>
+        	<li><a href="LoginYRegistro">Iniciar sesi√≥n/Registrarse</a></li>
         </c:if>
         <li><a href="RealizarCita">Pedir Cita</a></li>
         <li><a href="">Contactanos</a></li>
@@ -61,6 +61,11 @@
           >
           nos importa.
         </h1>
+        <a href="pedirCita.html">
+          <button class="btn-donate">
+            Pide tu cita ya pulsando aqui! ‚Üí
+        </button>
+        </a>
       </section>
       <svg
         class="waves"
@@ -102,26 +107,26 @@
 
     <main>
       <h1 style="color: rgb(0, 102, 255)">
-        ClÌnica Dental Smiling en Torremolinos (pendiente de bombardear)
+        Cl√≠nica Dental Smiling en Torremolinos (pendiente de bombardear)
       </h1>
       <br />
 
       <div class="textoMain">
         <p>
-          Una bonita sonrisa es sinÛnimo de salud y bienestar. Nuestra
-          experiencia y especializaciÛn permite personalizar cada caso para
-          conseguir un resultado perfecto gracias a tratamientos de ˙ltima
-          tecnologÌa.
+          Una bonita sonrisa es sin√≥nimo de salud y bienestar. Nuestra
+          experiencia y especializaci√≥n permite personalizar cada caso para
+          conseguir un resultado perfecto gracias a tratamientos de √∫ltima
+          tecnolog√≠a.
         </p>
 
         <p>
-          Manteniendo la filosofÌa de calidad y atenciÛn que la inspirÛ desde el
-          primer dÌa, ClÌnica Dental Smiling se basa hoy en tres pilares
-          fundamentales: calidad en el servicio, equipos de ˙ltima tecnologÌa y
-          formaciÛn en las ˙ltimas tÈcnicas y en tratamientos dentales m·s
-          innovadores, siempre con especial atenciÛn al paciente personalizando
+          Manteniendo la filosof√≠a de calidad y atenci√≥n que la inspir√° desde el
+          primer d√≠a, Cl√≠nica Dental Smiling se basa hoy en tres pilares
+          fundamentales: calidad en el servicio, equipos de √∫ltima tecnolog√≠a y
+          formaci√≥n en las √∫ltimas t√©cnicas y en tratamientos dentales m√°s
+          innovadores, siempre con especial atenci√≥n al paciente personalizando
           los tratamientos y ofreciendo un trato cercano. Descubre cuales son
-          los tratamientos m·s indicados para mejorar y fortalecer tu sonrisa.
+          los tratamientos m√°s indicados para mejorar y fortalecer tu sonrisa.
         </p>
       </div>
 
@@ -136,16 +141,16 @@
         <div class="columns content">
           <div class="content-container">
             <h5 style="color: rgba(40, 106, 255, 1)">
-              En Smiling tu sonrisa est· en manos de expertos
+              En Smiling tu sonrisa est√° en manos de expertos
             </h5>
             <p>
               En Smiling aseguramos la salud dental y el bienestar de nuestros
               pacientes. Aplicamos tratamientos dentales avanzados junto con el
               mejor equipo de dentistas expertos en Ortodoncia, Periodoncia,
-              ImplantologÌa, EstÈtica Dental, PrÛtesis dentales, y m·s. Nuestro
-              objetivo es que siempre tengas una clÌnica cerca de ti para
-              ayudarte a acceder al tratamiento que necesitas con unas cÛmodas
-              condiciones de pago y financiaciÛn.
+              Implantolog√≠a, Est√©tica Dental, Pr√≥tesis dentales, y m√°s. Nuestro
+              objetivo es que siempre tengas una cl√≠nica cerca de ti para
+              ayudarte a acceder al tratamiento que necesitas con unas c√≥modas
+              condiciones de pago y financiaci√≥n.
             </p>
           </div>
         </div>
@@ -155,21 +160,21 @@
         <div class="columns content">
           <div class="content-container">
             <h5 style="color: rgba(40, 106, 255, 1)">
-              Tus dientes te lo agradecer·n
+              Tus dientes te lo agradecer√°n
             </h5>
             <p>
-              En nuestra clÌnica odontolÛgica, no solo nos enfocamos en tratar
-              problemas dentales existentes, sino tambiÈn en prevenirlos.
-              Creemos que la prevenciÛn es la clave para una sonrisa saludable y
-              hermosa a largo plazo. Al visitar nuestra clÌnica, nuestros
-              pacientes obtienen acceso a servicios de odontologÌa preventiva y
-              cosmÈtica, como limpiezas dentales regulares, blanqueamiento
-              dental y tratamientos de ortodoncia. Adem·s, nuestro equipo de
+              En nuestra cl√≠nica odontol√≥gica, no solo nos enfocamos en tratar
+              problemas dentales existentes, sino tambi√©n en prevenirlos.
+              Creemos que la prevenci√≥n es la clave para una sonrisa saludable y
+              hermosa a largo plazo. Al visitar nuestra cl√≠nica, nuestros
+              pacientes obtienen acceso a servicios de odontolog√≠a preventiva y
+              cosm√©tica, como limpiezas dentales regulares, blanqueamiento
+              dental y tratamientos de ortodoncia. Adem√°s, nuestro equipo de
               dentistas altamente capacitados trabaja con cada paciente para
               desarrollar un plan de tratamiento personalizado y efectivo que
               satisfaga sus necesidades y objetivos. Al visitarnos, nuestros
-              pacientes pueden disfrutar de una sonrisa m·s brillante, saludable
-              y hermosa que durar· toda la vida.
+              pacientes pueden disfrutar de una sonrisa m√°s brillante, saludable
+              y hermosa que durar√° toda la vida.
             </p>
           </div>
         </div>
@@ -193,21 +198,21 @@
         <div class="columns content">
           <div class="content-container">
             <h5 style="color: rgba(40, 106, 255, 1)">
-              Te sentir·s como en casa
+              Te sentir√°s como en casa
             </h5>
             <p>
-              En nuestra clÌnica odontolÛgica, nos enorgullece ofrecer un
-              ambiente c·lido y acogedor para todos nuestros pacientes. Sabemos
+              En nuestra cl√≠nica odontol√≥gica, nos enorgullece ofrecer un
+              ambiente c√°lido y acogedor para todos nuestros pacientes. Sabemos
               que visitar al dentista puede ser estresante y, por eso, nos
               esforzamos por crear un ambiente relajante y agradable para
               nuestros pacientes. Nuestro personal es amable, atento y siempre
-              est· dispuesto a responder cualquier pregunta o inquietud que
-              nuestros pacientes puedan tener. Adem·s, nos esforzamos por ser
+              est√° dispuesto a responder cualquier pregunta o inquietud que
+              nuestros pacientes puedan tener. Adem√°s, nos esforzamos por ser
               accesibles y convenientes para nuestros pacientes, ofreciendo
               horarios flexibles y opciones de financiamiento para ayudar a
               nuestros pacientes a recibir el cuidado dental que necesitan y
-              merecen.VisÌtanos y experimenta nuestra atenciÛn dental
-              personalizada y de alta calidad en un ambiente cÛmodo y relajado."
+              merecen.Vis√≠tanos y experimenta nuestra atenci√≥n dental
+              personalizada y de alta calidad en un ambiente c√≥modo y relajado."
             </p>
           </div>
         </div>

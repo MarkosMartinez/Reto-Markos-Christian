@@ -40,8 +40,9 @@ public class RealizarCita extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(); //TODO Añadir los avisos de errores y cambiar el fondo?
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
+		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		ArrayList<Clinica> clinicas = new ArrayList<>();
 		ModeloClinica mclinica = new ModeloClinica();
 		clinicas = mclinica.getClinicas();	
@@ -54,7 +55,13 @@ public class RealizarCita extends HttpServlet {
 		if(clienteLogueado != null) {
 			dni = clienteLogueado.getDni();
 		}
-		
+		String tipoLogin = "ninguno";
+		if(clienteLogueado != null) {
+			tipoLogin = "cliente";
+		} else if(empleadoLogueado != null) {
+			tipoLogin = "empleado";
+		}
+		request.setAttribute("tipoLogin", tipoLogin);
 		request.setAttribute("aviso", aviso);
 		request.setAttribute("clinica", clinica);
 		request.setAttribute("dni", dni);
