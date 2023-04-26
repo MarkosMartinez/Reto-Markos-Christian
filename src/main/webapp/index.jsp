@@ -29,7 +29,7 @@
       <label for="check" class="botonmenu">
         <i class="fas fa-bars"></i>
       </label>
-      <a href="#" class="enlaceLogo">
+      <a href="Principal" class="enlaceLogo">
         <img src="img/logoProv.png" class="logo" />
       </a>
       <ul class="opciones">
@@ -44,6 +44,9 @@
         <li><a href="VerCitas">Consultar Citas</a></li>
         <c:if test="${tipoLogin eq 'cliente'}">
         <li><a href="EditarPerfil">Editar Perfil</a></li>
+        </c:if>
+        <c:if test="${tipoLogin != 'ninguno'}">
+        <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
         </c:if>
       </ul>
     </nav>
@@ -61,8 +64,8 @@
           >
           nos importa.
         </h1>
-        <a href="pedirCita.html">
-          <button class="btn-donate">
+        <a href="RealizarCita">
+          <button class="btn-donate"> <% //TODO Cambiar nombre de algunas clases como esta. %>
             Pide tu cita ya pulsando aqui! →
         </button>
         </a>

@@ -51,7 +51,7 @@
         <li><a href="EditarPerfil">Editar Perfil</a></li>
         </c:if>
         <c:if test="${tipoLogin != 'ninguno'}">
-        <li><a href="LoginYRegistro">Cerrar Sesion</a></li> <%//TODO Arreglarlo, porque al añadir mas campos se sale. %>
+        <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
         </c:if>
       </ul>
     </nav>
@@ -84,13 +84,30 @@
   <span>Error no se ha podido eliminar la cita!</span>
 </div>
         </div>
-
+        </c:if>
+        
+        <c:if test="${aviso eq 'error'}">
+        <div class="alerta">
+        	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert" style="background-color: red; box-shadow: none;"> <% //TODO Arreglar sombra %>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ <i class="fa-solid fa-triangle-exclamation fa-spin fa-lg" style="color: #ffffff;"></i> <% //TODO Cambiar el icono! %>
+  &nbsp; &nbsp;
+  <span>Error, esto no deberia de haber ocurrido!</span>
+</div>
+        </div>
         </c:if>
 
+		
+ 		<c:if test="${citasPosteriores.size() == 0}">
+ 		<div class="ag-courses_box">
+ 		<%//TODO Aqui estara la card o lo que tenga que mostrarse cuando no haya ninguna cita posterior! Las anteriores se veran? %>
+ 		</div>
+ 		</c:if>
+        
+		
 
         <div class="ag-courses_box">
         <c:set var="actual" value="0"/>
-            
                <c:forEach var="cita" items="${citasPosteriores}">
            	 <c:forEach var="clinica" items="${clinicas}">
            		 <c:if test="${clinica.getId_clinica() eq cita.getId_Clinica()}">
@@ -157,6 +174,15 @@
                <span class="ag-courses-item_date">
                       <fmt:formatDate value="${cita.getFecha_Cita()}" pattern="dd/MM/yyyy" /> ${horasAnteriores.get(actual)}
                 </span>
+                <c:if test="${tipoLogin eq 'empleado'}">
+                 <span>
+                  <a href="ConfirmarCita?id_clinica=${cita.getId_Clinica()}&dni=${cita.getDni_Cliente()}&fecha=${cita.getFecha_Cita()}&hora=${horasPosteriores.get(actual)}">
+                    <button class="primary-button"> <% //TODO En verde? %>
+                      <i class="fa-regular fa-circle-check"></i>
+                    </button>
+                  </a>
+                </span>
+                </c:if>
                 <c:set var="actual" value="${actual + 1}"/>
               </div>
             </div>
@@ -168,7 +194,7 @@
              	</c:forEach>
 
         </div>
-      </div>
+      
       
     </main>
   </body>

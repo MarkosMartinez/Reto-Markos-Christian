@@ -60,12 +60,6 @@ h2{
     transition: 0.5s;
 }
 
-input:focus ~ label, 
-input:valid ~ label{
-    top: -5px;
-    
-}
-
 .inputbox input{
     width: 100%;
     height: 50px;
@@ -104,4 +98,55 @@ button{
 button:hover{
     color: white;
     background-color: rgb(0, 116, 248);
+}
+
+.warning {
+  border-radius: 5px;
+  width: 220px;
+  height: 60px;
+  text-align: right;
+  position: absolute;
+  display: flex;
+  top: 100px;
+  left:-300px;
+  align-items: center;
+  background-color: red;
+  cursor: pointer;
+  color: white;
+  margin: 20px;
+  transition: all ease-in-out 0.5s;
+}
+
+.warning:hover{
+  background-color: #ad0000;
+  transition:0.5s;
+}
+
+
+.rotate {
+  animation: rotate 2s linear infinite;
+}
+
+.alerta{
+	position: absolute;
+	top: 0px;
+	transition: all ease-in-out 0.5s;
+	animation: entrada 0.5s ease-in-out 0.5s forwards;
+}
+
+@keyframes entrada {
+  from {
+    left: -300px;
+  }
+  to {
+    left: 300px;
+  }
+}
+
+.close-btn {
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  right: 6px;
 }

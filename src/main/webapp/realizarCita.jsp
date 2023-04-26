@@ -5,19 +5,24 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pide tu cita</title>
-
+    
     <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
-    crossorigin="anonymous"
-  />
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    
     <link rel="stylesheet" href="css/menu.css" />
     <link rel="stylesheet" href="css/pedirCita.css">
 
@@ -46,15 +51,28 @@
         <li><a href="EditarPerfil">Editar Perfil</a></li>
         </c:if>
         <c:if test="${tipoLogin ne 'ninguno'}">
-        <li><a href="LoginYRegistro">Cerrar Sesion</a></li> <%//TODO Arreglarlo, porque al añadir mas campos se sale. %>
+        <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
         </c:if>
       </ul>
     </nav>
   </header>
 
 <body>
-  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <main>
+    
+    <c:if test="${aviso eq 'demasiadascitas'}"> <% //TODO Arreglar esto! %>
+        <div class="alerta" style="position: absolute;left:5px">
+        	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert">
+				  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				 <i class="fa-solid fa-triangle-exclamation fa-bounce" style="color: #ffffff;"></i>
+				  &nbsp; &nbsp;
+				  <span>Error, en ese momento hay demasiadas citas!</span>
+			</div>
+        </div>
+        </c:if>
+        <% //TODO Agregar el error del DNI inexistente %>
+    
         <section style="padding-top: 100px;">
             <div class="form-box1">
                 <div class="form-value">
@@ -81,8 +99,8 @@
 						       
 							</c:if>
 							<c:if test = "${dni != null}">
-						      	 <input type="text" name="dni" value="${dni}" required="required" disabled="disabled">
-						       	<label style="margin-top:-30px">DNI</label> 	 
+						      	 <input type="text" name="dni" value="${dni}" required="required" readonly>
+						       	<label style="margin-top:-30px">DNI</label> <% //TODO Arreglar esto %> 	 
 							</c:if>
                         </div>
                         <div class="inputbox">
