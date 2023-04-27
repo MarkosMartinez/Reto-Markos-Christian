@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-04-2023 a las 13:31:29
+-- Tiempo de generación: 26-04-2023 a las 14:09:43
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -163,25 +163,23 @@ CREATE TABLE `realizacitas` (
   `ID_Clinica` int(11) NOT NULL,
   `DNI_Cliente` varchar(255) NOT NULL,
   `Fecha_Cita` date NOT NULL,
-  `Hora_Cita` time NOT NULL,
-  `Atendido` varchar(9) DEFAULT NULL
+  `Hora_Cita` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `realizacitas`
 --
 
-INSERT INTO `realizacitas` (`ID_Clinica`, `DNI_Cliente`, `Fecha_Cita`, `Hora_Cita`, `Atendido`) VALUES
-(1, '77777777V', '0001-12-12', '03:33:00', NULL),
-(1, '12345678A', '2023-04-19', '11:11:00', NULL),
-(1, '11111111A', '2023-04-22', '12:00:00', NULL),
-(1, '12345678A', '2023-04-24', '12:00:00', NULL),
-(1, '12345678A', '2023-04-24', '19:45:00', NULL),
-(1, '11111111A', '2023-05-02', '10:50:00', NULL),
-(1, '12345678A', '2023-10-15', '12:00:00', NULL),
-(1, '12345678A', '2023-10-15', '12:01:00', NULL),
-(1, '12345678A', '2023-10-15', '12:03:00', NULL),
-(1, '11111111A', '2023-10-15', '12:30:00', NULL);
+INSERT INTO `realizacitas` (`ID_Clinica`, `DNI_Cliente`, `Fecha_Cita`, `Hora_Cita`) VALUES
+(1, '11111111A', '2023-04-22', '12:00:00'),
+(1, '11111111A', '2023-05-02', '10:50:00'),
+(1, '11111111A', '2023-10-15', '12:30:00'),
+(1, '11111111A', '2023-10-15', '12:32:00'),
+(1, '12345678A', '2023-04-24', '12:00:00'),
+(1, '12345678A', '2023-04-24', '19:45:00'),
+(1, '12345678A', '2023-10-15', '12:03:00'),
+(1, '12345678A', '2023-10-15', '12:31:00'),
+(1, '77777777V', '0001-12-12', '03:33:00');
 
 -- --------------------------------------------------------
 

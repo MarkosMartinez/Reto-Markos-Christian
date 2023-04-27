@@ -115,7 +115,7 @@ public class LoginYRegistro extends HttpServlet {
 			}
 			String password = DigestUtils.sha1Hex(passSinEncriptar);
 			ModeloCliente mcliente = new ModeloCliente();
-			if(passSinEncriptar.equals(passConfirmar) && mcliente.comprobarPass(passSinEncriptar)) {
+			if(passSinEncriptar.equals(passConfirmar)) {
 				if(mcliente.comprobarDNI(dni)) {
 					response.sendRedirect(request.getContextPath() + "/LoginYRegistro?aviso=dniexistente");
 				}else {

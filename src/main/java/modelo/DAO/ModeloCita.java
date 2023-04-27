@@ -50,6 +50,7 @@ public class ModeloCita {
 				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
 				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
 				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
+				cita.setAtendido(resultado.getString("Atendido"));
 				citas.add(cita);
 			}
 			pSt.close();
@@ -110,6 +111,7 @@ public class ModeloCita {
 				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
 				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
 				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
+				cita.setAtendido(resultado.getString("Atendido"));
 				citas.add(cita);
 			}
 			pSt.close();
@@ -179,6 +181,7 @@ public class ModeloCita {
 				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
 				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
 				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
+				cita.setAtendido(resultado.getString("Atendido"));
 				citas.add(cita);
 			}
 			pSt.close();
@@ -232,6 +235,7 @@ public class ModeloCita {
 				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
 				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
 				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
+				cita.setAtendido(resultado.getString("Atendido"));
 				citas.add(cita);
 			}
 			pSt.close();

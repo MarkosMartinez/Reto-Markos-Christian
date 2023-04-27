@@ -15,7 +15,7 @@ section{
     align-items: center;
     min-height: 100vh;
     width: 100%;
-    background-image: url("../img/fondoLogin.jpg");
+    background-image: url("../img/fondoPedirCita.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -79,7 +79,7 @@ h2{
     top: 20px;
 }
 
-button{
+.pedirC{
     width: 100%;
     height: 40px;
     border-radius: 40px;
@@ -95,12 +95,12 @@ button{
 
 }
 
-button:hover{
+.pedirC:hover{
     color: white;
     background-color: rgb(0, 116, 248);
 }
 
-.warning {
+.danger {
   border-radius: 5px;
   width: 220px;
   height: 60px;
@@ -108,7 +108,7 @@ button:hover{
   position: absolute;
   display: flex;
   top: 100px;
-  left:-300px;
+  left:-400px;
   align-items: center;
   background-color: red;
   cursor: pointer;
@@ -117,8 +117,9 @@ button:hover{
   transition: all ease-in-out 0.5s;
 }
 
-.warning:hover{
-  background-color: #ad0000;
+.danger:hover{
+  transition: all ease-in-out 0.5s;
+  background-color: #b50f04;
   transition:0.5s;
 }
 
@@ -136,10 +137,10 @@ button:hover{
 
 @keyframes entrada {
   from {
-    left: -300px;
+    left: -400px;
   }
   to {
-    left: 300px;
+    left: 400px;
   }
 }
 

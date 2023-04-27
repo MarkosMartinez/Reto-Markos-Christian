@@ -91,6 +91,8 @@ main {
 .ag-format-container {
   width: 100%;
   margin: 0 auto;
+  position: relative;
+  z-index: -2;
 }
 
 .ag-courses_box {
@@ -130,7 +132,7 @@ main {
   text-decoration: none;
   color: rgb(255, 255, 255);
 }
-.ag-courses-item_link:hover .ag-courses-item_bg, .ag-courses-item_link:hover .ag-courses-item_bg2 {
+.ag-courses-item_link:hover .ag-courses-item_bg, .ag-courses-item_link:hover .ag-courses-item_bg2, .ag-courses-item_link:hover .ag-courses-item_bg3 {
   -webkit-transform: scale(10);
   -ms-transform: scale(10);
   transform: scale(14);
@@ -212,6 +214,24 @@ main {
   transition: all 0.5s ease;
 }
 
+
+.ag-courses-item_bg3 {
+  height: 128px;
+  width: 128px;
+  background-color: green;
+
+  z-index: 1;
+  position: absolute;
+  top: -75px;
+  right: -75px;
+
+  border-radius: 50%;
+
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
 @media only screen and (max-width: 979px) {
   .ag-courses_item {
     -ms-flex-preferred-size: calc(50% - 30px);
@@ -246,7 +266,7 @@ main {
   }
 }
 
-.primary-button {
+.primary-button, .primary-button2 {
   position: absolute;
   right: -20px;
   border-radius: 20px 0px 0px;
@@ -256,22 +276,118 @@ main {
   letter-spacing: 0.05rem;
   border: 1px solid #0e1822;
   padding: 0.8rem 2.1rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'%3E%3Cdefs%3E%3Cstyle%3E .shape %7B fill: %23FF4655 /* fill: %230E1822; */ %7D %3C/style%3E%3C/defs%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpolygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
   background-color: #0e1822;
+  	  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'%3E%3Cdefs%3E%3Cstyle%3E .shape %7B fill: %23FF4655 /* fill: %230E1822; */ %7D %3C/style%3E%3C/defs%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpolygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");	
+  
   background-size: 200%;
   background-position: 200%;
   background-repeat: no-repeat;
   transition: 0.3s ease-in-out;
   transition-property: background-position, border, color;
 }
+
+.primary-button2:hover{
+	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'><defs><style> .shape %7B fill: %23018f41 /* fill: %23018f41; */ %7D </style></defs><g id='Layer_2' data-name='Layer 2'><g id='Layer_1-2' data-name='Layer 1'><polygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /></g></g></svg>%0A");
+}
+
+
 @media (max-width: 640px) {
-  .primary-button {
+  .primary-button, .primary-button2 {
     right: -40px;
-    top: -20px;
+    top: -10px;
   }
 }
-.primary-button:hover {
+.primary-button:hover, .primary-button2:hover {
   border: 1px solid #ff4655;
   color: white;
   background-position: 40%;
+}
+
+.primary-button2:hover{
+	border-color: green;
+}
+
+
+/*formulario para empleado tras atender cita*/
+.overlay {
+  position: fixed;
+  z-index: 3;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 50px;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+ 
+  transition: all 1.5s ease-in-out;
+  z-index: 99;
+}
+
+.popup h2 {
+  position: relative;
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #0684d8;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+
+textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  resize: none;
+  width: 100%;
+}
+
+.botonFormulario{
+  position: absolute;
+  top: 430px;
+  right: 20px;
+  border-radius: 6px;
+  padding: 10px;
+  height: 50px;
+  background-color: rgb(0, 153, 255);
+  color: white;
 }

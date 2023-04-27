@@ -1,8 +1,10 @@
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Date"%>
 <%@ page import="modelo.DTO.Clinica"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -61,18 +63,34 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <main>
     
-    <c:if test="${aviso eq 'demasiadascitas'}"> <% //TODO Arreglar esto! %>
-        <div class="alerta" style="position: absolute;left:5px">
-        	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert">
-				  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				 <i class="fa-solid fa-triangle-exclamation fa-bounce" style="color: #ffffff;"></i>
-				  &nbsp; &nbsp;
-				  <span>Error, en ese momento hay demasiadas citas!</span>
+    <c:if test="${aviso eq 'demasiadascitas'}">
+      	<div class="alerta">
+			     <div class="alert alert-danger danger alert-dismissible fade show" role="alert">
+			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			 <i class="fa-solid fa-triangle-exclamation fa-bounce" style="color: #ffffff;"></i>
+			  &nbsp; &nbsp;
+			  <span>Hay demasiadas</span>
 			</div>
-        </div>
+		 </div>
         </c:if>
-        <% //TODO Agregar el error del DNI inexistente %>
-    
+        
+        
+        <c:if test="${aviso eq 'dninoregistrado'}">
+      	<div class="alerta">
+			     <div style="width:250px;height:90px" class="alert alert-danger danger alert-dismissible fade show" role="alert">
+			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			 <i class="fa-solid fa-triangle-exclamation fa-bounce" style="color: #ffffff;"></i>
+			  &nbsp; &nbsp;
+			  <span>Su dni no se encuentra en nuestra base de datos, pruebe registrandose <a style="color:yellow;" href="LoginYRegistro.jsp">aqui</a></span>
+			</div>
+		 </div>
+        </c:if>
+        
+        <fmt:formatDate value="${hoy}" pattern="dd/MM/yyyy" />
+        <%Date hoy = new Date();%>
+		<c:set var="hoy" value="<%= hoy %>" />
+        
+        
         <section style="padding-top: 100px;">
             <div class="form-box1">
                 <div class="form-value">
@@ -94,22 +112,22 @@
                         <div class="inputbox">
                             <i class="fas fa-id-card"></i>
                             <c:if test = "${dni == null}">
-						       <input type="text" id="dni" name="dni" required="required">
-						       <label for="dni">DNI</label>
+						       <input type="text" id="dni" name="dni" placeholder="xxxxxxxA" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" minlength="9" maxlength="9">
+						       <label style="margin-top:-30px" for="dni">DNI</label>
 						       
 							</c:if>
 							<c:if test = "${dni != null}">
-						      	 <input type="text" name="dni" value="${dni}" required="required" readonly>
-						       	<label style="margin-top:-30px">DNI</label> <% //TODO Arreglar esto %> 	 
+						      	 <input type="text" name="dni" value="${dni}" required="required" readonly pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" minlength="9" maxlength="9">
+						       	<label style="margin-top:-30px">DNI</label>
 							</c:if>
                         </div>
                         <div class="inputbox">
                             <i class="fas fa-calendar-alt"></i>
-                            <c:if test = "${fecha == null}"> <%//TODO Añadir limite a la fecha%>
-						       <input type="date" id="fecha" name="fecha" required="required">
+                            <c:if test = "${fecha == null}"> <%//TODO Añadir limite maximo a la fecha%>
+						       <input type="date" id="fecha" name="fecha" min="<fmt:formatDate value="${hoy}" pattern='yyyy-MM-dd' />" required="required">
 							</c:if>
 							<c:if test = "${fecha != null}">
-						        <input type="date" id="fecha" name="fecha" value="${fecha}" required="required">
+						        <input type="date" id="fecha" name="fecha" min="<fmt:formatDate value="${hoy}" pattern='yyyy-MM-dd' />" value="${fecha}" required="required">
 							</c:if>
                             <label class="fecha" for="fecha">Fecha</label>
                         </div>
@@ -125,7 +143,7 @@
                             <label class="hora" for="hora">Hora</label>
                         </div>
                       
-                        <button type="submit">Pedir cita</button>
+                        <button class="pedirC" type="submit">Pedir cita</button>
                     </form>
                 </div>
             </div>

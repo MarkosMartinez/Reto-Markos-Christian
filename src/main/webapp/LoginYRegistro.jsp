@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.Date"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -36,7 +38,7 @@
       <label for="check" class="botonmenu">
         <i class="fas fa-bars"></i>
       </label>
-      <a href="#" class="enlaceLogo">
+      <a href="Principal" class="enlaceLogo">
         <img src="img/logoProv.png" class="logo" />
       </a>
       <ul class="opciones">
@@ -51,8 +53,12 @@
 
 <body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-
     <main>    
+    
+    	<fmt:formatDate value="${hoy}" pattern="dd/MM/yyyy" />
+        <%Date hoy = new Date();%>
+		<c:set var="hoy" value="<%= hoy %>" />
+    
 			    <c:if test="${aviso eq 'error'}">
 				<div class="alerta">
 			     <div class="alert alert-danger danger alert-dismissible fade show" role="alert">
@@ -121,10 +127,10 @@
                         <div class="inputbox">
                             <i class="fas fa-id-card"></i>
                             <c:if test = "${dni == null}">
-					         	<input type="text" name="dni" id="dni" required="required">
+					         	<input type="text" name="dni" id="dni" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" minlength="9" maxlength="9">
 						      </c:if>
 						      <c:if test = "${dni != null}">
-					         	 <input type="text" name="dni" id="dni" value="${dni}" required="required">
+					         	 <input type="text" name="dni" id="dni" value="${dni}" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" minlength="9" maxlength="9">
 						     </c:if>
                             <label for="dni">DNI</label>
                         </div>
@@ -160,10 +166,10 @@
                         </div>
                         <div class="inputbox">
                             <c:if test = "${fechanacimiento == null}">
-				         	<input type="date" name="fechanacimiento" id="fechanacimiento" min='1899-01-01' max='2023-01-01' required="required"> <%//TODO Cambiar la fecha min/max %>
+				         	<input type="date" name="fechanacimiento" id="fechanacimiento" min='1899-01-01' max="<fmt:formatDate value="${hoy}" pattern='yyyy-MM-dd' />" value="${fecha}" required="required"> <%//TODO Cambiar la fecha min/max %>
 					      </c:if>
 					      <c:if test = "${fechanacimiento != null}">
-				         	 <input type="date" name="fechanacimiento" id="fechanacimiento" value="${fechanacimiento}" required="required">
+				         	 <input type="date" name="fechanacimiento" id="fechanacimiento" value="${fechanacimiento}" min='1899-01-01' max="<fmt:formatDate value="${hoy}" pattern='yyyy-MM-dd' />" value="${fecha}" required="required">
 					      </c:if>
                             <label class="fecha" for="fechanacimiento">Fecha de Nacimiento</label>
                         </div>
@@ -179,12 +185,12 @@
                         </div>                 
                         <div class="inputbox">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="pass" id="passregister" required="required">
+                            <input type="password" name="pass" id="passregister" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 8 caracteres, con mayusculas, minusculas y numeros">
                             <label for="passregister">Contraseña</label>
                         </div>
                         <div class="inputbox">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="confpass" id="confpass" required="required">
+                            <input type="password" name="confpass" id="confpass" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 8 caracteres, con mayusculas, minusculas y numeros">
                             <label for="confpass">Confirmar Contraseña</label>
                         </div>
                         <button class="boton" type="submit">Registrarse</button>

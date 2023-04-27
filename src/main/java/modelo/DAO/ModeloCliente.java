@@ -117,15 +117,6 @@ public class ModeloCliente {
 		return encontrado;
 	}
 
-	public boolean comprobarPass(String pass) {
-		boolean valido = false;
-		if(pass.length() >= 6) {
-		valido = true;
-	}
-	return valido;
-	
-}
-
 	public void addTel(String dni, ArrayList<Telefonos> telefonos) {
 		Conector conector = new Conector();
 		conector.conectar();

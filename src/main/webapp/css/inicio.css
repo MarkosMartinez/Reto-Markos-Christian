@@ -40,7 +40,7 @@ main {
   color: rgba(40, 106, 255, 1);
 }
 
-.btn-donate {
+.btn-cita {
   position: absolute;
   top: 440px;
   right: 440px;
@@ -66,11 +66,11 @@ main {
   box-shadow: 0px 0px 20px rgba(71, 114, 255, 0.5), 0px 5px 5px -1px rgba(58, 125, 233, 0.25), inset 4px 4px 8px rgba(175, 230, 255, 0.5), inset -4px -4px 8px rgba(19, 95, 216, 0.35);
 }
 
-.btn-donate:hover {
+.btn-cita:hover {
   background-position: right top;
 }
 
-.btn-donate:is(:focus, :focus-within,:active) {
+.btn-cita:is(:focus, :focus-within,:active) {
   outline: none;
   box-shadow: 0 0 0 3px var(--btn-bg-color), 0 0 0 6px var(--btn-bg-2);
 }

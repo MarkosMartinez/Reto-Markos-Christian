@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import modelo.DAO.ModeloCita;
 import modelo.DAO.ModeloCliente;
 import modelo.DAO.ModeloClinica;
+import modelo.DAO.ModeloEmpleado;
 import modelo.DTO.Cita;
 import modelo.DTO.Cliente;
 import modelo.DTO.Clinica;
@@ -52,6 +53,8 @@ public class VerCitas extends HttpServlet {
 				ModeloClinica mclinica = new ModeloClinica();
 				clinicas = mclinica.getClinicas();
 				ModeloCliente mcliente = new ModeloCliente();
+				ModeloEmpleado mempleado = new ModeloEmpleado();
+				ArrayList<Empleado> empleados = mempleado.getEmpleados();
 				ArrayList<Cliente> clientes = new ArrayList<>();
 				clientes = mcliente.getClientes();
 				if (empleadoLogueado != null) {
@@ -100,6 +103,7 @@ public class VerCitas extends HttpServlet {
 				}
 				request.setAttribute("tipoLogin", tipoLogin);
 				
+				request.setAttribute("empleados", empleados);
 				request.setAttribute("telefonosPosteriores", listaTelefonosPosteriores);
 				request.setAttribute("telefonosAnteriores", listaTelefonosAnteriores);
 				request.setAttribute("horasPosteriores", horasPosteriores);

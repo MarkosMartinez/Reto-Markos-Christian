@@ -9,6 +9,7 @@ public class Cita {
 	private String dni_Cliente;
 	private Date fecha_Cita;
 	private LocalTime hora_Cita;
+	private String Atendido;
 	
 	public int getId_Clinica() {
 		return id_Clinica;
@@ -33,6 +34,12 @@ public class Cita {
 	}
 	public void setHora_Cita(LocalTime hora_Cita) {
 		this.hora_Cita = hora_Cita;
+	}
+	public String getAtendido() {
+		return Atendido;
+	}
+	public void setAtendido(String atendido) {
+		Atendido = atendido;
 	}
 	
 	

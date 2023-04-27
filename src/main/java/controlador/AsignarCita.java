@@ -21,13 +21,13 @@ import modelo.DTO.Empleado;
  * Servlet implementation class ConfirmarCita
  */
 @WebServlet("/ConfirmarCita")
-public class ConfirmarCita extends HttpServlet {
+public class AsignarCita extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ConfirmarCita() {
+    public AsignarCita() {
         super();
     }
 
@@ -36,7 +36,6 @@ public class ConfirmarCita extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		boolean error = false;
 			if(empleadoLogueado == null) {
@@ -48,7 +47,7 @@ public class ConfirmarCita extends HttpServlet {
 				}else {
 					error = true;
 				}
-				//Obtener los datos del check y enviarlos al jsp
+				//TODO Obtener los datos del check y enviarlos al jsp
 				
 				if(error) {
 					response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");

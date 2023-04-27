@@ -65,6 +65,42 @@
       <div class="ag-format-container">
       
       <h1 class="listaCitas">Lista de citas</h1>
+      
+       <div id="formularioCita" class="overlay">
+          <div class="popup">
+            <h2 style="color: rgb(0, 132, 255);">Formulario de cita</h2>
+            <a class="close" href="#">&times;</a>
+            <div class="content">
+              <form action="https://i.redd.it/bn2mhngwvm391.jpg">
+
+                <label for="clinica">Clínica:</label>
+                <input type="text" required id="clinica">
+                <br><br>
+                <label for="cliente">Cliente:</label>
+                <input type="text" required id="cliente">
+                <br><br>
+                <label for="telefono">Teléfono:</label>
+                <input type="number" required id="telefono">
+                <br><br>
+                <label for="empleado">Empleado:</label>
+                <select>
+                  <option value="0">Lista de empleados</option>
+                </select>
+                <br><br>
+                <label for="informe">Observaciones e informe:</label><br>
+                <textarea name="informe" id="informe" cols="80" rows="4"></textarea>
+                <br><br>
+                <label for="equipamiento">Uso de equipamiento</label>
+                <input type="checkbox" id="equipamiento">
+
+                <br><br>
+
+                <button type="submit" class="botonFormulario">Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      
         <c:if test="${aviso eq 'borradocorrecto'}">
         	<div class="alerta">
 	  <div class="alert alert-success check alert-dismissible fade show" role="alert">
@@ -118,10 +154,10 @@
               <div class="ag-courses-item_bg"></div>
 
               <div class="ag-courses-item_title">
-                <p>Clínica: ${clinica.getNombre_clinica()}</p>
-                <p style="font-size: 16px;">Dirección: ${clinica.getDireccion()}</p>
                 <p>Nombre: ${cliente.getNombre()} ${cliente.getApellidos()}</p>
-                <p style="font-size: 16px;">Teléfono: ${telefonosPosteriores.get(actual)}</p>
+                <p style="font-size: 18px;">Teléfono: ${telefonosAnteriores.get(actual)}</p>
+                <p style="font-size: smaller;">Clínica: ${clinica.getNombre_clinica()}</p>
+                <p style="font-size: 16px;">Dirección: ${clinica.getDireccion()}</p>
               </div>
 
               <div class="ag-courses-item_date-box">
@@ -148,7 +184,8 @@
              	</c:forEach>
 
         </div>
-      </div>
+      
+            <h1 style="color: red;text-align: center;">Citas caducadas</h1>
       
       <div class="ag-courses_box">
         <c:set var="actual" value="0"/>
@@ -163,10 +200,11 @@
               <div class="ag-courses-item_bg2"></div>
 
               <div class="ag-courses-item_title">
-                <p>Clínica: ${clinica.getNombre_clinica()}</p>
-                <p style="font-size: 16px;">Dirección: ${clinica.getDireccion()}</p>
                 <p>Nombre: ${cliente.getNombre()} ${cliente.getApellidos()}</p>
-                <p style="font-size: 16px;">Teléfono: ${telefonosAnteriores.get(actual)}</p>
+                <p style="font-size: smaller;">Clínica: ${clinica.getNombre_clinica()}</p>
+                <p style="font-size: 18px;">Teléfono: ${telefonosAnteriores.get(actual)}</p>
+                <p style="font-size: 16px;">Atendido por: Joakin Benabide</p>
+                <p style="font-size: 16px;">Informe: El paciente tenia 33 caries por lo que le hemos tenido, El paciente tenia 33 caries por lo que le hemos tenido, El paciente tenia 33 caries por lo que le hemos tenido, El paciente tenia 33 caries por lo que le hemos tenido, El paciente tenia 33 caries por lo que le hemos tenido, El paciente tenia 33 caries por lo que le hemos tenido</p>
               </div>
 
               <div class="ag-courses-item_date-box2">
@@ -176,9 +214,10 @@
                 </span>
                 <c:if test="${tipoLogin eq 'empleado'}">
                  <span>
-                  <a href="ConfirmarCita?id_clinica=${cita.getId_Clinica()}&dni=${cita.getDni_Cliente()}&fecha=${cita.getFecha_Cita()}&hora=${horasPosteriores.get(actual)}">
-                    <button class="primary-button"> <% //TODO En verde? %>
-                      <i class="fa-regular fa-circle-check"></i>
+                   <a href="#formularioCita">
+                    <button class="primary-button2" type="button">
+					<i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
+
                     </button>
                   </a>
                 </span>
@@ -194,6 +233,7 @@
              	</c:forEach>
 
         </div>
+            </div>
       
       
     </main>
@@ -237,7 +277,7 @@
       </div>
       <div>
         <i class="fa fa-envelope"></i>
-        <p><a href="mailto:ikbdb@plaiaundi.net"> smiling@hotmail.com</a></p>
+        <p><a href="mailto:ikbdb@plaiaundi.net">smiling@hotmail.com</a></p>
       </div>
     </div>
     <div class="footer-derecha col-md-4 col-sm-6">
