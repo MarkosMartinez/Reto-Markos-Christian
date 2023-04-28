@@ -102,7 +102,6 @@ public class VerCitas extends HttpServlet {
 					tipoLogin = "empleado";
 				}
 				request.setAttribute("tipoLogin", tipoLogin);
-				
 				request.setAttribute("empleados", empleados);
 				request.setAttribute("telefonosPosteriores", listaTelefonosPosteriores);
 				request.setAttribute("telefonosAnteriores", listaTelefonosAnteriores);

@@ -266,7 +266,7 @@ main {
   }
 }
 
-.primary-button, .primary-button2 {
+.primary-button {
   position: absolute;
   right: -20px;
   border-radius: 20px 0px 0px;
@@ -277,8 +277,7 @@ main {
   border: 1px solid #0e1822;
   padding: 0.8rem 2.1rem;
   background-color: #0e1822;
-  	  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'%3E%3Cdefs%3E%3Cstyle%3E .shape %7B fill: %23FF4655 /* fill: %230E1822; */ %7D %3C/style%3E%3C/defs%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpolygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");	
-  
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'%3E%3Cdefs%3E%3Cstyle%3E .shape %7B fill: %23FF4655 /* fill: %230E1822; */ %7D %3C/style%3E%3C/defs%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpolygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");	
   background-size: 200%;
   background-position: 200%;
   background-repeat: no-repeat;
@@ -286,10 +285,24 @@ main {
   transition-property: background-position, border, color;
 }
 
-.primary-button2:hover{
-	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'><defs><style> .shape %7B fill: %23018f41 /* fill: %23018f41; */ %7D </style></defs><g id='Layer_2' data-name='Layer 2'><g id='Layer_1-2' data-name='Layer 1'><polygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /></g></g></svg>%0A");
+.primary-button2 {
+  position: absolute;
+  right: -20px;
+  border-radius: 20px 0px 0px;
+  color: white;
+  cursor: pointer;
+  font-size: 25px;
+  letter-spacing: 0.05rem;
+  border: 1px solid #0e1822;
+  padding: 0.8rem 2.1rem;
+  background-color: #0e1822;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'><defs><style> .shape %7B fill: %23018f41 /* fill: %23018f41; */ %7D </style></defs><g id='Layer_2' data-name='Layer 2'><g id='Layer_1-2' data-name='Layer 1'><polygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /></g></g></svg>%0A");
+  background-size: 200%;
+  background-position: 200%;
+  background-repeat: no-repeat;
+  transition: 0.3s ease-in-out;
+  transition-property: background-position, border, color;
 }
-
 
 @media (max-width: 640px) {
   .primary-button, .primary-button2 {
@@ -297,14 +310,17 @@ main {
     top: -10px;
   }
 }
-.primary-button:hover, .primary-button2:hover {
+.primary-button:hover {
   border: 1px solid #ff4655;
   color: white;
   background-position: 40%;
 }
 
 .primary-button2:hover{
-	border-color: green;
+	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'><defs><style> .shape %7B fill: %23018f41 /* fill: %23018f41; */ %7D </style></defs><g id='Layer_2' data-name='Layer 2'><g id='Layer_1-2' data-name='Layer 1'><polygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /></g></g></svg>%0A");
+	border: 1px solid #018f41;
+	color: white;
+  	background-position: 40%;
 }
 
 

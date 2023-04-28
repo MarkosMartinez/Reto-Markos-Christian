@@ -69,9 +69,9 @@
        <div id="formularioCita" class="overlay">
           <div class="popup">
             <h2 style="color: rgb(0, 132, 255);">Formulario de cita</h2>
-            <a class="close" href="#">&times;</a>
+            <a class="close" href="#volver">&times;</a>
             <div class="content">
-              <form action="https://i.redd.it/bn2mhngwvm391.jpg">
+              <form action="VerCitas" method="POST">
 
                 <label for="clinica">Clínica:</label>
                 <input type="text" required id="clinica">
@@ -83,9 +83,11 @@
                 <input type="number" required id="telefono">
                 <br><br>
                 <label for="empleado">Empleado:</label>
-                <select>
-                  <option value="0">Lista de empleados</option>
-                </select>
+                	<select name="empleado" required="required">
+                	 <c:forEach var="empleado" items="${empleados}">
+					 	<option value="${empleado.getDni_Emp()}">${empleado.getNombre()} ${empleado.getApellidos()}</option>
+					</c:forEach>
+					</select>
                 <br><br>
                 <label for="informe">Observaciones e informe:</label><br>
                 <textarea name="informe" id="informe" cols="80" rows="4"></textarea>
@@ -95,7 +97,7 @@
 
                 <br><br>
 
-                <button type="submit" class="botonFormulario">Enviar</button>
+                <button type="submit" class="botonFormulario">Guardar</button>
               </form>
             </div>
           </div>
