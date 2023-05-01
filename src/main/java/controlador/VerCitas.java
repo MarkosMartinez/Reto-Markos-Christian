@@ -1,7 +1,11 @@
 package controlador;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,10 +18,12 @@ import modelo.DAO.ModeloCita;
 import modelo.DAO.ModeloCliente;
 import modelo.DAO.ModeloClinica;
 import modelo.DAO.ModeloEmpleado;
+import modelo.DAO.ModeloHistorial_Cliente;
 import modelo.DTO.Cita;
 import modelo.DTO.Cliente;
 import modelo.DTO.Clinica;
 import modelo.DTO.Empleado;
+import modelo.DTO.Historial_Cliente;
 import modelo.DTO.Telefonos;
 
 /**
@@ -41,6 +47,23 @@ public class VerCitas extends HttpServlet {
 		HttpSession session = request.getSession();
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado"); //TODO Hacer un refactor de las clases y la BBDD de plural/singular. Ej: Empleado/s...
+		
+		String editarid_clinica = request.getParameter("editarid_clinica");
+		String editardni = request.getParameter("editardni");
+		String editarclinica = request.getParameter("editarclinica");
+		String editartelefono = request.getParameter("editartelefono");
+		String editarfecha = request.getParameter("editarfecha");
+		String editarhora = request.getParameter("editarhora");
+		String editarcliente = request.getParameter("editarcliente");
+		
+		request.setAttribute("editarid_clinica", editarid_clinica);
+		request.setAttribute("editardni", editardni);
+		request.setAttribute("editarclinica", editarclinica);
+		request.setAttribute("editartelefono", editartelefono);
+		request.setAttribute("editarfecha", editarfecha);
+		request.setAttribute("editarhora", editarhora);
+		request.setAttribute("editarcliente", editarcliente);
+		
 			if(clienteLogueado == null && empleadoLogueado == null) {
 				response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
 			} else {
@@ -52,6 +75,11 @@ public class VerCitas extends HttpServlet {
 				ArrayList<Clinica> clinicas = new ArrayList<>();
 				ModeloClinica mclinica = new ModeloClinica();
 				clinicas = mclinica.getClinicas();
+				
+				ArrayList<Historial_Cliente> historiales = new ArrayList<>();
+				ModeloHistorial_Cliente mhistorial = new ModeloHistorial_Cliente();
+				historiales = mhistorial.getHistoriales(); //TODO enviar solo los del cliente si loguea el cliente?
+				
 				ModeloCliente mcliente = new ModeloCliente();
 				ModeloEmpleado mempleado = new ModeloEmpleado();
 				ArrayList<Empleado> empleados = mempleado.getEmpleados();
@@ -102,6 +130,7 @@ public class VerCitas extends HttpServlet {
 					tipoLogin = "empleado";
 				}
 				request.setAttribute("tipoLogin", tipoLogin);
+				request.setAttribute("historiales", historiales);
 				request.setAttribute("empleados", empleados);
 				request.setAttribute("telefonosPosteriores", listaTelefonosPosteriores);
 				request.setAttribute("telefonosAnteriores", listaTelefonosAnteriores);
@@ -121,7 +150,35 @@ public class VerCitas extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String editardni = request.getParameter("editardni");
+		String editarclinica = request.getParameter("editarclinica");
+		int editartelefono = Integer.parseInt(request.getParameter("editartelefono"));
+		String fechaSinFormato = request.getParameter("editarfecha");
+		Date editarfecha = null;
+		try {
+			editarfecha = new SimpleDateFormat("yyyy-MM-dd").parse(fechaSinFormato);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		 LocalTime editarhora = LocalTime.parse(request.getParameter("editarhora"));
+		 String editarcliente = request.getParameter("editarcliente");
+		 String editarempleado = request.getParameter("editarempleado");
+		 String informe = request.getParameter("informe");
+		 String equipamiento = request.getParameter("equipamiento"); /*null y on*/
+		 
+		 ModeloCita mcita = new ModeloCita();
+		 Boolean actualizado = false;
+		 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe);
+		 if(actualizado) {
+		 if(equipamiento == null) {
+			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=borradocorrecto"); //TODO Cambiar el aviso correcto!
+		 }else if(equipamiento == "on") {
+			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento");
+		 }
+		 }else {
+			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
+		 }
+		 
 	}
 
 }

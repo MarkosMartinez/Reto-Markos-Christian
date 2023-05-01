@@ -50,7 +50,6 @@ public class ModeloCita {
 				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
 				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
 				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
-				cita.setAtendido(resultado.getString("Atendido"));
 				citas.add(cita);
 			}
 			pSt.close();
@@ -181,7 +180,6 @@ public class ModeloCita {
 				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
 				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
 				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
-				cita.setAtendido(resultado.getString("Atendido"));
 				citas.add(cita);
 			}
 			pSt.close();
@@ -235,7 +233,6 @@ public class ModeloCita {
 				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
 				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
 				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
-				cita.setAtendido(resultado.getString("Atendido"));
 				citas.add(cita);
 			}
 			pSt.close();
@@ -245,6 +242,33 @@ public class ModeloCita {
 		
 		conector.cerrar();
 		return citas;
+	}
+
+	public Boolean actualizarCita(String editardni, java.util.Date editarfecha, LocalTime editarhora, String editarempleado, String informe) {
+		boolean actualizado = false;
+		
+		Conector conector = new Conector();
+		conector.conectar();
+		
+		PreparedStatement pSt;
+		try {
+			pSt = conector.getCon().prepareStatement("INSERT INTO historial_cliente(DNI, Fecha_Revision, Hora_Revision, Observaciones, Atendido) VALUES (?, ?, ?, ?, ?)");
+			pSt.setString(1, editardni);
+			pSt.setDate(2, new java.sql.Date(editarfecha.getTime()));
+			Time hora = Time.valueOf(editarhora);
+			pSt.setTime(3, hora);
+			pSt.setString(4, informe);
+			pSt.setString(5, editarempleado);
+			int filasAfectadas = pSt.executeUpdate();
+			if (filasAfectadas > 0) {
+			actualizado = true;
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		conector.cerrar();
+		
+		return actualizado;
 	}
 
 }

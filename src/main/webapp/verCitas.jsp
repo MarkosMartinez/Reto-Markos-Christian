@@ -8,7 +8,7 @@
 <%@ page import="modelo.DAO.ModeloCita"%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -72,18 +72,20 @@
             <a class="close" href="#volver">&times;</a>
             <div class="content">
               <form action="VerCitas" method="POST">
-
-                <label for="clinica">Clínica:</label>
-                <input type="text" required id="clinica">
+				<input type="text" value="${editardni}" name="editardni" readonly="readonly" hidden required="required">
+				<input type="date" required readonly="readonly" name="editarfecha" value="${editarfecha}" hidden>
+				<input type="time" required readonly="readonly" name="editarhora" value="${editarhora}" hidden>
+                <label>Clínica:</label>
+                <input type="text" required value="${editarclinica}" name="editarclinica" readonly="readonly">
                 <br><br>
                 <label for="cliente">Cliente:</label>
-                <input type="text" required id="cliente">
+                <input type="text" required id="cliente" value="${editarcliente}" readonly="readonly">
                 <br><br>
-                <label for="telefono">Teléfono:</label>
-                <input type="number" required id="telefono">
+                <label for="editartelefono">Teléfono:</label>
+                <input type="number" required id="editartelefono" name="editartelefono" readonly="readonly" value="${editartelefono}">
                 <br><br>
-                <label for="empleado">Empleado:</label>
-                	<select name="empleado" required="required">
+                <label for="editarempleado">Empleado:</label>
+                	<select name="editarempleado" required="required">
                 	 <c:forEach var="empleado" items="${empleados}">
 					 	<option value="${empleado.getDni_Emp()}">${empleado.getNombre()} ${empleado.getApellidos()}</option>
 					</c:forEach>
@@ -93,7 +95,7 @@
                 <textarea name="informe" id="informe" cols="80" rows="4"></textarea>
                 <br><br>
                 <label for="equipamiento">Uso de equipamiento</label>
-                <input type="checkbox" id="equipamiento">
+                <input type="checkbox" id="equipamiento" name="equipamiento">
 
                 <br><br>
 
@@ -187,43 +189,54 @@
 
         </div>
       
-            <h1 style="color: red;text-align: center;">Citas caducadas</h1>
-      
-      <div class="ag-courses_box">
-        <c:set var="actual" value="0"/>
-            
-               <c:forEach var="cita" items="${citasAnteriores}">
-           	 <c:forEach var="clinica" items="${clinicas}">
-           		 <c:if test="${clinica.getId_clinica() eq cita.getId_Clinica()}">
-            		 <c:forEach var="cliente" items="${clientes}">
-            		  <c:if test="${cliente.getDni() eq cita.getDni_Cliente()}">
-          <div class="ag-courses_item">
-            <div class="ag-courses-item_link">
-              <div class="ag-courses-item_bg2"></div>
+            <h1 style="color: red;text-align: center;">Citas Anteriores</h1>
 
-              <div class="ag-courses-item_title">
-                <p>Nombre: ${cliente.getNombre()} ${cliente.getApellidos()}</p>
-                <p style="font-size: smaller;">Clínica: ${clinica.getNombre_clinica()}</p>
-                <p style="font-size: 18px;">Teléfono: ${telefonosAnteriores.get(actual)}</p>
-                <p style="font-size: 16px;">Atendido por: Joakin Benabide</p>
-                <p style="font-size: 16px;">Informe: El paciente tenia 33 caries por lo que le hemos tenido, El paciente tenia 33 caries por lo que le hemos tenido, El paciente tenia 33 caries por lo que le hemos tenido, El paciente tenia 33 caries por lo que le hemos tenido, El paciente tenia 33 caries por lo que le hemos tenido, El paciente tenia 33 caries por lo que le hemos tenido</p>
-              </div>
+<div class="ag-courses_box">
+  <c:set var="actual" value="0"/>
 
-              <div class="ag-courses-item_date-box2">
-                Fecha:
-               <span class="ag-courses-item_date">
-                      <fmt:formatDate value="${cita.getFecha_Cita()}" pattern="dd/MM/yyyy" /> ${horasAnteriores.get(actual)}
-                </span>
-                <c:if test="${tipoLogin eq 'empleado'}">
-                 <span>
-                   <a href="#formularioCita">
-                    <button class="primary-button2" type="button">
-					<i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
+  <c:forEach var="cita" items="${citasAnteriores}">
+    <c:forEach var="clinica" items="${clinicas}">
+      <c:if test="${clinica.getId_clinica() eq cita.getId_Clinica()}">
+        <c:forEach var="cliente" items="${clientes}">
+          <c:if test="${cliente.getDni() eq cita.getDni_Cliente()}">
+            <div class="ag-courses_item">
+              <div class="ag-courses-item_link">
+                <div class="ag-courses-item_bg2"></div>
 
-                    </button>
-                  </a>
-                </span>
-                </c:if>
+                <div class="ag-courses-item_title">
+                  <p>Nombre: ${cliente.getNombre()} ${cliente.getApellidos()}</p>
+                  <p style="font-size: smaller;">Clínica: ${clinica.getNombre_clinica()}</p>
+                  <p style="font-size: 18px;">Teléfono: ${telefonosAnteriores.get(actual)}</p>
+                  
+                  <c:forEach var="historial" items="${historiales}">
+                    <c:if test="${historial.getDNI() eq cita.getDni_Cliente() && historial.getFecha_Revision() eq cita.getFecha_Cita() && historial.getHora_Revision() == horasAnteriores.get(actual)}">
+                    <c:forEach var="empleado" items="${empleados}">
+                    <c:if test="${empleado.getDni_Emp() eq historial.getAtendido()}">
+					 	<p style="font-size: 16px;">Atendido por: ${empleado.getNombre()} ${empleado.getApellidos()}</p>
+					 	</c:if>
+					</c:forEach>
+                       
+                       <p style="font-size: 16px;">Observaciones: ${historial.getObservaciones()}</p>
+                     
+                    </c:if>
+                  </c:forEach>
+                  
+                </div>
+
+                <div class="ag-courses-item_date-box2">
+                  Fecha:
+                  <span class="ag-courses-item_date">
+                    <fmt:formatDate value="${cita.getFecha_Cita()}" pattern="dd/MM/yyyy" /> ${horasAnteriores.get(actual)}
+                  </span>
+                  <c:if test="${tipoLogin eq 'empleado'}">
+                    <span>
+                      <a href="VerCitas?editarid_clinica=${cita.getId_Clinica()}&editardni=${cliente.getDni()}&editarclinica=${clinica.getNombre_clinica()}&editartelefono=${telefonosAnteriores.get(actual)}&editarfecha=${cita.getFecha_Cita()}&editarhora=${horasAnteriores.get(actual)}&editarcliente=${cliente.getNombre()} ${cliente.getApellidos()}#formularioCita">
+                        <button class="primary-button2" type="button">
+                          <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
+                        </button>
+                      </a>
+                    </span>
+                  </c:if>
                 <c:set var="actual" value="${actual + 1}"/>
               </div>
             </div>
