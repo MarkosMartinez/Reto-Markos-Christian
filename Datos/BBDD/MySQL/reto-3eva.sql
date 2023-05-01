@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-05-2023 a las 18:37:20
+-- Tiempo de generación: 01-05-2023 a las 20:56:37
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -105,6 +105,16 @@ CREATE TABLE `equipamiento` (
   `Stock` int(7) NOT NULL,
   `ID_Clinica` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `equipamiento`
+--
+
+INSERT INTO `equipamiento` (`ID_Equipamiento`, `Nombre_Equipamiento`, `Precio`, `Stock`, `ID_Clinica`) VALUES
+(1, 'Brackets', 999, 15, 1),
+(2, 'Cepillo de Dientes', 2.5, 33, 1),
+(3, 'Invisalign', 1100.2, 5, 2),
+(4, 'Paste de dientes', 3.99, 20, 2);
 
 -- --------------------------------------------------------
 
@@ -291,7 +301,7 @@ ALTER TABLE `clinica`
 -- AUTO_INCREMENT de la tabla `equipamiento`
 --
 ALTER TABLE `equipamiento`
-  MODIFY `ID_Equipamiento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Equipamiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `habitaciones`
