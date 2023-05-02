@@ -61,6 +61,10 @@ public class EditarEquipamiento extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String tipo = request.getParameter("tipo");
+		if(tipo.equals("insert")) {
+			
+		}else if(tipo.equals("actualizar")){
 		int cantidadStock = Integer.parseInt(request.getParameter("cantidad"));
 		
 		HttpSession session = request.getSession();
@@ -89,7 +93,10 @@ public class EditarEquipamiento extends HttpServlet {
 			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error"); //TODO Msg Error
 
 		}
-		
+		}else {
+			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error"); //TODO Msg Error
+
+		}
 	}
 
 }

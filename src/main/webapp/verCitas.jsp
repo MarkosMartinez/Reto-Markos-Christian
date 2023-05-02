@@ -50,6 +50,9 @@
         <c:if test="${tipoLogin eq 'cliente'}">
         <li><a href="EditarPerfil">Editar Perfil</a></li>
         </c:if>
+        <c:if test="${tipoLogin eq 'empleado'}">
+        <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
+        </c:if>
         <c:if test="${tipoLogin != 'ninguno'}">
         <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
         </c:if>

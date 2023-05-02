@@ -78,12 +78,19 @@ main {
 
 
 @media(max-width: 1150px){
-  .btn-donate{
+  .btn-cita{
     right: 380px;
   }
 }
 
-/*olas (para nada robadas)*/
+@media(max-width: 970px){
+  .btn-cita{
+    margin-top: 50px;
+    right: 100px;
+  }
+}
+
+/*olas*/
 .waves {
   position: relative;
   width: 100%;

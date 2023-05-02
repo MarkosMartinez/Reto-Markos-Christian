@@ -4,23 +4,15 @@
 
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Editar Equipamiento</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/menu.css" />
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipamiento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/equipamiento.css">
+</head>
 
 <header>
     <nav>
@@ -35,54 +27,90 @@
         <li><a href="Principal">Inicio</a></li>
         <li><a href="nuestroEquipo.html">Nuestro equipo</a></li>
         <li><a href="">Tratamientos</a></li>
+        <c:if test="${tipoLogin eq 'ninguno'}">
+        	<li><a href="LoginYRegistro">Iniciar sesión/Registrarse</a></li>
+        </c:if>
         <li><a href="RealizarCita">Pedir Cita</a></li>
         <li><a href="">Contactanos</a></li>
-        <li><a class="activo" href="VerCitas">Consultar Citas</a></li>
-        <c:if test="${tipoLogin eq 'cliente'}">
-        <li><a href="EditarPerfil">Editar Perfil</a></li>
-        </c:if>
+        <li><a href="VerCitas">Consultar Citas</a></li>
+        <li><a class="activo" href="EditarEquipamiento">Editar Equipamiento</a></li>
       </ul>
     </nav>
   </header>
 
-  <body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-  <main>
-  <div class="form-value">
-   <form class="form-inline" action="EditarEquipamiento" method="POST">
-   <c:set var="cantidad" value="0"/>
-  <table class="table caption-top" style="position:absolute; top:90px">
-  <caption>Editar equipamiento en: Nombre de la clinica</caption> <%//TODO Si es el director que lo pueda cambiar? %>
-  <thead class="table-light">
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Precio</th>
-      <th scope="col">Stock</th>
-      <th scope="col">Editar</th>
-    </tr>
-  </thead>
-  <tbody>
-  <c:forEach var="equip" items="${equipamiento}">
-    <tr>
-      <th scope="row">${equip.getId_Equipamiento()}</th>
-      <td>${equip.getNombre_Equipamiento()}</td>
-      <td>${equip.getPrecio()} €</td>
-      <td><input type="number" value="${equip.getStock()}" min="0" name="stock-${cantidad}" required="required"> Uds</td>
-      <td><a type="button" href="EditarEquipamiento?c=${cantidad}&v=${equip.getStock()+1}" class="btn btn-success">+1</a> <a type="button" href="EditarEquipamiento?c=${cantidad}&v=${equip.getStock()-1}" class="btn btn-danger">-1</a></td>
-      <c:set var="cantidad" value="${cantidad + 1}"/>
-    </tr>
-    </c:forEach>
-  </tbody>
-</table>
-<input type="text" value="${cantidad}" name="cantidad" readonly="readonly" hidden required="required">
-<button type="submit" class="btn btn-warning botonFormulario" style="position:absolute; right: 0; top:300px">Actualizar todos!</button> <% //TODO Arreglar la posicion de este boton %>
-</form>
-</div>
-  
-  </main>
+<body>
+    <main>
+        <section>
+            <h1>Lista de equipamiento</h1>
+            <div class="form-value">
+            <form class="form-inline" action="EditarEquipamiento" method="POST">
+            <input type="text" value="actualizar" name="tipo" readonly="readonly" hidden required="required">
+  			 <c:set var="cantidad" value="0"/>
+            <div class="tbl-header">
+              <table cellpadding="0" cellspacing="0" border="0">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Editar</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="tbl-content">
+              <table cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+				  <c:forEach var="equip" items="${equipamiento}">
+				    <tr>
+				      <th scope="row">${equip.getId_Equipamiento()}</th>
+				      <td>${equip.getNombre_Equipamiento()}</td>
+				      <td>${equip.getPrecio()} €</td>
+				      <td><input type="number" value="${equip.getStock()}" min="0" name="stock-${cantidad}" required="required" class="inputs"> Uds</td>
+				      <td><a type="button" href="EditarEquipamiento?c=${cantidad}&v=${equip.getStock()-1}" class="btn btn-danger">-1</a></td>
+				      <c:set var="cantidad" value="${cantidad + 1}"/>
+				    </tr>
+				    </c:forEach>
+				  </tbody>
+              </table>
+             </div>
+				<input type="text" value="${cantidad}" name="cantidad" readonly="readonly" hidden required="required">
+				<a href="#formularioEquip" type="button" class="btn btn-success btnInsertar">Insertar Equipamiento</a>
+				<button type="submit" class="btn btn-warning botonFormulario">Actualizar todos!</button> <% //TODO Arreglar la posicion de este boton %>
+				
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+				
+				       <div id="formularioEquip" class="overlay">
+          <div class="popup">
+            <h2 style="color: rgb(0, 132, 255);">Insertar Equipamiento</h2>
+            <a class="close" href="#volver">&times;</a>
+            <div class="content">
+              <form action="EditarEquipamiento" method="POST">
+				<input type="text" value="insert" name="tipo" readonly="readonly" hidden required="required">
+                <label for="nombre" >Nombre:</label>
+                <input type="text" required id="nombre" name="nombre" readonly="readonly">
+                <br><br>
+                <label for="precio">Precio:</label>
+                <input type="number" required id="precio" min="0" readonly="readonly">
+                <br><br>
+                <label for="stock">Stock:</label>
+                <input type="number" required id="stock"  min="0" readonly="readonly">
+                <br><br>
+                <button type="submit" class="botonInsertar">Insertar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+			</form>
+		</div>
+            
+          </section>
+    </main>
 </body>
- <footer class="footer">
+
+<footer class="footer">
     <div class="footer-izquierda col-md-4 col-sm-6">
       <p class="about">
         <span> Sobre Smiling</span> Ut congue augue non tellus bibendum, in
@@ -121,7 +149,7 @@
       </div>
       <div>
         <i class="fa fa-envelope"></i>
-        <p><a href="mailto:ikbdb@plaiaundi.net">smiling@hotmail.com</a></p>
+        <p><a href="mailto:ikbdb@plaiaundi.net"> smiling@hotmail.com</a></p>
       </div>
     </div>
     <div class="footer-derecha col-md-4 col-sm-6">

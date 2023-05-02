@@ -151,8 +151,6 @@ public class VerCitas extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String editardni = request.getParameter("editardni");
-		String editarclinica = request.getParameter("editarclinica");
-		int editartelefono = Integer.parseInt(request.getParameter("editartelefono"));
 		String fechaSinFormato = request.getParameter("editarfecha");
 		Date editarfecha = null;
 		try {
@@ -161,7 +159,6 @@ public class VerCitas extends HttpServlet {
 			e.printStackTrace();
 		}
 		 LocalTime editarhora = LocalTime.parse(request.getParameter("editarhora"));
-		 String editarcliente = request.getParameter("editarcliente");
 		 String editarempleado = request.getParameter("editarempleado");
 		 String informe = request.getParameter("informe");
 		 String equipamiento = request.getParameter("equipamiento"); /*null y on*/
@@ -172,7 +169,7 @@ public class VerCitas extends HttpServlet {
 		 if(actualizado) {
 		 if(equipamiento == null) {
 			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=borradocorrecto"); //TODO Cambiar el aviso correcto!
-		 }else if(equipamiento == "on") {
+		 }else if(equipamiento.equals("on")) {
 			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento");
 		 }
 		 }else {
