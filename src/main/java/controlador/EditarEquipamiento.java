@@ -48,9 +48,11 @@ public class EditarEquipamiento extends HttpServlet {
 					equipamiento = mequipamiento.cargarEquipamiento(empleadoLogueado.getId_Clinica());
 				}else {
 					request.setAttribute("equipamiento", equipamiento);
-					request.getRequestDispatcher("editarEquipamiento.jsp?aviso=error").forward(request, response); //TODO MSG error
+					request.getRequestDispatcher("editarEquipamiento.jsp?aviso=error").forward(request, response);
 				}
 				}
+			String aviso = request.getParameter("aviso");
+			request.setAttribute("aviso", aviso);
 			
 			request.setAttribute("equipamiento", equipamiento);
 			request.getRequestDispatcher("editarEquipamiento.jsp").forward(request, response);
@@ -62,14 +64,24 @@ public class EditarEquipamiento extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String tipo = request.getParameter("tipo");
+		ModeloEquipamiento mequipamiento = new ModeloEquipamiento();
 		if(tipo.equals("insert")) {
 			
+			if(request.getParameter("nombre") != null && request.getParameter("precio") != null && request.getParameter("stock") !=null) {
+			String nombre = request.getParameter("nombre");
+			Double precio = Double.parseDouble(request.getParameter("precio"));
+			int stock = Integer.parseInt(request.getParameter("stock"));
+			int idClinica = Integer.parseInt(request.getParameter("idClinica"));
+			mequipamiento.insertar(nombre, precio, stock, idClinica);
+			response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=insertado");
+			}else {
+				response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
+			}
 		}else if(tipo.equals("actualizar")){
 		int cantidadStock = Integer.parseInt(request.getParameter("cantidad"));
 		
 		HttpSession session = request.getSession();
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
-			ModeloEquipamiento mequipamiento = new ModeloEquipamiento();
 			ArrayList<Equipamiento> equipamiento = new ArrayList<>(); 
 			equipamiento = mequipamiento.cargarEquipamiento(empleadoLogueado.getId_Clinica());
 		
@@ -88,13 +100,13 @@ public class EditarEquipamiento extends HttpServlet {
 		boolean actualizado = false;
 		actualizado = mequipamiento.actualizarTodos(equipamientoFinal);
 		if(actualizado) {
-			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=actualizado"); //TODO Msg correcto?
+			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=actualizado");
 		}else {
-			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error"); //TODO Msg Error
+			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
 
 		}
 		}else {
-			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error"); //TODO Msg Error
+			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
 
 		}
 	}

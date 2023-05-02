@@ -78,4 +78,21 @@ public class ModeloEquipamiento {
 		return actualizado;
 	}
 
+	public void insertar(String nombre, Double precio, int stock, int idClinica) {
+		Conector conector = new Conector();
+		conector.conectar();
+			PreparedStatement pstInsertar;
+			try {
+				pstInsertar = conector.getCon().prepareStatement("INSERT INTO `equipamiento`(`Nombre_Equipamiento`, `Precio`, `Stock`, `ID_Clinica`) VALUES (?, ?, ?, ?)");
+				pstInsertar.setString(1, nombre);
+				pstInsertar.setDouble(2, precio);
+				pstInsertar.setInt(3, stock);
+				pstInsertar.setInt(4, idClinica);
+				pstInsertar.execute();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		conector.cerrar();
+	}
+
 }

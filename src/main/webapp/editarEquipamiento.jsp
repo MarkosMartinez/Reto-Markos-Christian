@@ -27,19 +27,49 @@
         <li><a href="Principal">Inicio</a></li>
         <li><a href="nuestroEquipo.html">Nuestro equipo</a></li>
         <li><a href="">Tratamientos</a></li>
-        <c:if test="${tipoLogin eq 'ninguno'}">
-        	<li><a href="LoginYRegistro">Iniciar sesión/Registrarse</a></li>
-        </c:if>
         <li><a href="RealizarCita">Pedir Cita</a></li>
         <li><a href="">Contactanos</a></li>
         <li><a href="VerCitas">Consultar Citas</a></li>
         <li><a class="activo" href="EditarEquipamiento">Editar Equipamiento</a></li>
+        <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
       </ul>
     </nav>
   </header>
 
 <body>
     <main>
+    
+    <c:if test="${aviso eq 'insertado'}">
+        	<div class="alerta">
+	  <div class="alert alert-success check alert-dismissible fade show" role="alert">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <i class="fas fa-trash fa-shake fa-lg" style="color: #ffffff;"></i> &nbsp; &nbsp;
+  <span>Equipamiento insertado correctamente!</span>
+</div>
+</div>
+        </c:if>
+        
+        <c:if test="${aviso eq 'actualizado'}">
+        	<div class="alerta">
+	  <div class="alert alert-success check alert-dismissible fade show" role="alert">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <i class="fas fa-trash fa-shake fa-lg" style="color: #ffffff;"></i> &nbsp; &nbsp;
+  <span>Equipamiento actualizado correctamente!</span>
+</div>
+</div>
+        </c:if>
+        
+        <c:if test="${aviso eq 'error'}">
+        <div class="alerta">
+        	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert" style="background-color: red; box-shadow: none;">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ <i class="fa-solid fa-triangle-exclamation fa-spin fa-lg" style="color: #ffffff;"></i> <% //TODO Cambiar el icono! %>
+  &nbsp; &nbsp;
+  <span>Error, esto no deberia de haber ocurrido!</span>
+</div>
+        </div>
+        </c:if>
+    
         <section>
             <h1>Lista de equipamiento</h1>
             <div class="form-value">
@@ -77,34 +107,36 @@
              </div>
 				<input type="text" value="${cantidad}" name="cantidad" readonly="readonly" hidden required="required">
 				<a href="#formularioEquip" type="button" class="btn btn-success btnInsertar">Insertar Equipamiento</a>
-				<button type="submit" class="btn btn-warning botonFormulario">Actualizar todos!</button> <% //TODO Arreglar la posicion de este boton %>
+				<button type="submit" class="btn btn-warning botonFormulario">Actualizar todos!</button>
 				
 				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 				
-				       <div id="formularioEquip" class="overlay">
+				       
+        
+			</form>
+		</div>
+		<div id="formularioEquip" class="overlay">
           <div class="popup">
             <h2 style="color: rgb(0, 132, 255);">Insertar Equipamiento</h2>
             <a class="close" href="#volver">&times;</a>
             <div class="content">
               <form action="EditarEquipamiento" method="POST">
 				<input type="text" value="insert" name="tipo" readonly="readonly" hidden required="required">
+				<input type="number" value="${equipamiento.get(0).getId_Clinica()}" name="idClinica" readonly="readonly" hidden required="required">
                 <label for="nombre" >Nombre:</label>
-                <input type="text" required id="nombre" name="nombre" readonly="readonly">
+                <input type="text" required id="nombre" name="nombre">
                 <br><br>
                 <label for="precio">Precio:</label>
-                <input type="number" required id="precio" min="0" readonly="readonly">
+                <input type="number" step="any" required id="precio" name="precio" min="0">
                 <br><br>
                 <label for="stock">Stock:</label>
-                <input type="number" required id="stock"  min="0" readonly="readonly">
+                <input type="number" required id="stock" name="stock" min="0">
                 <br><br>
                 <button type="submit" class="botonInsertar">Insertar</button>
               </form>
             </div>
           </div>
         </div>
-        
-			</form>
-		</div>
             
           </section>
     </main>

@@ -111,6 +111,19 @@ public class ModeloCliente {
 			e.printStackTrace();
 		}
 		
+		if(!encontrado) {
+		try {
+			PreparedStatement comprobardni = conector.getCon().prepareStatement("SELECT * FROM empleados WHERE DNI_Emp = ?");
+			comprobardni.setString(1, dni);
+			ResultSet resultado=comprobardni.executeQuery();
+			if(resultado.next()) {
+			encontrado = true;
+			}
+			comprobardni.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		}
 		
 		
 		conector.cerrar();

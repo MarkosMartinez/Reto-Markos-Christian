@@ -63,7 +63,7 @@ public class LoginYRegistro extends HttpServlet {
 		request.setAttribute("correo", correo);
 		request.setAttribute("telefono", telefono);
 		request.setAttribute("fechanacimiento", fechanacimiento);
-		request.getRequestDispatcher("LoginYRegistro.jsp").forward(request, response); //TODO Minusculas, Subir 1px?
+		request.getRequestDispatcher("LoginYRegistro.jsp").forward(request, response);
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class LoginYRegistro extends HttpServlet {
 			String password = DigestUtils.sha1Hex(passSinEncriptar);
 			ModeloCliente mcliente = new ModeloCliente();
 			if(passSinEncriptar.equals(passConfirmar)) {
-				if(mcliente.comprobarDNI(dni)) { //TODO Comprobar tambien en la tabla de empleados
+				if(mcliente.comprobarDNI(dni)) {
 					response.sendRedirect(request.getContextPath() + "/LoginYRegistro?aviso=dniexistente");
 				}else {
 					mcliente.registro(dni, nombre, apellido, correo, password, fechanacimiento);
