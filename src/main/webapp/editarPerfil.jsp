@@ -49,7 +49,6 @@
 
   <body>
     <main>
-     <form class="form-inline" action="EditarPerfil" method="POST">
       <div class="container">
         <div class="row gutters">
           <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
@@ -77,6 +76,8 @@
           </div>
           <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
+            <form class="form-inline" action="EditarPerfil" method="POST">
+     		<input type="text" class="form-control" value="${cliente.getDni()}" required hidden readonly="readonly" name="dni">
               <div class="card-body">
                 <div class="row gutters">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -126,34 +127,34 @@
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="contrasena">Introduce la contraseña actual</label>
-                      <input type="password" class="form-control" id="contrasena" name="contrasena"/>
+                      <input type="password" class="form-control" id="contrasena" name="contrasena" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 8 caracteres, con mayusculas, minusculas y numeros"/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="nuevaCon">Nueva contraseña</label>
-                      <input type="password" class="form-control" id="nuevaCon" name="nuevaCon"/>
+                      <input type="password" class="form-control" id="nuevaCon" name="nuevaCon" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 8 caracteres, con mayusculas, minusculas y numeros"/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="confNuevaCon">Confirmar nueva contraseña</label>
-                      <input type="password" class="form-control" id="confNuevaCon" name="confNuevaCon" />
+                      <input type="password" class="form-control" id="confNuevaCon" name="confNuevaCon" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 8 caracteres, con mayusculas, minusculas y numeros"/>
                     </div>
                   </div>
                 </div>
                 <div class="row gutters">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <button type="button" id="submit" class="btn btn-primary" style="margin-top: 30px">Actualizar</button>
+                    <button type="submit" id="submit" class="btn btn-primary" style="margin-top: 30px">Actualizar</button>
                   </div>
                   
                 </div>
               </div>
+             </form>
             </div>
           </div>
         </div>
       </div>
-      </form>
     </main>
   </body>
 

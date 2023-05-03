@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import modelo.DTO.Cliente;
+import modelo.DTO.Equipamiento;
 import modelo.DTO.Telefonos;
 
 public class ModeloCliente {
@@ -130,21 +131,19 @@ public class ModeloCliente {
 		return encontrado;
 	}
 
-	public void addTel(String dni, ArrayList<Telefonos> telefonos) {
+	public void addTel(String dni, Telefonos oTelefono) {
 		Conector conector = new Conector();
 		conector.conectar();
 		PreparedStatement insertar;
-		
-		for (Telefonos telefono : telefonos) {
+
 			try {
 				insertar = conector.getCon().prepareStatement("INSERT INTO `telefonos`(`DNI`, `Telefono`) VALUES (?, ?)");
 				insertar.setString(1, dni);
-				insertar.setInt(2, telefono.getTelefono());
+				insertar.setInt(2, oTelefono.getTelefono());
 				insertar.execute();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
 		
 		conector.cerrar();	
 	}
@@ -222,5 +221,21 @@ public class ModeloCliente {
 		conector.cerrar();
 		
 		return telefonos;
+	}
+
+	public void cambiarContrasenia(String dni, String passCifrada) {
+		Conector conector = new Conector();
+		conector.conectar();
+			PreparedStatement pstModificar;
+			try {
+	            pstModificar = conector.getCon().prepareStatement("UPDATE cliente SET Contraseña = ? WHERE DNI = ?;");
+	            pstModificar.setString(1, passCifrada);
+	            pstModificar.setString(2, dni);
+	            pstModificar.execute();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		conector.cerrar();
+		
 	}
 }

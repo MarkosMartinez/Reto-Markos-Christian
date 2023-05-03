@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import modelo.DAO.ModeloCliente;
 import modelo.DTO.Cliente;
 import modelo.DTO.Empleado;
@@ -77,7 +79,8 @@ public class EditarPerfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String dni = request.getParameter("dni");
+		//TODO EL FORMULARIO NO ENVIA O EL SERVLET NO RECIVE LOS DATOS PARA ACTUALIZAR LOS PERFILES
+		String dni = request.getParameter("dni"); //TODO Comprobar si envia bien!
 		String nombre = request.getParameter("nombre");
 		String apellidos = request.getParameter("apellidos");
 		String correo = request.getParameter("correo");
@@ -86,11 +89,41 @@ public class EditarPerfil extends HttpServlet {
 		String contrasena = request.getParameter("contrasena");
 		String nuevaCon = request.getParameter("nuevaCon");
 		String confNuevaCon = request.getParameter("confNuevaCon");
+		boolean modificado = true;
+		ModeloCliente mcliente = new ModeloCliente();
+		Cliente clienteModificado = new Cliente();
 		
-		if(nuevoTelefono != null) {
-			ModeloCliente mcliente = new ModeloCliente();
-			/*mcliente.addTel(dni, null);*/ //TODO comrpobar modelocliente.addTel
+		if(nuevoTelefono != null) { //TODO Bajarlo debajo de modificar el usuario? o no hace falta?
+			Telefonos telefono = new Telefonos();
+			telefono.setDni(dni);
+			telefono.setTelefono(Integer.parseInt(nuevoTelefono));
+			mcliente.addTel(dni, telefono);
+		}
+		if(dni != null && nombre != null && apellidos != null && correo != null) { //TODO eliminar telefonos y las contraseñas
+			clienteModificado.setNombre(nombre);
+			clienteModificado.setApellidos(apellidos);
+			clienteModificado.setCorreo(correo);
 			
+			
+			if(nuevaCon != null || contrasena != null || confNuevaCon != null) {
+				Cliente clienteLogueado = mcliente.comprobarLogin(dni, contrasena); //TODO Actualizarlo a un boolean.
+				if(clienteLogueado.getDni() != "-1") {
+					if(nuevaCon != contrasena && nuevaCon == confNuevaCon) {
+						String passCifrada = DigestUtils.sha1Hex(nuevaCon);
+						mcliente.cambiarContrasenia(dni, passCifrada);
+					}else {
+						modificado = false;
+					}
+				}else {
+					modificado = false;
+				}
+			}
+			
+			if(modificado) {
+			/*modificado = mcliente.modificarUsuario(clienteModificado);*/
+			}else {
+				response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=error"); //TODO MSG De error / modificado
+			}
 		}
 		
 	}
