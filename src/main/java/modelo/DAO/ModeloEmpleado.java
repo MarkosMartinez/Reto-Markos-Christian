@@ -107,4 +107,43 @@ public class ModeloEmpleado {
 		return empleados;
 	}
 
+	public boolean getDirector(int id_Puesto) {
+		Conector conector = new Conector();
+		conector.conectar();
+		boolean director = false;
+	
+		PreparedStatement gettear;
+		try {
+			gettear = conector.getCon().prepareStatement("SELECT Nombre_Puesto FROM puestos WHERE ID_Puesto = ?");
+			gettear.setInt(1, id_Puesto);
+			ResultSet resultado=gettear.executeQuery();
+			if(resultado.next()) {
+				if(resultado.getString("Nombre_Puesto").equals("Director"))
+				director = true;
+			}
+			gettear.close();
+			conector.cerrar();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return director;
+	}
+
+	public void cambiarClinica(String dniDirector, int idNuevaClinica) {
+		Conector conector = new Conector();
+		conector.conectar();
+			PreparedStatement pstModificar;
+			try {
+	            pstModificar = conector.getCon().prepareStatement("UPDATE empleados SET ID_Clinica = ? WHERE DNI_Emp = ?;");
+	            pstModificar.setInt(1, idNuevaClinica);
+	            pstModificar.setString(2, dniDirector);
+	            pstModificar.execute();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		conector.cerrar();
+		
+	}
+
 }

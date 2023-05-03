@@ -167,6 +167,7 @@
 
         <div class="ag-courses_box">
         <c:set var="actual" value="0"/>
+        <c:if test="${citasPosteriores.size() >= 1}">
                <c:forEach var="cita" items="${citasPosteriores}">
            	 <c:forEach var="clinica" items="${clinicas}">
            		 <c:if test="${clinica.getId_clinica() eq cita.getId_Clinica()}">
@@ -178,7 +179,7 @@
 
               <div class="ag-courses-item_title">
                 <p>Nombre: ${cliente.getNombre()} ${cliente.getApellidos()}</p>
-                <p style="font-size: 18px;">Teléfono: ${telefonosAnteriores.get(actual)}</p>
+                <p style="font-size: 18px;">Teléfono: ${telefonosPosteriores.get(actual)}</p>
                 <p style="font-size: smaller;">Clínica: ${clinica.getNombre_clinica()}</p>
                 <p style="font-size: 16px;">Dirección: ${clinica.getDireccion()}</p>
               </div>
@@ -205,6 +206,7 @@
               	</c:if>
               </c:forEach>
              	</c:forEach>
+             </c:if>
 
         </div>
       
@@ -212,7 +214,7 @@
 
 <div class="ag-courses_box">
   <c:set var="actual" value="0"/>
-
+ <c:if test="${citasAnteriores.size() >= 1}">
   <c:forEach var="cita" items="${citasAnteriores}">
     <c:forEach var="clinica" items="${clinicas}">
       <c:if test="${clinica.getId_clinica() eq cita.getId_Clinica()}">
@@ -265,6 +267,7 @@
               	</c:if>
               </c:forEach>
              	</c:forEach>
+             		</c:if>
 
         </div>
             </div>

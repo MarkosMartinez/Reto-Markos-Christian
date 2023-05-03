@@ -95,4 +95,23 @@ public class ModeloEquipamiento {
 		conector.cerrar();
 	}
 
+	public boolean eliminarStock(int delete) {
+	    boolean eliminado = false;
+	    Conector conector = new Conector();
+	    conector.conectar();
+	    try {
+	        PreparedStatement pstModificar = conector.getCon().prepareStatement("DELETE FROM `equipamiento` WHERE ID_Equipamiento = ?");
+	        pstModificar.setInt(1, delete);
+	        int filasAfectadas = pstModificar.executeUpdate();
+	        if(filasAfectadas > 0) {
+	            eliminado = true;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    conector.cerrar();
+	    return eliminado;
+	}
+
+
 }

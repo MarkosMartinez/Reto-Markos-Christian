@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
+import modelo.DTO.Clinica;
 import modelo.DTO.Empleado;
+import modelo.DAO.ModeloClinica;
+import modelo.DAO.ModeloEmpleado;
 import modelo.DAO.ModeloEquipamiento;
 import modelo.DTO.Equipamiento;
 
@@ -36,6 +39,11 @@ public class EditarEquipamiento extends HttpServlet {
 		if(empleadoLogueado == null) {
 			response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 		} else {
+			ArrayList<Clinica> clinicas = new ArrayList<>();
+			ModeloClinica mclinica = new ModeloClinica();
+			clinicas = mclinica.getClinicas();
+			ModeloEmpleado mempleado = new ModeloEmpleado();
+			boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
 			ModeloEquipamiento mequipamiento = new ModeloEquipamiento();
 			ArrayList<Equipamiento> equipamiento = new ArrayList<>(); 
 			equipamiento = mequipamiento.cargarEquipamiento(empleadoLogueado.getId_Clinica());
@@ -51,10 +59,27 @@ public class EditarEquipamiento extends HttpServlet {
 					request.getRequestDispatcher("editarEquipamiento.jsp?aviso=error").forward(request, response);
 				}
 				}
+			
+			if(request.getParameter("d") != null && director) {
+				int delete = Integer.parseInt(request.getParameter("d"));
+				boolean eliminado = mequipamiento.eliminarStock(delete);
+				if(!eliminado) {
+					request.setAttribute("equipamiento", equipamiento);
+					request.getRequestDispatcher("editarEquipamiento.jsp?aviso=error").forward(request, response);
+				}else {
+					equipamiento = mequipamiento.cargarEquipamiento(empleadoLogueado.getId_Clinica());
+				}
+				}
+			
 			String aviso = request.getParameter("aviso");
 			request.setAttribute("aviso", aviso);
 			
+			request.setAttribute("empleadoLogueado", empleadoLogueado);
 			request.setAttribute("equipamiento", equipamiento);
+			request.setAttribute("director", director);
+			if(director) {
+				request.setAttribute("clinicas", clinicas);
+			}
 			request.getRequestDispatcher("editarEquipamiento.jsp").forward(request, response);
 		}
 	}
@@ -105,6 +130,17 @@ public class EditarEquipamiento extends HttpServlet {
 			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
 
 		}
+		}else if(tipo.equals("modclinica")){
+			ModeloEmpleado mempleado = new ModeloEmpleado();
+			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));
+			String dniDirector = request.getParameter("dnidirector");
+			mempleado.cambiarClinica(dniDirector, idNuevaClinica);
+			response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=actualizado");
+			HttpSession session = request.getSession();
+			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
+			empleadoLogueado.setId_Clinica(idNuevaClinica);
+			session.setAttribute("empleadoLogueado", empleadoLogueado);
+		
 		}else {
 			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
 
