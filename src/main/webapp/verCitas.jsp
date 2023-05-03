@@ -141,7 +141,7 @@
         </c:if>
 
 		
- 		<c:if test="${citasPosteriores.size() == 0}">
+ 		<c:if test="${citasPosteriores.size() == 0 && tipoLogin ne 'empleado'}">
  		<%//TODO Aqui estara la card o lo que tenga que mostrarse cuando no haya ninguna cita posterior! Las anteriores se veran? %>
  		
  		<div class="ag-courses_box">
@@ -157,6 +157,23 @@
 			    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
 			  </div>
 			</a>
+            </div>
+          </div>
+        </div>
+ 		
+ 		</c:if>
+ 		
+ 		<c:if test="${citasPosteriores.size() == 0 && tipoLogin eq 'empleado'}">
+ 		<%//TODO Aqui estara la card o lo que tenga que mostrarse cuando no haya ninguna cita posterior! Las anteriores se veran? %>
+ 		
+ 		<div class="ag-courses_box">
+          <div class="ag-courses_item">
+            <div class="ag-courses-item_link">
+
+              <div class="ag-courses-item_title">
+                <p style="color: black" >No existe ninguna cita todavia!</p>
+                <p style="font-size: 18px;color: black">Hoy tienes el dia libre!</p>
+              </div>
             </div>
           </div>
         </div>
