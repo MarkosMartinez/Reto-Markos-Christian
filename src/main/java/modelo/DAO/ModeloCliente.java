@@ -198,4 +198,29 @@ public class ModeloCliente {
 		
 		return telefonos;
 	}
+	
+	public ArrayList<Telefonos> getTelefonos(String dni) {
+		Conector conector = new Conector();
+		conector.conectar();
+		ArrayList<Telefonos> telefonos = new ArrayList<>();
+		
+		PreparedStatement gettear;
+		try {
+			gettear = conector.getCon().prepareStatement("SELECT * FROM telefonos WHERE DNI = ?");
+			gettear.setString(1, dni);
+			ResultSet resultado=gettear.executeQuery();
+			while(resultado.next()) {
+			Telefonos telefono = new Telefonos();
+			telefono.setDni(resultado.getString("DNI"));
+			telefono.setTelefono(resultado.getInt("Telefono"));	
+			telefonos.add(telefono);
+			}
+			gettear.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		conector.cerrar();
+		
+		return telefonos;
+	}
 }

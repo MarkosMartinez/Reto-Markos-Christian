@@ -22,29 +22,34 @@
     <link rel="stylesheet" href="css/editarPerfil.css" />
   </head>
 
-  <header>
+<header>
     <nav>
       <input type="checkbox" id="check" />
       <label for="check" class="botonmenu">
         <i class="fas fa-bars"></i>
       </label>
-      <a href="#" class="enlaceLogo">
+      <a href="Principal" class="enlaceLogo">
         <img src="img/logoProv.png" class="logo" />
       </a>
       <ul class="opciones">
-        <li><a class="activo" href="">Inicio</a></li>
+        <li><a href="Principal">Inicio</a></li>
         <li><a href="nuestroEquipo.html">Nuestro equipo</a></li>
         <li><a href="">Tratamientos</a></li>
-        <li><a href="Login.html">Iniciar sesión/Registrarse</a></li>
-        <li><a href="pedirCita.html">Pide tu Cita</a></li>
-        <li><a href="">Contáctanos</a></li>
-        <li><a href="verCitas.html">Consultar Citas</a></li>
+        <li><a href="RealizarCita">Pedir Cita</a></li>
+        <li><a href="">Contactanos</a></li>
+        <li><a href="VerCitas">Consultar Citas</a></li>
+        <li><a class="activo" href="EditarPerfil">Editar Perfil</a></li>
+        <c:if test="${tipoLogin eq 'empleado'}">
+        <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
+        </c:if>
+        <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
       </ul>
     </nav>
   </header>
 
   <body>
     <main>
+     <form class="form-inline" action="EditarPerfil" method="POST">
       <div class="container">
         <div class="row gutters">
           <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
@@ -80,46 +85,25 @@
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="nombre">Nombre</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="nombre"
-                        required
-                      />
+                      <input type="text" class="form-control" id="nombre" value="${cliente.getNombre()}" class="nombre" required/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="apellidos">Apellidos</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="apellidos"
-                        required
-                      />
+                      <input type="text" class="form-control" id="apellidos" value="${cliente.getApellidos()}" class="apellidos" required/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="correo">Correo</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="correo"
-                        required
-                      />
+                      <input type="email" class="form-control" id="correo" value="${cliente.getCorreo()}" class="correo" required/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="telefono">Añadir teléfono (opcional)</label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="telefono"
-                        min="600000000"
-                        max="999999999"
-                      />
+                      <input type="number" class="form-control" id="telefono" name="telefono" min="600000000" max="999999999"/>
                     </div>
                   </div>
                 </div>
@@ -128,12 +112,11 @@
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <label for="telefonos">Teléfono/s:</label>
                     <select name="telefonos" id="telefonos" size="2">
-                      <option value="telefono">666666666</option>
+                     <c:forEach var="telefono" items="${telefonos}">
+                      <option value="${telefono.getTelefono()}">${telefono.getTelefono()}</option>
+                     </c:forEach>
                     </select>
-                    <br /><br />
-                    <button type="submit" class="btn btn-danger">
-                      Eliminar teléfono
-                    </button>
+                    <p>* Selecciona uno y pulsar en "Actualizar" para eliminarlo</p>
                   </div>
                 </div>
                 <div class="row gutters">
@@ -142,57 +125,35 @@
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
-                      <label for="contrasena"
-                        >Introduce la contraseña actual</label
-                      >
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="contrasena"
-                      />
+                      <label for="contrasena">Introduce la contraseña actual</label>
+                      <input type="password" class="form-control" id="contrasena" name="contrasena"/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="nuevaCon">Nueva contraseña</label>
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="nuevaCon"
-                      />
+                      <input type="password" class="form-control" id="nuevaCon" name="nuevaCon"/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
-                      <label for="confNuevaCon"
-                        >Confirmar nueva contraseña</label
-                      >
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="confNuevaCon"
-                      />
+                      <label for="confNuevaCon">Confirmar nueva contraseña</label>
+                      <input type="password" class="form-control" id="confNuevaCon" name="confNuevaCon" />
                     </div>
                   </div>
                 </div>
                 <div class="row gutters">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <button
-                      type="button"
-                      id="submit"
-                      name="submit"
-                      class="btn btn-primary"
-                      style="margin-top: 30px"
-                    >
-                      Actualizar
-                    </button>
+                    <button type="button" id="submit" class="btn btn-primary" style="margin-top: 30px">Actualizar</button>
                   </div>
+                  
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      </form>
     </main>
   </body>
 
