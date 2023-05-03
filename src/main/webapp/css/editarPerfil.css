@@ -1,0 +1,54 @@
+@charset "ISO-8859-1";
+body {
+  background: fixed url("../img/fondoEditarPerfil.jpg") no-repeat;
+  background-size: cover;
+}
+
+.container{
+    padding-top: 140px;
+    padding-bottom: 10px;
+}
+
+.editarPerfil .foto {
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+ 
+.logo{
+    padding-bottom: 60%;
+}
+.logo img{
+    width: 100%;
+ }
+
+
+.editarPerfil .foto h5.titulo {
+    margin: 0 0 0.5rem 0;
+}
+.editarPerfil .foto h6.user-email {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #9fa8b9;
+}
+.editarPerfil .texto {
+    margin: 2rem 0 0 0;
+    text-align: center;
+}
+.editarPerfil .texto h5 {
+    margin: 0 0 15px 0;
+    color: #007ae1;
+}
+.editarPerfil .texto p {
+    font-size: 1rem;
+}
+.form-control {
+    border: 1px solid #cfd1d8;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    font-size: .825rem;
+    background: #ffffff;
+    color: #2e323c;
+}

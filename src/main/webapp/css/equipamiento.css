@@ -52,18 +52,6 @@ h1{
     color: #fff;
     border-bottom: solid 1px rgba(255,255,255,0.1);
   }
-  
-/*estilo sencillo y delgado para la barra de deslizamiento*/
-::-webkit-scrollbar {
-    width: 6px;
-} 
-
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-} 
-::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-}
 
 .botonFormulario, .btnInsertar{
 	position: relative;
