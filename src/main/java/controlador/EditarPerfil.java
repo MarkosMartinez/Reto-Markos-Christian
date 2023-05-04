@@ -56,6 +56,9 @@ public class EditarPerfil extends HttpServlet {
 				}else {
 				String dni = request.getParameter("dni");
 				clienteAModificar= mcliente.getCliente(dni);
+				if(clienteAModificar.getDni() == "-1") {
+					error = true;
+				}
 				cliente = clienteAModificar;
 				tipoLogin = "empleado";
 				}
@@ -81,7 +84,7 @@ public class EditarPerfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String dni = request.getParameter("dni"); //TODO Comprobar si funciona desde el empleado
+		String dni = request.getParameter("dni");
 		String nombre = request.getParameter("nombre");
 		String apellidos = request.getParameter("apellidos");
 		String correo = request.getParameter("correo");
@@ -155,7 +158,7 @@ public class EditarPerfil extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=error");
 			}
 		}else {
-			response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=error"); //TODO MSG De error / modificado
+			response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=error");
 		}
 		
 	}
