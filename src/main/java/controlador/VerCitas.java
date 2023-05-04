@@ -103,25 +103,7 @@ public class VerCitas extends HttpServlet {
 					horasAnteriores.add(cita.getHora_Cita().toString());
 					
 				}
-				
-				ArrayList<Telefonos> telefonos = new ArrayList<>();
-				ArrayList<String> listaTelefonosPosteriores = new ArrayList<>();
-				ArrayList<String> listaTelefonosAnteriores = new ArrayList<>();
-				telefonos = mcliente.cargarTelefonos();
-				for (Cita cita : citasPosteriores) {
-					for (Telefonos telefono : telefonos) {
-						if(cita.getDni_Cliente().equals(telefono.getDni())) {
-							listaTelefonosPosteriores.add(Integer.toString(telefono.getTelefono()));
-						}
-					}
-				}
-				for (Cita cita : citasAnteriores) {
-					for (Telefonos telefono : telefonos) {
-						if(cita.getDni_Cliente().equals(telefono.getDni())) {
-							listaTelefonosAnteriores.add(Integer.toString(telefono.getTelefono()));
-						}
-					}
-				}
+				ArrayList<Telefonos> telefonos = mcliente.cargarTelefonos();
 				
 				String tipoLogin = "ninguno";
 				if(clienteLogueado != null) {
@@ -132,8 +114,7 @@ public class VerCitas extends HttpServlet {
 				request.setAttribute("tipoLogin", tipoLogin);
 				request.setAttribute("historiales", historiales);
 				request.setAttribute("empleados", empleados);
-				request.setAttribute("telefonosPosteriores", listaTelefonosPosteriores);
-				request.setAttribute("telefonosAnteriores", listaTelefonosAnteriores);
+				request.setAttribute("telefonos", telefonos);
 				request.setAttribute("horasPosteriores", horasPosteriores);
 				request.setAttribute("horasAnteriores", horasAnteriores);
 				request.setAttribute("clinicas", clinicas);
