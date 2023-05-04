@@ -40,7 +40,7 @@ public class EditarPerfil extends HttpServlet {
 		boolean error = false;
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
-		if(clienteLogueado == null && empleadoLogueado == null) { //TODO El empleado no se puede editar el perfil, pero podra editar la de los usuarios?
+		if(clienteLogueado == null && empleadoLogueado == null) {
 			response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
 		}else {
 		Cliente cliente = new Cliente();
@@ -79,8 +79,7 @@ public class EditarPerfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO EL FORMULARIO NO ENVIA O EL SERVLET NO RECIVE LOS DATOS PARA ACTUALIZAR LOS PERFILES
-		String dni = request.getParameter("dni"); //TODO Comprobar si envia bien!
+		String dni = request.getParameter("dni"); //TODO Comprobar si funciona desde el empleado
 		String nombre = request.getParameter("nombre");
 		String apellidos = request.getParameter("apellidos");
 		String correo = request.getParameter("correo");
@@ -90,27 +89,24 @@ public class EditarPerfil extends HttpServlet {
 		String nuevaCon = request.getParameter("nuevaCon");
 		String confNuevaCon = request.getParameter("confNuevaCon");
 		boolean modificado = true;
+		boolean cambiarpass = false;
 		ModeloCliente mcliente = new ModeloCliente();
 		Cliente clienteModificado = new Cliente();
-		
-		if(nuevoTelefono != null) { //TODO Bajarlo debajo de modificar el usuario? o no hace falta?
-			Telefonos telefono = new Telefonos();
-			telefono.setDni(dni);
-			telefono.setTelefono(Integer.parseInt(nuevoTelefono));
-			mcliente.addTel(dni, telefono);
-		}
-		if(dni != null && nombre != null && apellidos != null && correo != null) { //TODO eliminar telefonos y las contraseñas
+		String passCifrada = "2be88ca4242c76e8253ac62474851065032d6833"; /*null por defecto por si algo fallase, aunque no deberia*/
+
+		if(dni != null && nombre != null && apellidos != null && correo != null) {
 			clienteModificado.setNombre(nombre);
 			clienteModificado.setApellidos(apellidos);
 			clienteModificado.setCorreo(correo);
+			clienteModificado.setDni(dni);
 			
 			
-			if(nuevaCon != null || contrasena != null || confNuevaCon != null) {
-				Cliente clienteLogueado = mcliente.comprobarLogin(dni, contrasena); //TODO Actualizarlo a un boolean.
+			if(nuevaCon != "" || contrasena != "" || confNuevaCon != "") {
+				Cliente clienteLogueado = mcliente.comprobarLogin(dni, DigestUtils.sha1Hex(contrasena)); //TODO Actualizarlo a un boolean.
 				if(clienteLogueado.getDni() != "-1") {
-					if(nuevaCon != contrasena && nuevaCon == confNuevaCon) {
-						String passCifrada = DigestUtils.sha1Hex(nuevaCon);
-						mcliente.cambiarContrasenia(dni, passCifrada);
+					if(nuevaCon != contrasena && nuevaCon.equals(confNuevaCon)) {
+						passCifrada = DigestUtils.sha1Hex(nuevaCon);
+						cambiarpass = true;
 					}else {
 						modificado = false;
 					}
@@ -120,10 +116,44 @@ public class EditarPerfil extends HttpServlet {
 			}
 			
 			if(modificado) {
-			/*modificado = mcliente.modificarUsuario(clienteModificado);*/
+			modificado = mcliente.modificarUsuario(clienteModificado);
+			if(modificado){
+				if(cambiarpass) {
+					mcliente.cambiarContrasenia(dni, passCifrada);
+				}
+				if(telefonos != null) {
+					Telefonos telefono = new Telefonos(); 
+					telefono.setDni(dni);
+					telefono.setTelefono(Integer.parseInt(telefonos));
+					mcliente.eliminarTel(telefono);
+				}
+				if(nuevoTelefono != "") {
+					Telefonos telefono = new Telefonos();
+					telefono.setDni(dni);
+					telefono.setTelefono(Integer.parseInt(nuevoTelefono));
+					mcliente.addTel(dni, telefono);
+				}
+				HttpSession session = request.getSession();
+				Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
+				Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
+				if(clienteLogueado != null) {
+				clienteLogueado.setNombre(nombre);
+				clienteLogueado.setApellidos(apellidos);
+				clienteLogueado.setCorreo(correo);
+				clienteLogueado.setDni(dni);
+				session.setAttribute("clienteLogueado", clienteLogueado);
+				response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=actualizado");
+				}else if(empleadoLogueado != null) {
+					response.sendRedirect(request.getContextPath() + "/EditarPerfil?dni=" + dni + "&aviso=actualizado");
+				}
 			}else {
-				response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=error"); //TODO MSG De error / modificado
+				response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=error");
 			}
+			}else {
+				response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=error");
+			}
+		}else {
+			response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=error"); //TODO MSG De error / modificado
 		}
 		
 	}

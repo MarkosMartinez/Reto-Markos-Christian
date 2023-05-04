@@ -1,10 +1,7 @@
 @charset "ISO-8859-1";
 body{
-    background: linear-gradient(
-        90deg,
-        whitesmoke 0%,
-        rgb(40, 105, 255) 100%
-      )
+    background: url("../img/fondoEquipamiento.jpg") fixed no-repeat;
+    background-size: cover;
   }
 
   section{

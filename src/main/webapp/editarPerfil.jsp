@@ -86,19 +86,19 @@
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="nombre" value="${cliente.getNombre()}" class="nombre" required/>
+                      <input type="text" class="form-control" id="nombre" value="${cliente.getNombre()}" name="nombre" required/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="apellidos">Apellidos</label>
-                      <input type="text" class="form-control" id="apellidos" value="${cliente.getApellidos()}" class="apellidos" required/>
+                      <input type="text" class="form-control" id="apellidos" value="${cliente.getApellidos()}" name="apellidos" required/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="correo">Correo</label>
-                      <input type="email" class="form-control" id="correo" value="${cliente.getCorreo()}" class="correo" required/>
+                      <input type="email" class="form-control" id="correo" value="${cliente.getCorreo()}" name="correo" required/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">

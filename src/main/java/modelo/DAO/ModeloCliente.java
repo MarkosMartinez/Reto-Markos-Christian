@@ -238,4 +238,42 @@ public class ModeloCliente {
 		conector.cerrar();
 		
 	}
+
+	public void eliminarTel(Telefonos telefono) {
+		Conector conector = new Conector();
+		conector.conectar();
+			PreparedStatement pstModificar;
+			try {
+	            pstModificar = conector.getCon().prepareStatement("DELETE FROM `telefonos` WHERE DNI = ? AND Telefono = ?");
+	            pstModificar.setString(1, telefono.getDni());
+	            pstModificar.setInt(2, telefono.getTelefono());
+	            pstModificar.execute();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		conector.cerrar();
+	}
+
+	public boolean modificarUsuario(Cliente clienteModificado) {
+	    Conector conector = new Conector();
+	    conector.conectar();
+	    boolean modificado = false;
+	    PreparedStatement pstModificar;
+	    try {
+	        pstModificar = conector.getCon().prepareStatement("UPDATE cliente SET Nombre = ?, Apellidos = ?, Correo = ? WHERE DNI = ?;");
+	        pstModificar.setString(1, clienteModificado.getNombre());
+	        pstModificar.setString(2, clienteModificado.getApellidos());
+	        pstModificar.setString(3, clienteModificado.getCorreo());
+	        pstModificar.setString(4, clienteModificado.getDni());
+	        int filasModificadas = pstModificar.executeUpdate();
+	        if (filasModificadas > 0) {
+	            modificado = true;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    conector.cerrar();
+	    return modificado;
+	}
+
 }

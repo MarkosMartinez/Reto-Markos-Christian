@@ -12,7 +12,6 @@
 main {
   position: relative;
   z-index: 1;
-  min-height: 75vh;
 }
 
 .imgPrincipal {
@@ -55,7 +54,6 @@ main {
   min-width: 120px;
   min-height: 44px;
   font-size: var(--size, 1rem);
-  font-family: "Segoe UI", system-ui, sans-serif;
   font-weight: 500;
   transition: 0.8s;
   background-size: 280% auto;
@@ -83,14 +81,14 @@ main {
   }
 }
 
-@media(max-width: 970px){
+@media(max-width: 970PX){
   .btn-cita{
     margin-top: 50px;
     right: 100px;
   }
 }
 
-/*olas*/
+/*olas (para nada robadas)*/
 .waves {
   position: relative;
   width: 100%;
