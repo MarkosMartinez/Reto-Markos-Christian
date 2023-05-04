@@ -49,6 +49,28 @@
 
   <body>
     <main>
+    
+     <c:if test="${aviso eq 'actualizado'}">
+        	<div class="alerta">
+	  <div class="alert alert-success check alert-dismissible fade show" role="alert">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <i class="fa-solid fa-circle-check fa-bounce fa-lg"></i> &nbsp; &nbsp;
+  <span>Perfil actualizado correctamente!</span>
+</div>
+</div>
+        </c:if>
+        
+        <c:if test="${aviso eq 'error'}"> <% //TODO Cambiar el error que no de vueltas %>
+        <div class="alerta">
+        	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert" style="background-color: red; box-shadow: none;">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ <i class="fa-solid fa-triangle-exclamation fa-spin fa-lg" style="color: #ffffff;"></i> <% //TODO Cambiar el icono! %>
+  &nbsp; &nbsp;
+  <span>Error, esto no deberia de haber ocurrido!</span>
+</div>
+        </div>
+        </c:if>
+    
       <div class="container">
         <div class="row gutters">
           <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">

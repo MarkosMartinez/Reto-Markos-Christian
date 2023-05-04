@@ -37,7 +37,6 @@ h1{
     font-size: 12px;
     color: #fff;
     text-transform: uppercase;
-    text-shadow: 1px 1px rgb(40, 105, 255);
     
   }
   td{
@@ -59,7 +58,7 @@ h1{
 
 .inputs{
 	width: 50px; 
-	background-color: rgb(120,160,251); 
+	background-color: #00bdf7; 
 	border: 1px solid white; 
 	border-radius: 2px; 
 	color: white; 
@@ -161,7 +160,7 @@ textarea {
   align-items: center;
   background-color: #08c41b;
   cursor: pointer;
-  box-shadow: 9px 9px 18px whitesmoke, -9px -9px 18px whitesmoke;
+  box-shadow: 9px 9px 18px #00bdf7, -9px -9px 18px #00bdf7;
   color: white;
   margin: 20px;
   transition: all ease-in-out 0.5s;

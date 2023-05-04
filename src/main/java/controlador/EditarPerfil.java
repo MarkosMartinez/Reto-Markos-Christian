@@ -65,6 +65,8 @@ public class EditarPerfil extends HttpServlet {
 			telefonos = mcliente.getTelefonos(cliente.getDni());
 			
 			if(!error) {
+		String aviso = request.getParameter("aviso");
+		request.setAttribute("aviso", aviso);
 		request.setAttribute("tipoLogin", tipoLogin);
 		request.setAttribute("cliente", cliente);
 		request.setAttribute("telefonos", telefonos);

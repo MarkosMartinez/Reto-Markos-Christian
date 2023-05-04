@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-05-2023 a las 12:36:36
+-- Tiempo de generación: 04-05-2023 a las 14:20:37
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -42,7 +42,7 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`DNI`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`) VALUES
 ('11111111A', 'a', 'a', 'aaa@aaa.com', '2be88ca4242c76e8253ac62474851065032d6833', '2004-10-15'),
-('12345678A', 'Aitor', 'Etxaide Baroja', 'aitoretxaide@a.com', '2be88ca4242c76e8253ac62474851065032d6833', '2023-10-15'),
+('12345678A', 'Aitor', 'Escobar Gaviria', 'aitoretxaide@plaiaundi.net', '2be88ca4242c76e8253ac62474851065032d6833', '2023-10-15'),
 ('22222222A', 'Pepe', 'Perez', 'pperez@hotmail.com', '2be88ca4242c76e8253ac62474851065032d6833', '2004-04-23'),
 ('77777777V', 'Miguel', 'Torres', 'migueltorres@gmail.com', '2be88ca4242c76e8253ac62474851065032d6833', '2019-03-31');
 
@@ -114,7 +114,16 @@ INSERT INTO `equipamiento` (`ID_Equipamiento`, `Nombre_Equipamiento`, `Precio`, 
 (2, 'Cepillo de Dientes', 2.5, 33, 1),
 (3, 'Invisalign', 1100.2, 5, 2),
 (4, 'Paste de dientes', 3.99, 20, 2),
-(9, 'Listerine', 9.99, 15, 1);
+(10, 'Brackets metálicos', 50, 100, 1),
+(11, 'Lápiz de blanqueamiento dental', 15, 50, 1),
+(12, 'Fresas dentales', 20, 200, 1),
+(13, 'Cera para ortodoncia', 10, 100, 1),
+(14, 'Ligadura elástica', 5, 500, 1),
+(15, 'Escáner dental', 5000, 2, 2),
+(16, 'Brackets cerámicos', 80, 50, 2),
+(17, 'Arco de níquel-titanio', 25, 200, 2),
+(18, 'Adhesivo para brackets', 40, 30, 2),
+(19, 'Escalador ultrasónico', 900, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -311,7 +320,7 @@ ALTER TABLE `clinica`
 -- AUTO_INCREMENT de la tabla `equipamiento`
 --
 ALTER TABLE `equipamiento`
-  MODIFY `ID_Equipamiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ID_Equipamiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `habitaciones`
