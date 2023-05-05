@@ -1,5 +1,6 @@
 body {
   background-image: url("https://fancywalls.eu/wp-content/uploads/blue-and-white-minimalist-unpasted-wallpaper-540x540.jpg");
+  background-attachment: fixed;
   position: relative;
 }
 
