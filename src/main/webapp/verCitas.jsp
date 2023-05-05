@@ -91,7 +91,7 @@
                 <label for="editarempleado">Empleado:</label>
                 	<select name="editarempleado" required="required">
                 	 <c:forEach var="empleado" items="${empleados}">
-					 	<option value="${empleado.getDni_Emp()}">${empleado.getNombre()} ${empleado.getApellidos()}</option>
+					 	<option value="${empleado.dni_Emp}">${empleado.nombre} ${empleado.apellidos}</option>
 					</c:forEach>
 					</select>
                 <br><br>
@@ -190,22 +190,22 @@
            	 <c:forEach var="clinica" items="${clinicas}">
            		 <c:if test="${clinica.getId_clinica() eq cita.getId_Clinica()}">
             		 <c:forEach var="cliente" items="${clientes}">
-            		  <c:if test="${cliente.getDni() eq cita.getDni_Cliente()}">
+            		  <c:if test="${cliente.dni eq cita.dni_Cliente}">
           <div class="ag-courses_item">
             <div class="ag-courses-item_link">
               <div class="ag-courses-item_bg"></div>
 
               <div class="ag-courses-item_title">
-                <p>Nombre: ${cliente.getNombre()} ${cliente.getApellidos()}</p>
+                <p>Nombre: ${cliente.nombre} ${cliente.apellidos}</p>
                 <p style="font-size: 18px;">Teléfono/s:
                 <c:forEach var="telefono" items="${telefonos}">
-                  <c:if test="${telefono.getDni() eq cita.getDni_Cliente()}">
-               		 ${telefono.getTelefono()} 
+                  <c:if test="${telefono.getDni() eq cita.dni_Cliente}">
+               		 ${telefono.telefono} 
                	  </c:if>
                 </c:forEach>
                 </p>
-                <p style="font-size: smaller;">Clínica: ${clinica.getNombre_clinica()}</p>
-                <p style="font-size: 16px;">Dirección: ${clinica.getDireccion()}</p>
+                <p style="font-size: smaller;">Clínica: ${clinica.nombre_clinica}</p>
+                <p style="font-size: 16px;">Dirección: ${clinica.direccion}</p>
               </div>
 
               <div class="ag-courses-item_date-box">
@@ -259,14 +259,14 @@
                	 </c:forEach>
                	 </p>
                   <c:forEach var="historial" items="${historiales}">
-                    <c:if test="${historial.getDNI() eq cita.getDni_Cliente() && historial.getFecha_Revision() eq cita.getFecha_Cita() && historial.getHora_Revision() == horasAnteriores.get(actual)}">
+                    <c:if test="${historial.DNI eq cita.dni_Cliente && historial.fecha_Revision eq cita.fecha_Cita && historial.hora_Revision == horasAnteriores.get(actual)}">
                     <c:forEach var="empleado" items="${empleados}">
-                    <c:if test="${empleado.getDni_Emp() eq historial.getAtendido()}">
-					 	<p style="font-size: 16px;">Atendido por: ${empleado.getNombre()} ${empleado.getApellidos()}</p>
+                    <c:if test="${empleado.dni_Emp eq historial.atendido}">
+					 	<p style="font-size: 16px;">Atendido por: ${empleado.nombre} ${empleado.apellidos}</p>
 					 	</c:if>
 					</c:forEach>
                        
-                       <p style="font-size: 16px;">Observaciones: ${historial.getObservaciones()}</p>
+                       <p style="font-size: 16px;">Observaciones: ${historial.observaciones}</p>
                      
                     </c:if>
                   </c:forEach>
@@ -276,16 +276,16 @@
                 <div class="ag-courses-item_date-box2">
                   Fecha:
                   <span class="ag-courses-item_date">
-                    <fmt:formatDate value="${cita.getFecha_Cita()}" pattern="dd/MM/yyyy" /> ${horasAnteriores.get(actual)}
+                    <fmt:formatDate value="${cita.fecha_Cita}" pattern="dd/MM/yyyy" /> ${horasAnteriores.get(actual)}
                   </span>
                   <c:if test="${tipoLogin eq 'empleado'}">
                     <span>
                     <c:set var="encontrado" value="0"/> <% //TODO Para que el telefono que editas siempre muestre el primero (el menor), consultar si quitar %>
                     <c:forEach var="telefono" items="${telefonos}">
-					<c:if test="${telefono.getDni() eq cliente.getDni()}">
+					<c:if test="${telefono.dni eq cliente.dni}">
 					<c:if test="${encontrado < 1}">
 					  <c:set var="encontrado" value="1"/>
-                      <a href="VerCitas?editarid_clinica=${cita.getId_Clinica()}&editardni=${cliente.getDni()}&editarclinica=${clinica.getNombre_clinica()}&editartelefono=${telefono.getTelefono()}&editarfecha=${cita.getFecha_Cita()}&editarhora=${horasAnteriores.get(actual)}&editarcliente=${cliente.getNombre()} ${cliente.getApellidos()}#formularioCita">
+                      <a href="VerCitas?editarid_clinica=${cita.id_Clinica}&editardni=${cliente.dni}&editarclinica=${clinica.nombre_clinica}&editartelefono=${telefono.telefono}&editarfecha=${cita.fecha_Cita}&editarhora=${horasAnteriores.get(actual)}&editarcliente=${cliente.nombre} ${cliente.apellidos}#formularioCita">
                     </c:if>
 					</c:if>
 				</c:forEach>

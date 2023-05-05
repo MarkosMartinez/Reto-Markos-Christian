@@ -77,9 +77,9 @@
         <section>
        		<c:if test="${director eq 'true'}">
 		    <div style="max-width: 100%; margin: auto;">
-		        <h1 style="display: inline-block;">Lista de equipamiento de la clinica: </h1>
+		        <h1 style="display: inline-block;">Lista de equipamiento de </h1>
 		        <form action="EditarEquipamiento" method="POST" style="display: inline-block;">
-		            <select name="clinica" required="required" onchange="this.form.submit()">
+		            <select class="clinica" name="clinica" required="required" onchange="this.form.submit()">
 		                <c:forEach var="clinica" items="${clinicas}">
 		                    <c:if test="${clinica.getId_clinica() eq empleadoLogueado.getId_Clinica()}">
 		                        <option selected="selected" value="${clinica.getId_clinica()}">${clinica.getNombre_clinica()}</option>

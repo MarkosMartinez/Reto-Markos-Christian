@@ -16,6 +16,33 @@ h1{
     text-align: center;
     margin: 60px 0px;
 }
+
+.clinica{
+	background: transparent;
+	color: white;
+	font-size: 30px;
+	border: none;
+	text-transform: uppercase;
+}
+
+.clinica option{
+	background-color: #00bdf7;
+}
+
+@media(max-width:568px){
+	
+	h1{
+	margin-left:10%;
+	margin-top:100px;
+	font-size: 100%;
+	}
+	
+	.clinica{
+	font-size: 16px;
+	}
+}
+
+
   table{
     width:100%;
     table-layout: fixed;

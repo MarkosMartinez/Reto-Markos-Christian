@@ -73,7 +73,7 @@ public class EditarPerfil extends HttpServlet {
 		request.setAttribute("tipoLogin", tipoLogin);
 		request.setAttribute("cliente", cliente);
 		request.setAttribute("telefonos", telefonos);
-		request.getRequestDispatcher("editarPerfil.jsp").forward(request, response);
+		request.getRequestDispatcher("editarPerfilC.jsp").forward(request, response);
 			}else {
 				response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 			}
