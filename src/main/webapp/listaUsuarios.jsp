@@ -50,11 +50,16 @@
     <main>
       <section>
         <div class="tituloYopcion">
+        <c:if test="${director eq true}">
           <h1 class="titulo">Lista de</h1>
           <select class="opcionGestion" name="opcionGestion">
             <option value="empleados">EMPLEADOS</option>
             <option value="clientes">CLIENTES</option>
           </select>
+          </c:if>
+          <c:if test="${director eq false}">
+          <h1 class="titulo">Lista de Clientes</h1>
+          </c:if>
         </div>
 
         <div class="tbl-header">
@@ -63,7 +68,7 @@
               <tr>
                 <th>DNI</th>
                 <th>Nombre</th>
-                <th>Clínica</th>
+                <% //TODO <th>Clínica</th> Solo si son los empleados a los que quieres ver%>
                 <th>Editar</th>
                 <th>Eliminar</th>
               </tr>
@@ -73,161 +78,32 @@
         <div class="tbl-content">
           <table cellpadding="0" cellspacing="0" border="0">
             <tbody>
+            <c:forEach var="cliente" items="${clientes}">
               <tr>
-                <td>12345678A</td>
-                <td>Markos Martinez</td>
-                <td>Clinica etxaide</td>
+                <td>${cliente.dni}</td>
+                <td>${cliente.nombre} ${cliente.apellidos}</td>
                 <td>
-                  <a href="" class="btn btn-success"
-                    ><i
-                      class="fa-solid fa-pen-to-square"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
+                  <a href="EditarPerfil?dni=${cliente.dni}" class="btn btn-success">
+                  <i class="fa-solid fa-pen-to-square" style="color: #ffffff"></i>
+                  </a>
                 </td>
                 <td>
-                  <a href="" class="btn btn-danger"
-                    ><i
-                      class="fa-solid fa-user-slash"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
+                  <a href="EliminiarUsuario?dni=${cliente.dni}" class="btn btn-danger">
+                  <i class="fa-solid fa-user-slash" style="color: #ffffff"></i>
+                  </a>
                 </td>
               </tr>
-              <tr>
-                <td>12345678B</td>
-                <td>Christian Camarasa</td>
-                <td>Clinica etxaide</td>
-                <td>
-                  <a href="" class="btn btn-success"
-                    ><i
-                      class="fa-solid fa-pen-to-square"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-                <td>
-                  <a href="" class="btn btn-danger"
-                    ><i
-                      class="fa-solid fa-user-slash"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>12345678C</td>
-                <td>Arnold Bermell</td>
-                <td>Clinica etxaide</td>
-                <td>
-                  <a href="" class="btn btn-success"
-                    ><i
-                      class="fa-solid fa-pen-to-square"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-                <td>
-                  <a href="" class="btn btn-danger"
-                    ><i
-                      class="fa-solid fa-user-slash"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>12345678A</td>
-                <td>Nagore Sanchez</td>
-                <td>Clinica etxaide</td>
-                <td>
-                  <a href="" class="btn btn-success"
-                    ><i
-                      class="fa-solid fa-pen-to-square"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-                <td>
-                  <a href="" class="btn btn-danger"
-                    ><i
-                      class="fa-solid fa-user-slash"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>12345678A</td>
-                <td>Nagore Sanchez</td>
-                <td>Clinica etxaide</td>
-                <td>
-                  <a href="" class="btn btn-success"
-                    ><i
-                      class="fa-solid fa-pen-to-square"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-                <td>
-                  <a href="" class="btn btn-danger"
-                    ><i
-                      class="fa-solid fa-user-slash"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>12345678A</td>
-                <td>Nagore Sanchez</td>
-                <td>Clinica etxaide</td>
-                <td>
-                  <a href="" class="btn btn-success"
-                    ><i
-                      class="fa-solid fa-pen-to-square"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-                <td>
-                  <a href="" class="btn btn-danger"
-                    ><i
-                      class="fa-solid fa-user-slash"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>12345678A</td>
-                <td>Nagore Sanchez</td>
-                <td>Clinica etxaide</td>
-                <td>
-                  <a href="" class="btn btn-success"
-                    ><i
-                      class="fa-solid fa-pen-to-square"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-                <td>
-                  <a href="" class="btn btn-danger"
-                    ><i
-                      class="fa-solid fa-user-slash"
-                      style="color: #ffffff"
-                    ></i
-                  ></a>
-                </td>
-              </tr>
+              </c:forEach>
             </tbody>
           </table>
         </div>
-        <a href="#añadir">
+        <c:if test="${director eq true}">
+          <a href="#añadir">
           <button class="button" style="vertical-align: middle">
             <span>ㅤAñadirㅤ</span>
           </button>
         </a>
+          </c:if>
 
         <div id="añadir" class="overlay">
           <div class="popup">

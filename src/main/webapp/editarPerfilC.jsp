@@ -99,7 +99,7 @@
           <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
             <form class="form-inline" action="EditarPerfil" method="POST">
-     		<input type="text" class="form-control" value="${cliente.getDni()}" required hidden readonly="readonly" name="dni">
+     		<input type="text" class="form-control" value="${cliente.dni}" required hidden readonly="readonly" name="dni">
               <div class="card-body">
                 <div class="row gutters">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -108,19 +108,19 @@
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="nombre" value="${cliente.getNombre()}" name="nombre" required/>
+                      <input type="text" class="form-control" id="nombre" value="${cliente.nombre}" name="nombre" required/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="apellidos">Apellidos</label>
-                      <input type="text" class="form-control" id="apellidos" value="${cliente.getApellidos()}" name="apellidos" required/>
+                      <input type="text" class="form-control" id="apellidos" value="${cliente.apellidos}" name="apellidos" required/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="correo">Correo</label>
-                      <input type="email" class="form-control" id="correo" value="${cliente.getCorreo()}" name="correo" required/>
+                      <input type="email" class="form-control" id="correo" value="${cliente.correo}" name="correo" required/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -136,7 +136,7 @@
                     <label for="telefonos">Teléfono/s:</label>
                     <select name="telefonos" id="telefonos" size="2">
                      <c:forEach var="telefono" items="${telefonos}">
-                      <option value="${telefono.getTelefono()}">${telefono.getTelefono()}</option>
+                      <option value="${telefono.telefono}">${telefono.telefono}</option>
                      </c:forEach>
                     </select>
                     <p>* Selecciona uno y pulsar en "Actualizar" para eliminarlo</p>
@@ -173,6 +173,7 @@
                 <div class="row gutters">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <button type="submit" id="submit" class="btn btn-primary" style="margin-top: 30px">Actualizar</button>
+                    <a href="EliminarUsuario?dni=${cliente.dni}" class="btn btn-danger btnEliminar">Eliminar Usuario</a>
                   </div>
                   
                 </div>

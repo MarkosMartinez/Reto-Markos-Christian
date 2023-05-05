@@ -81,16 +81,16 @@
 		        <form action="EditarEquipamiento" method="POST" style="display: inline-block;">
 		            <select class="clinica" name="clinica" required="required" onchange="this.form.submit()">
 		                <c:forEach var="clinica" items="${clinicas}">
-		                    <c:if test="${clinica.getId_clinica() eq empleadoLogueado.getId_Clinica()}">
-		                        <option selected="selected" value="${clinica.getId_clinica()}">${clinica.getNombre_clinica()}</option>
+		                    <c:if test="${clinica.id_clinica eq empleadoLogueado.getId_Clinica()}">
+		                        <option selected="selected" value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
 		                    </c:if>
-		                    <c:if test="${clinica.getId_clinica() ne empleadoLogueado.getId_Clinica()}">
-		                        <option value="${clinica.getId_clinica()}">${clinica.getNombre_clinica()}</option>
+		                    <c:if test="${clinica.id_clinica ne empleadoLogueado.getId_Clinica()}">
+		                        <option value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
 		                    </c:if>
 		                </c:forEach>
 		            </select>
 		            <input type="text" value="modclinica" name="tipo" readonly="readonly" hidden required="required">
-		            <input type="text" value="${empleadoLogueado.getDni_Emp()}" name="dnidirector" readonly="readonly" hidden required="required">
+		            <input type="text" value="${empleadoLogueado.dni_Emp}" name="dnidirector" readonly="readonly" hidden required="required">
 		        </form>
 		    </div>
 		</c:if>
@@ -120,7 +120,7 @@
                 <tbody>
 				  <c:forEach var="equip" items="${equipamiento}">
 				    <tr>
-				      <th scope="row">${equip.getId_Equipamiento()}</th>
+				      <th scope="row">${equip.id_Equipamiento}</th>
 				      <td>${equip.getNombre_Equipamiento()}</td>
 				      <td>${equip.getPrecio()} €</td>
 				      <td><input type="number" value="${equip.getStock()}" min="0" name="stock-${cantidad}" required="required" class="inputs"> Uds</td>
@@ -153,7 +153,7 @@
             <div class="content">
               <form action="EditarEquipamiento" method="POST">
 				<input type="text" value="insert" name="tipo" readonly="readonly" hidden required="required">
-				<input type="number" value="${equipamiento.get(0).getId_Clinica()}" name="idClinica" readonly="readonly" hidden required="required">
+				<input type="number" value="${equipamiento.get(0).id_Clinica}" name="idClinica" readonly="readonly" hidden required="required">
                 <label for="nombre" >Nombre:</label>
                 <input type="text" required id="nombre" name="nombre">
                 <br><br>

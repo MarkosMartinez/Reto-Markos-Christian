@@ -84,7 +84,7 @@ public class EditarPerfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String dni = request.getParameter("dni");
+		String dni = request.getParameter("dni"); //TODO Falta el botón (<a>) de dar de baja al usuario, y que elimine las citas pendientes!
 		String nombre = request.getParameter("nombre");
 		String apellidos = request.getParameter("apellidos");
 		String correo = request.getParameter("correo");

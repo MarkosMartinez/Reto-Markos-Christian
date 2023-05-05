@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="css/verCitas.css" />
   </head>
 
-<header>
+<header> <% //TODO Arreglar el header y añadir lo que falte. Por ejemplo GestionarUsuarios %>
     <nav>
       <input type="checkbox" id="check" />
       <label for="check" class="botonmenu">
@@ -188,7 +188,7 @@
         <c:if test="${citasPosteriores.size() >= 1}">
                <c:forEach var="cita" items="${citasPosteriores}">
            	 <c:forEach var="clinica" items="${clinicas}">
-           		 <c:if test="${clinica.getId_clinica() eq cita.getId_Clinica()}">
+           		 <c:if test="${clinica.id_clinica eq cita.id_Clinica}">
             		 <c:forEach var="cliente" items="${clientes}">
             		  <c:if test="${cliente.dni eq cita.dni_Cliente}">
           <div class="ag-courses_item">
@@ -199,7 +199,7 @@
                 <p>Nombre: ${cliente.nombre} ${cliente.apellidos}</p>
                 <p style="font-size: 18px;">Teléfono/s:
                 <c:forEach var="telefono" items="${telefonos}">
-                  <c:if test="${telefono.getDni() eq cita.dni_Cliente}">
+                  <c:if test="${telefono.dni eq cita.dni_Cliente}">
                		 ${telefono.telefono} 
                	  </c:if>
                 </c:forEach>
@@ -211,11 +211,11 @@
               <div class="ag-courses-item_date-box">
                 Fecha:
                <span class="ag-courses-item_date">
-                      <fmt:formatDate value="${cita.getFecha_Cita()}" pattern="dd/MM/yyyy" /> ${horasPosteriores.get(actual)}
+                      <fmt:formatDate value="${cita.fecha_Cita}" pattern="dd/MM/yyyy" /> ${horasPosteriores.get(actual)}
                 </span>
 
                 <span>
-                  <a href="EliminarCita?id_clinica=${cita.getId_Clinica()}&dni=${cita.getDni_Cliente()}&fecha=${cita.getFecha_Cita()}&hora=${horasPosteriores.get(actual)}">
+                  <a href="EliminarCita?id_clinica=${cita.id_Clinica}&dni=${cita.dni_Cliente}&fecha=${cita.fecha_Cita}&hora=${horasPosteriores.get(actual)}">
                     <button class="primary-button">
                       <i class="fas fa-trash"></i>
                     </button>
@@ -241,20 +241,20 @@
  <c:if test="${citasAnteriores.size() >= 1}">
   <c:forEach var="cita" items="${citasAnteriores}">
     <c:forEach var="clinica" items="${clinicas}">
-      <c:if test="${clinica.getId_clinica() eq cita.getId_Clinica()}">
+      <c:if test="${clinica.id_clinica eq cita.id_Clinica}">
         <c:forEach var="cliente" items="${clientes}">
-          <c:if test="${cliente.getDni() eq cita.getDni_Cliente()}">
+          <c:if test="${cliente.dni eq cita.dni_Cliente}">
             <div class="ag-courses_item">
               <div class="ag-courses-item_link">
                 <div class="ag-courses-item_bg2"></div>
 
                 <div class="ag-courses-item_title">
-                  <p>Nombre: ${cliente.getNombre()} ${cliente.getApellidos()}</p>
-                  <p style="font-size: smaller;">Clínica: ${clinica.getNombre_clinica()}</p>
+                  <p>Nombre: ${cliente.nombre} ${cliente.apellidos}</p>
+                  <p style="font-size: smaller;">Clínica: ${clinica.nombre_clinica}</p>
                   <p style="font-size: 18px;">Teléfono/s:
                  <c:forEach var="telefono" items="${telefonos}">
-                	 <c:if test="${telefono.getDni() eq cita.getDni_Cliente()}">
-               			 ${telefono.getTelefono()} 
+                	 <c:if test="${telefono.dni eq cita.dni_Cliente}">
+               			 ${telefono.telefono} 
                 	 </c:if>
                	 </c:forEach>
                	 </p>
