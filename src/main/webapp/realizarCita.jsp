@@ -135,10 +135,10 @@
                         <div class="inputbox">
                             <i class="fas fa-clock"></i>
                              <c:if test = "${hora == null}">
-						       <input type="time" id="hora" name="hora" required="required">
+						       <input type="time" id="hora" name="hora" min="09:00" max="17:00" required="required">
 							</c:if>
 							<c:if test = "${hora != null}">
-						      	 <input type="time" id="hora" name="hora" value="${hora}" required="required">
+						      	 <input type="time" id="hora" name="hora" value="${hora}" min="09:00" max="17:00" required="required">
 							</c:if>
                             <label class="hora" for="hora">Hora</label>
                         </div>

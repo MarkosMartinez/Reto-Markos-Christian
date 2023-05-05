@@ -197,12 +197,13 @@
 
               <div class="ag-courses-item_title">
                 <p>Nombre: ${cliente.getNombre()} ${cliente.getApellidos()}</p>
-                <p style="font-size: 18px;">Teléfono/s:</p>
-                 <c:forEach var="telefono" items="${telefonos}">
-                 <c:if test="${telefono.getDni() eq cita.getDni_Cliente()}">
-                <p style="font-size: 15px;">${telefono.getTelefono()}</p>
-                 </c:if>
+                <p style="font-size: 18px;">Teléfono/s:
+                <c:forEach var="telefono" items="${telefonos}">
+                  <c:if test="${telefono.getDni() eq cita.getDni_Cliente()}">
+               		 ${telefono.getTelefono()} 
+               	  </c:if>
                 </c:forEach>
+                </p>
                 <p style="font-size: smaller;">Clínica: ${clinica.getNombre_clinica()}</p>
                 <p style="font-size: 16px;">Dirección: ${clinica.getDireccion()}</p>
               </div>
@@ -250,12 +251,13 @@
                 <div class="ag-courses-item_title">
                   <p>Nombre: ${cliente.getNombre()} ${cliente.getApellidos()}</p>
                   <p style="font-size: smaller;">Clínica: ${clinica.getNombre_clinica()}</p>
-                  <p style="font-size: 18px;">Teléfono/s:</p>
-                  <c:forEach var="telefono" items="${telefonos}">
-					<c:if test="${telefono.getDni() eq cliente.getDni()}">
-						<p style="font-size: 15px;">${telefono.getTelefono()}</p>
-					</c:if>
-				</c:forEach>
+                  <p style="font-size: 18px;">Teléfono/s:
+                 <c:forEach var="telefono" items="${telefonos}">
+                	 <c:if test="${telefono.getDni() eq cita.getDni_Cliente()}">
+               			 ${telefono.getTelefono()} 
+                	 </c:if>
+               	 </c:forEach>
+               	 </p>
                   <c:forEach var="historial" items="${historiales}">
                     <c:if test="${historial.getDNI() eq cita.getDni_Cliente() && historial.getFecha_Revision() eq cita.getFecha_Cita() && historial.getHora_Revision() == horasAnteriores.get(actual)}">
                     <c:forEach var="empleado" items="${empleados}">
@@ -281,7 +283,6 @@
                     <c:set var="encontrado" value="0"/> <% //TODO Para que el telefono que editas siempre muestre el primero (el menor), consultar si quitar %>
                     <c:forEach var="telefono" items="${telefonos}">
 					<c:if test="${telefono.getDni() eq cliente.getDni()}">
-					
 					<c:if test="${encontrado < 1}">
 					  <c:set var="encontrado" value="1"/>
                       <a href="VerCitas?editarid_clinica=${cita.getId_Clinica()}&editardni=${cliente.getDni()}&editarclinica=${clinica.getNombre_clinica()}&editartelefono=${telefono.getTelefono()}&editarfecha=${cita.getFecha_Cita()}&editarhora=${horasAnteriores.get(actual)}&editarcliente=${cliente.getNombre()} ${cliente.getApellidos()}#formularioCita">

@@ -110,7 +110,7 @@
 
     <main>
       <h1 style="color: rgb(0, 102, 255)">
-        Clínica Dental Smiling en Torremolinos (pendiente de bombardear)
+        Clínica Dental Smiling
       </h1>
       <br />
 
