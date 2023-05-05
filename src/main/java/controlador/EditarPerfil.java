@@ -98,6 +98,8 @@ public class EditarPerfil extends HttpServlet {
 		ModeloCliente mcliente = new ModeloCliente();
 		Cliente clienteModificado = new Cliente();
 		String passCifrada = "2be88ca4242c76e8253ac62474851065032d6833"; /*null por defecto por si algo fallase, aunque no deberia*/
+		HttpSession session = request.getSession();
+		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 
 		if(dni != null && nombre != null && apellidos != null && correo != null) {
 			clienteModificado.setNombre(nombre);
@@ -107,6 +109,14 @@ public class EditarPerfil extends HttpServlet {
 			
 			
 			if(nuevaCon != "" || contrasena != "" || confNuevaCon != "") {
+				if(empleadoLogueado != null) {
+					if(nuevaCon.equals(confNuevaCon)) {
+						cambiarpass = true;
+						passCifrada = DigestUtils.sha1Hex(nuevaCon);
+					}else {
+						modificado = false;
+					}
+				}else {
 				Cliente clienteLogueado = mcliente.comprobarLogin(dni, DigestUtils.sha1Hex(contrasena)); //TODO Actualizarlo a un boolean.
 				if(clienteLogueado.getDni() != "-1") {
 					if(nuevaCon != contrasena && nuevaCon.equals(confNuevaCon)) {
@@ -117,6 +127,7 @@ public class EditarPerfil extends HttpServlet {
 					}
 				}else {
 					modificado = false;
+				}
 				}
 			}
 			
@@ -138,9 +149,7 @@ public class EditarPerfil extends HttpServlet {
 					telefono.setTelefono(Integer.parseInt(nuevoTelefono));
 					mcliente.addTel(dni, telefono);
 				}
-				HttpSession session = request.getSession();
 				Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
-				Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 				if(clienteLogueado != null) {
 				clienteLogueado.setNombre(nombre);
 				clienteLogueado.setApellidos(apellidos);

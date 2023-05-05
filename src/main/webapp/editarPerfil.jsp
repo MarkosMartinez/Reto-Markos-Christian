@@ -149,7 +149,12 @@
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="contrasena">Introduce la contraseña actual</label>
-                      <input type="password" class="form-control" id="contrasena" name="contrasena" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 8 caracteres, con mayusculas, minusculas y numeros"/>
+                      <c:if test="${tipoLogin eq 'empleado'}">
+                      	<input type="password" class="form-control" id="contrasena" readonly="readonly" disabled="disabled" name="contrasena"/>
+                      </c:if>	
+                      <c:if test="${tipoLogin eq 'cliente'}">
+                      	<input type="password" class="form-control" id="contrasena" name="contrasena"/>
+                      </c:if>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
