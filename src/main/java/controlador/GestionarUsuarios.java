@@ -40,25 +40,38 @@ public class GestionarUsuarios extends HttpServlet {
 		if(empleadoLogueado == null) {
 			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 		}else {
+			String visualizar = request.getParameter("v");
+			if(visualizar == null)
+				visualizar = "cliente";
+				
 			ModeloEmpleado mempleado = new ModeloEmpleado();
 			boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
-			ModeloCliente mcliente = new ModeloCliente();
-			ModeloClinica mclinica = new ModeloClinica();
-			ArrayList<Cliente> clientes = new ArrayList<>();
-			ArrayList<Empleado> empleados = new ArrayList<>();
-			ArrayList<Clinica> clinicas = new ArrayList<>();
-			clientes = mcliente.getClientes();
-			clinicas = mclinica.getClinicas();
+			request.setAttribute("director", director);
+			request.setAttribute("visualizar", visualizar);
+			if(!visualizar.equals("emp")) {
+				ModeloCliente mcliente = new ModeloCliente();
+				ArrayList<Cliente> clientes = new ArrayList<>();
 			
-			if(director) {
-				empleados = mempleado.getEmpleados();
-				request.setAttribute("empleados", empleados);
+				clientes = mcliente.getClientes();
+			
+				request.setAttribute("clientes", clientes);
+				request.getRequestDispatcher("listaUsuarios.jsp").forward(request, response);
+			}else {
+				if(director) {
+					ModeloClinica mclinica = new ModeloClinica();
+					ArrayList<Empleado> empleados = new ArrayList<>();
+					ArrayList<Clinica> clinicas = new ArrayList<>();
+				
+					clinicas = mclinica.getClinicas();
+					empleados = mempleado.getEmpleados();
+					request.setAttribute("empleados", empleados);
+					request.setAttribute("clinicas", clinicas);
+					request.getRequestDispatcher("listaUsuarios.jsp").forward(request, response);
+				}else {
+					response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?aviso=error");
+				}
 			}
 			
-			request.setAttribute("clinicas", clinicas);
-			request.setAttribute("clientes", clientes);
-			request.setAttribute("director", director);
-			request.getRequestDispatcher("listaUsuarios.jsp").forward(request, response);
 		}
 	}
 
@@ -66,7 +79,19 @@ public class GestionarUsuarios extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String opcionGestion = request.getParameter("opcionGestion"); //TODO Aviso correcto / error
+		String tipo = request.getParameter("tipo");
+		if(tipo.equals("cambiomodo")) {
+		if(opcionGestion.equals("empleados")) {
+			response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp");
+		}else {
+			response.sendRedirect(request.getContextPath() + "/GestionarUsuarios");
+		}
+		}else if(tipo.equals("insertEmpleado")) {
+			//TODO Hacer que inserte el nuevo empleado
+		}else {
+			response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?aviso=error");
+		}
 	}
 
 }

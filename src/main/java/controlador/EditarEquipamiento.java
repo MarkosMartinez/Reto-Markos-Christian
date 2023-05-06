@@ -135,7 +135,7 @@ public class EditarEquipamiento extends HttpServlet {
 			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));
 			String dniDirector = request.getParameter("dnidirector");
 			mempleado.cambiarClinica(dniDirector, idNuevaClinica);
-			response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=actualizado");
+			response.sendRedirect(request.getContextPath() + "/EditarEquipamiento");
 			HttpSession session = request.getSession();
 			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 			empleadoLogueado.setId_Clinica(idNuevaClinica);
