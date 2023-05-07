@@ -173,7 +173,7 @@
                 <div class="row gutters">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <button type="submit" id="submit" class="btn btn-primary" style="margin-top: 30px">Actualizar</button>
-                    <a href="EliminarUsuario?dni=${cliente.dni}" class="btn btn-danger btnEliminar">Eliminar Usuario</a>
+                    <a href="EliminarCliente?dni=${cliente.dni}" class="btn btn-danger btnEliminar">Eliminar Usuario</a>
                   </div>
                   
                 </div>

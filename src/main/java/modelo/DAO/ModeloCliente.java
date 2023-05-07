@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import modelo.DTO.Cliente;
-import modelo.DTO.Equipamiento;
 import modelo.DTO.Telefonos;
 
 public class ModeloCliente {
@@ -232,6 +231,7 @@ public class ModeloCliente {
 	            pstModificar.setString(1, passCifrada);
 	            pstModificar.setString(2, dni);
 	            pstModificar.execute();
+	            pstModificar.close();
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
@@ -274,6 +274,71 @@ public class ModeloCliente {
 	    }
 	    conector.cerrar();
 	    return modificado;
+	}
+
+	public boolean eliminarCliente(String dni) {
+		Conector conector = new Conector();
+	    conector.conectar();
+	    boolean eliminado = true;
+	    
+	    PreparedStatement pstEliminarCitas;
+		try {
+			pstEliminarCitas = conector.getCon().prepareStatement("DELETE FROM `realizacitas` WHERE DNI_Cliente = ?");
+			pstEliminarCitas.setString(1, dni);
+			pstEliminarCitas.executeUpdate();
+	        pstEliminarCitas.close();
+        } catch (SQLException e) {
+        	eliminado = false;
+            e.printStackTrace();
+        }
+		
+		if(eliminado) {
+			
+		PreparedStatement pstEliminarTelefonos;
+		try {
+			pstEliminarTelefonos = conector.getCon().prepareStatement("DELETE FROM `telefonos` WHERE DNI = ?");
+			pstEliminarTelefonos.setString(1, dni);
+			int filasAfectadas = pstEliminarTelefonos.executeUpdate();
+	        if(filasAfectadas == 0) {
+	        	eliminado = false;
+	        }
+	        pstEliminarTelefonos.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		
+		if(eliminado) {
+			
+			PreparedStatement pstEliminarHistorial;
+			try {
+				pstEliminarHistorial = conector.getCon().prepareStatement("DELETE FROM `historial_cliente` WHERE DNI = ?");
+				pstEliminarHistorial.setString(1, dni);
+				pstEliminarHistorial.executeUpdate();
+				pstEliminarHistorial.close();
+	        } catch (SQLException e) {
+	        	eliminado = false;
+	            e.printStackTrace();
+	        }
+			
+			if(eliminado) {
+				PreparedStatement pstEliminarCliente;
+				try {
+					pstEliminarCliente = conector.getCon().prepareStatement("DELETE FROM `cliente` WHERE DNI = ?");
+					pstEliminarCliente.setString(1, dni);
+					int filasAfectadas = pstEliminarCliente.executeUpdate();
+			        if(filasAfectadas == 0) {
+			        	eliminado = false;
+			        }
+			        pstEliminarCliente.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+			}
+
+		}
+		}
+		conector.cerrar();
+		return eliminado;
 	}
 
 }

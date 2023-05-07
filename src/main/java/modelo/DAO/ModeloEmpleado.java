@@ -178,5 +178,67 @@ public class ModeloEmpleado {
 		return insertado;
 	}
 
+	public boolean eliminarEmpleado(String dni) {
+		Conector conector = new Conector();
+	    conector.conectar();
+	    boolean eliminado = true;
+	    
+	    PreparedStatement pstEliminarEmpleado;
+		try {
+			pstEliminarEmpleado = conector.getCon().prepareStatement("DELETE FROM `empleados` WHERE DNI_Emp = ?");
+			pstEliminarEmpleado.setString(1, dni);
+			int filasAfectadas = pstEliminarEmpleado.executeUpdate();
+	        if(filasAfectadas == 0) {
+	        	eliminado = false;
+	        }
+	        pstEliminarEmpleado.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	   
+		conector.cerrar();
+		return eliminado;
+	}
+
+	public void cambiarContrasenia(String dni, String passCifrada) {
+		Conector conector = new Conector();
+		conector.conectar();
+			PreparedStatement pstModificar;
+			try {
+	            pstModificar = conector.getCon().prepareStatement("UPDATE empleados SET Contraseña = ? WHERE DNI_Emp = ?;");
+	            pstModificar.setString(1, passCifrada);
+	            pstModificar.setString(2, dni);
+	            pstModificar.execute();
+	            pstModificar.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		conector.cerrar();
+	}
+
+	public boolean modificarEmpleado(Empleado empleadoModificado) {
+		 Conector conector = new Conector();
+		    conector.conectar();
+		    boolean modificado = false;
+		    PreparedStatement pstModificar;
+		    try {
+		        pstModificar = conector.getCon().prepareStatement("UPDATE `empleados` SET `Nombre`= ?,`Apellidos`= ?,`Correo`= ?,`ID_Puesto`= ?,`ID_Clinica`= ? WHERE DNI_Emp = ?");
+		        pstModificar.setString(1, empleadoModificado.getNombre());
+		        pstModificar.setString(2, empleadoModificado.getApellidos());
+		        pstModificar.setString(3, empleadoModificado.getCorreo());
+		        pstModificar.setInt(4, empleadoModificado.getId_Puesto());
+		        pstModificar.setInt(5, empleadoModificado.getId_Clinica());
+		        pstModificar.setString(6, empleadoModificado.getDni_Emp());
+		        int filasModificadas = pstModificar.executeUpdate();
+		        if (filasModificadas > 0) {
+		            modificado = true;
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    conector.cerrar();
+		    return modificado;
+	}
+
 
 }

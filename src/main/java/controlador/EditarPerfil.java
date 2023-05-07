@@ -34,7 +34,6 @@ public class EditarPerfil extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@SuppressWarnings("unused") /*Para quitar el warning de clases que no se usan (aunque si se usan)*/
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		boolean error = false;
@@ -84,7 +83,7 @@ public class EditarPerfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String dni = request.getParameter("dni"); //TODO Falta el botón (<a>) de dar de baja al usuario, y que elimine las citas pendientes!
+		String dni = request.getParameter("dni"); //TODO No dejar que elimine todos los telefonos
 		String nombre = request.getParameter("nombre");
 		String apellidos = request.getParameter("apellidos");
 		String correo = request.getParameter("correo");
