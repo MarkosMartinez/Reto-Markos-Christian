@@ -9,15 +9,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista de empleados</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/menu.css" />
     <link rel="stylesheet" href="css/listaEmpleadosClientes.css" />
-
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
-      crossorigin="anonymous"
-    />
   </head>
 
 <header> <% //TODO Arreglar el header y añadir lo que falte. Por ejemplo GestionarUsuarios %>
@@ -54,11 +52,33 @@
 
   <body>
     <main>
+    
+	     <c:if test="${aviso eq 'usucreado'}">
+	        	<div class="alerta">
+					  <div class="alert alert-success check alert-dismissible fade show" role="alert">
+				 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				  		<i class="fa-solid fa-circle-check fa-bounce fa-lg"></i> &nbsp; &nbsp;
+				 		<span>Empleado creado correctamente!</span>
+					  </div>
+				</div>
+        </c:if>
+        
+        <c:if test="${aviso eq 'error'}">
+        	<div class="alerta">
+        	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert" style="background-color: red; box-shadow: none;">
+  				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ 				<i class="fa-solid fa-triangle-exclamation fa-spin fa-lg" style="color: #ffffff;"></i> <% //TODO Cambiar el icono! %>
+  				&nbsp; &nbsp;
+  				<span>Error, esto no deberia de haber ocurrido!</span>
+			  </div>
+        	</div>
+        </c:if>
+    
       <section>
         <div class="tituloYopcion">
         <c:if test="${director eq true}">
           <h1 class="titulo">Lista de</h1>
-		  <form action="GestionarUsuarios" method="POST">
+		  <form action="GestionarUsuarios" method="POST" >
 		   <input type="text" value="cambiomodo" name="tipo" readonly="readonly" hidden required="required">
           	<select class="opcionGestion" name="opcionGestion" onchange="this.form.submit()">
           		<c:if test="${visualizar eq 'emp'}">
@@ -161,25 +181,26 @@
                 <input type="text" name="Nombre" required id="nombre" />
                 <br /><br />
                 <label for="apellidos">Apellidos:</label>
-                <input type="number" name="Apellidos" required id="apellidos" />
+                <input type="text" name="Apellidos" required id="apellidos" />
                 <br /><br />
                 <label for="correo">Correo:</label>
                 <input type="email" name="Correo" required id="correo" />
                 <br /><br />
                 <label for="contraseña">Contraseña:</label> <% //TODO Confirmar contraseña? %>
-                <input type="password" name="Contraseña" required id="contraseña" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 8 caracteres, con mayusculas, minusculas y numeros"/>
+                <input type="password" name="pass" required id="contraseña" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros"/>
                 <br /><br />
                 <label for="fecha_nac">Fecha de Nacimiento:</label>
                 <input type="date" name="Fecha_Nacimiento" required id="fecha_nac"/>
                 <br /><br />
                 <label for="puesto">Puesto:</label>
-                <select name="Puesto" id="puesto"> <% //TODO Añadir lo que falta %>
-                  <option value="puesto1">Dentista</option>
-                  <option value="puesto2">Dentista2</option>
+                <select name="Puesto" id="puesto" required="required">
+                <c:forEach var="puesto" items="${puestos}">
+                  <option value="${puesto.id_Puesto}">${puesto.nombre_Puesto}</option>
+                  </c:forEach>
                 </select>
                 <br /><br />
                 <label for="clinica">Clinica:</label>
-                <select name="Clinica" id="clinica">
+                <select name="Clinica" id="clinica" required="required">
                  <c:forEach var="clinica" items="${clinicas}">
                   <option value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
                   </c:forEach>

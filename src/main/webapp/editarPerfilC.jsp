@@ -160,13 +160,13 @@
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="nuevaCon">Nueva contraseña</label>
-                      <input type="password" class="form-control" id="nuevaCon" name="nuevaCon" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 8 caracteres, con mayusculas, minusculas y numeros"/>
+                      <input type="password" class="form-control" id="nuevaCon" name="nuevaCon" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros"/>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="confNuevaCon">Confirmar nueva contraseña</label>
-                      <input type="password" class="form-control" id="confNuevaCon" name="confNuevaCon" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 8 caracteres, con mayusculas, minusculas y numeros"/>
+                      <input type="password" class="form-control" id="confNuevaCon" name="confNuevaCon" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros"/>
                     </div>
                   </div>
                 </div>

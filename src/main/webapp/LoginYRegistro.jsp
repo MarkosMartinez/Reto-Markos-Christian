@@ -185,12 +185,12 @@
                         </div>                 
                         <div class="inputbox">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="pass" id="passregister" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 8 caracteres, con mayusculas, minusculas y numeros">
+                            <input type="password" name="pass" id="passregister" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros">
                             <label for="passregister">Contraseña</label>
                         </div>
                         <div class="inputbox">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="confpass" id="confpass" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 8 caracteres, con mayusculas, minusculas y numeros">
+                            <input type="password" name="confpass" id="confpass" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros">
                             <label for="confpass">Confirmar Contraseña</label>
                         </div>
                         <button class="boton" type="submit">Registrarse</button>

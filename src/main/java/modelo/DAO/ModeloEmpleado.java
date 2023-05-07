@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import modelo.DTO.Empleado;
 
@@ -145,5 +146,37 @@ public class ModeloEmpleado {
 		conector.cerrar();
 		
 	}
+
+	public boolean addEmpleado(String dni, String nombre, String apellidos, String correo, String pass, Date fecha_nacimiento, int puesto, int clinica) {
+		Conector conector = new Conector();
+		conector.conectar();
+		boolean insertado = false;
+	
+		PreparedStatement insertar;
+		try {
+			insertar = conector.getCon().prepareStatement("INSERT INTO `empleados`(`DNI_Emp`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`, `ID_Puesto`, `ID_Clinica`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			insertar.setString(1, dni);
+			insertar.setString(2, nombre);
+			insertar.setString(3, apellidos);
+			insertar.setString(4, correo);
+			insertar.setString(5, pass);
+			insertar.setDate(6, new java.sql.Date(fecha_nacimiento.getTime()));
+			insertar.setInt(7, puesto);
+			insertar.setInt(8, clinica);
+			int filasAfectadas = insertar.executeUpdate();
+			if (filasAfectadas == 1) {
+			    insertado = true;
+			} else {
+			    insertado = false;
+			}
+			insertar.close();
+			conector.cerrar();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return insertado;
+	}
+
 
 }
