@@ -68,7 +68,7 @@
 					  <div class="alert alert-success check alert-dismissible fade show" role="alert">
 				 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 				  		<i class="fa-solid fa-user-minus fa-fade fa-lg" style="color: #ffffff;"></i> &nbsp; &nbsp;
-				 		<span>Cliente eliminado correctamente!</span>
+				 		<span>Usuario eliminado correctamente!</span>
 					  </div>
 				</div>
         </c:if>
@@ -141,9 +141,16 @@
 		                  </a>
 		                </td>
 		                <td>
+		                <c:if test="${empleado.dni_Emp eq empleadoLogueado.dni_Emp}">
+		                  <a href="http://localhost:8080/Reto-3EVA/GestionarUsuarios?v=emp&aviso=error" class="btn btn-danger disabled"> <%//TODO Hacer que funcione! %>
+		                  <i class="fa-solid fa-user-slash" style="color: #ffffff"></i>
+		                  </a>
+		                </c:if>
+		                <c:if test="${empleado.dni_Emp ne empleadoLogueado.dni_Emp}">
 		                  <a href="EliminarEmpleado?dni=${empleado.dni_Emp}" class="btn btn-danger"> <%//TODO Hacer que funcione! %>
 		                  <i class="fa-solid fa-user-slash" style="color: #ffffff"></i>
 		                  </a>
+		                </c:if>
 		                </td>
 		              </tr>
 	              </c:forEach>

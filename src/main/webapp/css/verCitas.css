@@ -12,11 +12,14 @@ main {
 .listaCitas{
 	padding-top: 100px;
 	color: blue;
+	font-size: 50px;
+	text-align: center;
+	display: inline-block;
 	text-align: center;
 }
 .check {
   border-radius: 5px;
-  width: 180px;
+  width: 190px;
   height: 60px;
   text-align: right;
   position: absolute;
@@ -461,4 +464,12 @@ textarea {
 
 .cssbuttons-io-button:active .icon {
   transform: scale(0.95);
+}
+
+select.clinica {
+  background-color: transparent;
+  border: none;
+  font-size: 43px;
+  color: blue;
+  margin-left: 5px;
 }

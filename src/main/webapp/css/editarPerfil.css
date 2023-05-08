@@ -54,6 +54,7 @@ body {
 }
 
 .check {
+  z-index: 99;
   border-radius: 5px;
   width: 200px;
   height: 60px;
@@ -72,6 +73,7 @@ body {
 }
 
 .warning {
+  z-index: 99;
   border-radius: 5px;
   width: 220px;
   height: 60px;

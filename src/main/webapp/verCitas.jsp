@@ -68,7 +68,30 @@
     
       <div class="ag-format-container">
       
-      <h1 class="listaCitas">Lista de citas</h1>
+      <c:if test="${director eq 'true'}">
+		    <div style="max-width: 100%; margin: auto; display: flex; justify-content: center; align-items: center;">
+			    <h1 class="listaCitas">Lista de citas de</h1>
+			    <form action="VerCitas" method="POST" style="display: inline-block; margin-top: 98px;">
+			        <select class="clinica" name="clinica" required="required" onchange="this.form.submit()">
+			            <c:forEach var="clinica" items="${clinicas}">
+			                <c:if test="${clinica.id_clinica eq empleadoLogueado.getId_Clinica()}">
+			                    <option selected="selected" value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
+			                </c:if>
+			                <c:if test="${clinica.id_clinica ne empleadoLogueado.getId_Clinica()}">
+			                    <option value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
+			                </c:if>
+			            </c:forEach>
+			        </select>
+			        <input type="text" value="modclinica" name="tipo" readonly="readonly" hidden required="required">
+			        <input type="text" value="${empleadoLogueado.dni_Emp}" name="dnidirector" readonly="readonly" hidden required="required">
+			    </form>
+			</div>
+
+		</c:if>
+
+         	<c:if test="${director eq 'false'}">
+          	  <h1 class="listaCitas">Lista de citas</h1>
+            </c:if>
       
        <div id="formularioCita" class="overlay">
           <div class="popup">
@@ -76,6 +99,7 @@
             <a class="close" href="#volver">&times;</a>
             <div class="content">
               <form action="VerCitas" method="POST">
+              	<input type="text" value="formcita" name="tipo" readonly="readonly" hidden required="required">
 				<input type="text" value="${editardni}" name="editardni" readonly="readonly" hidden required="required">
 				<input type="date" required readonly="readonly" name="editarfecha" value="${editarfecha}" hidden>
 				<input type="time" required readonly="readonly" name="editarhora" value="${editarhora}" hidden>
@@ -115,6 +139,16 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   <i class="fas fa-trash fa-shake fa-lg" style="color: #ffffff;"></i> &nbsp; &nbsp;
   <span>Cita cancelada correctamente!</span>
+</div>
+</div>
+        </c:if>
+        
+        <c:if test="${aviso eq 'citaactualizada'}">
+        	<div class="alerta">
+	  <div class="alert alert-success check alert-dismissible fade show" role="alert">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <i class="fa-solid fa-pen fa-bounce fa-lg" style="color: #ffffff;"></i> &nbsp; &nbsp;
+  <span>Cita actualizada correctamente!</span>
 </div>
 </div>
         </c:if>

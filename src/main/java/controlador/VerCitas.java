@@ -111,6 +111,8 @@ public class VerCitas extends HttpServlet {
 				} else if(empleadoLogueado != null) {
 					tipoLogin = "empleado";
 				}
+				boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
+				request.setAttribute("director", director);
 				request.setAttribute("tipoLogin", tipoLogin);
 				request.setAttribute("historiales", historiales);
 				request.setAttribute("empleados", empleados);
@@ -133,6 +135,8 @@ public class VerCitas extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String editardni = request.getParameter("editardni");
 		String fechaSinFormato = request.getParameter("editarfecha");
+		String tipo = request.getParameter("tipo");
+		if(tipo.equals("formcita")) {
 		Date editarfecha = null;
 		try {
 			editarfecha = new SimpleDateFormat("yyyy-MM-dd").parse(fechaSinFormato);
@@ -149,14 +153,26 @@ public class VerCitas extends HttpServlet {
 		 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe);
 		 if(actualizado) {
 		 if(equipamiento == null) {
-			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=borradocorrecto"); //TODO Cambiar el aviso correcto!
+			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citaactualizada"); //TODO Cambiar el aviso correcto!
 		 }else if(equipamiento.equals("on")) {
 			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento");
 		 }
 		 }else {
 			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 		 }
-		 
+		}else if (tipo.equals("modclinica")) {
+			ModeloEmpleado mempleado = new ModeloEmpleado();
+			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));
+			String dniDirector = request.getParameter("dnidirector");
+			mempleado.cambiarClinica(dniDirector, idNuevaClinica);
+			HttpSession session = request.getSession();
+			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
+			empleadoLogueado.setId_Clinica(idNuevaClinica);
+			session.setAttribute("empleadoLogueado", empleadoLogueado);
+			response.sendRedirect(request.getContextPath() + "/VerCitas");
+		}else {
+			response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
+		}
 	}
 
 }

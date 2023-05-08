@@ -77,6 +77,7 @@ public class GestionarUsuarios extends HttpServlet {
 					clinicas = mclinica.getClinicas();
 					empleados = mempleado.getEmpleados();
 					request.setAttribute("puestos", puestos);
+					request.setAttribute("empleadoLogueado", empleadoLogueado);
 					request.setAttribute("empleados", empleados);
 					request.setAttribute("clinicas", clinicas);
 					request.getRequestDispatcher("listaUsuarios.jsp").forward(request, response);
