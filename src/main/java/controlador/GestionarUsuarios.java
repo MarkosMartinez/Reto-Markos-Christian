@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import modelo.DAO.Conector;
 import modelo.DAO.ModeloCliente;
 import modelo.DAO.ModeloClinica;
 import modelo.DAO.ModeloEmpleado;
@@ -51,24 +52,27 @@ public class GestionarUsuarios extends HttpServlet {
 			if(visualizar == null) {
 				visualizar = "cliente";
 			}
-			ModeloEmpleado mempleado = new ModeloEmpleado();
+			Conector con  = new Conector();
+			con.conectar();
+			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
 			String aviso = request.getParameter("aviso");
 			request.setAttribute("aviso", aviso);
 			request.setAttribute("director", director);
 			request.setAttribute("visualizar", visualizar);
 			if(!visualizar.equals("emp")) {
-				ModeloCliente mcliente = new ModeloCliente();
+				ModeloCliente mcliente = new ModeloCliente(con);
 				ArrayList<Cliente> clientes = new ArrayList<>();
 			
 				clientes = mcliente.getClientes();
 			
 				request.setAttribute("clientes", clientes);
+				con.cerrar();
 				request.getRequestDispatcher("listaUsuarios.jsp").forward(request, response);
 			}else {
 				if(director) {
-					ModeloClinica mclinica = new ModeloClinica();
-					ModeloPuesto mpuesto = new ModeloPuesto();
+					ModeloClinica mclinica = new ModeloClinica(con);
+					ModeloPuesto mpuesto = new ModeloPuesto(con);
 					ArrayList<Empleado> empleados = new ArrayList<>();
 					ArrayList<Clinica> clinicas = new ArrayList<>();
 					ArrayList<Puesto> puestos = new ArrayList<>();
@@ -82,6 +86,7 @@ public class GestionarUsuarios extends HttpServlet {
 					request.setAttribute("clinicas", clinicas);
 					request.getRequestDispatcher("listaUsuarios.jsp").forward(request, response);
 				}else {
+					con.cerrar();
 					response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?aviso=error");
 				}
 			}
@@ -102,7 +107,9 @@ public class GestionarUsuarios extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/GestionarUsuarios");
 		}
 		}else if(tipo.equals("insertEmpleado")) {
-			ModeloEmpleado mempleado = new ModeloEmpleado();
+			Conector con  = new Conector();
+			con.conectar();
+			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			String dni = request.getParameter("DNI_Emp");
 			String nombre = request.getParameter("Nombre");
 			String apellidos = request.getParameter("Apellidos");
@@ -120,7 +127,7 @@ public class GestionarUsuarios extends HttpServlet {
 			}
 			
 			boolean creado = mempleado.addEmpleado(dni, nombre, apellidos, correo, password, fecha_nacimiento, Integer.parseInt(puesto), Integer.parseInt(clinica));
-			
+			con.cerrar();
 			if(creado) {
 				response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp&aviso=usucreado");
 			}else {

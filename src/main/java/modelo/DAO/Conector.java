@@ -9,7 +9,6 @@ import com.jcraft.jsch.Session;
 
 public class Conector {
 	
-	private boolean sshConectado = false;
 	
 	private Connection conexion;
 	private Session session;
@@ -48,15 +47,6 @@ public class Conector {
 	}
 	
 	public void conectar() {
-
-        // SSL Tunnerl settings
-        String host = "91.200.117.27"; // Remote host to connect to
-        String user = "1daw3"; // Remote shell username
-        String password = "1daw3"; // Remote shell password
-        int lport = 49161; // Local port to create
-        int rport = 49161; // Destination port
-        String rhost = "192.168.100.170"; // Destination address
-
         // MySQL Connection settings
         String dbuserName = "smiling"; // mysql username
         String dbpassword = "smiling"; // mysql password
@@ -64,19 +54,6 @@ public class Conector {
         String driverName = "com.mysql.cj.jdbc.Driver";
 
         try {
-                // Set StrictHostKeyCheacking property to no to avoid UnknownHostKey issue
-                /*java.util.Properties config = new java.util.Properties();
-                config.put("StrictHostKeyChecking", "no");
-                JSch jsch = new JSch();
-                session = jsch.getSession(user, host, 10022);
-                session.setPassword(password);
-                session.setConfig(config);
-                session.connect();
-                System.out.println("-- SSH connection successful");
-                int assinged_port = session.setPortForwardingL(lport, rhost, rport);
-                System.out.println("-- localhost:" + assinged_port + " tunneled to " + host + ":" + rport);*/
-        		
-
             // mysql database connectivity
             Class.forName(driverName);
             System.out.println("-- Mysql connect to " + url + " " + dbuserName + " " + dbpassword);
@@ -98,6 +75,7 @@ public class Conector {
             }
         } catch (Exception e2) {
         }
+        /*Para desconectar el SSH, Actualmente sin uso:*/
         /*if (session != null && session.isConnected()) {
             System.out.println("Closing SSH Connection");
             session.disconnect();

@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.DAO.Conector;
 import modelo.DAO.ModeloEmpleado;
 import modelo.DTO.Empleado;
 
@@ -35,16 +37,20 @@ public class EliminarEmpleado extends HttpServlet {
 		if(empleadoLogueado == null || dniAEliminar == null) {
 			response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?aviso=error");
 		}else {
-			ModeloEmpleado mempleado = new ModeloEmpleado();
+			Conector con  = new Conector();
+			con.conectar();
+			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
 		if(director) {
 			boolean eliminado = mempleado.eliminarEmpleado(dniAEliminar);
+			con.cerrar();
 			if(!eliminado) {
 				response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp&aviso=error");
 			}else {
 				response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp&aviso=eliminado");
 			}
 		}else {
+			con.cerrar();
 			response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp&aviso=error");
 		}
 		}

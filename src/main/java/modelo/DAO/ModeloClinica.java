@@ -9,18 +9,18 @@ import modelo.DTO.Clinica;
 
 public class ModeloClinica {
 	
-	public ModeloClinica() {
-		
+	private Conector con;
+	
+	public ModeloClinica(Conector con) {
+		this.con  = con;
 	}
 
 		public ArrayList<Clinica> getClinicas() {
 		ArrayList<Clinica> clinicas = new ArrayList<>();
-		Conector conector = new Conector();
-		conector.conectar();
-	
+
 		PreparedStatement pSt;
 		try {
-			pSt = conector.getCon().prepareStatement("SELECT * FROM clinica");
+			pSt = this.con.getCon().prepareStatement("SELECT * FROM clinica");
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
 				Clinica clinica = new Clinica();
@@ -35,7 +35,6 @@ public class ModeloClinica {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();
 		return clinicas;
 		
 	}

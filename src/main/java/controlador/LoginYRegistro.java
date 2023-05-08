@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import modelo.DAO.Conector;
 import modelo.DAO.ModeloCliente;
 import modelo.DAO.ModeloEmpleado;
 import modelo.DTO.Cliente;
@@ -71,12 +72,15 @@ public class LoginYRegistro extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String tipo = request.getParameter("tipo");
+			Conector con  = new Conector();
+			con.conectar();
 		if(tipo.equals("login")) {
 			String dni = request.getParameter("dni");
 			String passSinEncriptar = request.getParameter("pass");
 			String password = DigestUtils.sha1Hex(passSinEncriptar);
-			ModeloCliente mcliente = new ModeloCliente();
-			ModeloEmpleado mempleado = new ModeloEmpleado();
+			
+			ModeloCliente mcliente = new ModeloCliente(con);
+			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			Cliente cliente = new Cliente();
 			Empleado empleado = new Empleado();
 			cliente = mcliente.comprobarLogin(dni, password);
@@ -84,14 +88,17 @@ public class LoginYRegistro extends HttpServlet {
 			if(cliente.getDni() == "-1") {
 				empleado = mempleado.comprobarLogin(dni, password); 
 				if(empleado.getDni_Emp() == "-1") {
+					con.cerrar();
 					response.sendRedirect(request.getContextPath() + "/LoginYRegistro?aviso=error&dnilogin=" + dni);
 				}else {
 					session.setAttribute("empleadoLogueado", empleado);
+					con.cerrar();
 					response.sendRedirect(request.getContextPath() + "/VerCitas");
 				}
 				
 			}else {
 				session.setAttribute("clienteLogueado", cliente);
+				con.cerrar();
 				response.sendRedirect(request.getContextPath() + "/VerCitas");
 			}
 			
@@ -114,7 +121,7 @@ public class LoginYRegistro extends HttpServlet {
 				e.printStackTrace();
 			}
 			String password = DigestUtils.sha1Hex(passSinEncriptar);
-			ModeloCliente mcliente = new ModeloCliente();
+			ModeloCliente mcliente = new ModeloCliente(con);
 			if(passSinEncriptar.equals(passConfirmar)) {
 				if(mcliente.comprobarDNI(dni)) {
 					response.sendRedirect(request.getContextPath() + "/LoginYRegistro?aviso=dniexistente");

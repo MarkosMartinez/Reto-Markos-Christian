@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.DAO.Conector;
 import modelo.DAO.ModeloCita;
 import modelo.DTO.Cliente;
 import modelo.DTO.Empleado;
@@ -39,9 +40,12 @@ public class EliminarCita extends HttpServlet {
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		boolean eliminado = false;
+		
 			if(clienteLogueado == null && empleadoLogueado == null) {
 				response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
 			} else {
+				Conector con  = new Conector();
+				con.conectar();
 				int id_clinica = -1;
 				if(request.getParameter("id_clinica") != null) {
 					id_clinica = Integer.parseInt(request.getParameter("id_clinica"));
@@ -49,11 +53,11 @@ public class EliminarCita extends HttpServlet {
 				String dni = request.getParameter("dni");
 				if(clienteLogueado != null) {
 					if(!dni.equals(clienteLogueado.getDni())) {
+						con.cerrar();
 						response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=borradoincorrecto");
 						//TODO Despues de esto, tiene que salir!
 						//TODO Arreglar el Bug de que deje de funconar despues de esto!
 					}else {
-						/**/
 						
 						String fechaSinFormato = request.getParameter("fecha");
 						SimpleDateFormat formatoFecha=new SimpleDateFormat("yyyy-MM-dd");
@@ -70,10 +74,12 @@ public class EliminarCita extends HttpServlet {
 					    	hora = LocalTime.parse(request.getParameter("hora"));
 					    }
 					    if(id_clinica == -1 || dni == null || fecha == null || hora == null) {
+					    	con.cerrar();
 					    	response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=borradoincorrecto");
 					    }else {
-					    	ModeloCita mcita = new ModeloCita();
+					    	ModeloCita mcita = new ModeloCita(con);
 					    	eliminado = mcita.borrarCita(id_clinica, dni, fecha, hora);
+					    	con.cerrar();
 					    	if(eliminado) {
 					    	response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=borradocorrecto");
 					    	}else {
@@ -99,10 +105,12 @@ public class EliminarCita extends HttpServlet {
 			    	hora = LocalTime.parse(request.getParameter("hora"));
 			    }
 			    if(id_clinica == -1 || dni == null || fecha == null || hora == null) {
+			    	con.cerrar();
 			    	response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=borradoincorrecto");
 			    }else {
-			    	ModeloCita mcita = new ModeloCita();
+			    	ModeloCita mcita = new ModeloCita(con);
 			    	eliminado = mcita.borrarCita(id_clinica, dni, fecha, hora);
+			    	con.cerrar();
 			    	if(eliminado) {
 			    	response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=borradocorrecto");
 			    	}else {

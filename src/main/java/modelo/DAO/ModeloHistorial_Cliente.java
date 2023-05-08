@@ -9,19 +9,19 @@ import java.util.ArrayList;
 import modelo.DTO.Historial_Cliente;
 
 public class ModeloHistorial_Cliente {
+
+	private Conector con;
 	
-	public ModeloHistorial_Cliente() {
-		
+	public ModeloHistorial_Cliente(Conector con) {
+		this.con = con;
 	}
 
 	public ArrayList<Historial_Cliente> getHistoriales() {
 		ArrayList<Historial_Cliente> historiales = new ArrayList<>();
-		Conector conector = new Conector();
-		conector.conectar();
 		
 		PreparedStatement pSt;
 		try {
-			pSt = conector.getCon().prepareStatement("SELECT * FROM historial_cliente;");
+			pSt = this.con.getCon().prepareStatement("SELECT * FROM historial_cliente;");
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
 				Historial_Cliente historial = new Historial_Cliente();
@@ -37,7 +37,6 @@ public class ModeloHistorial_Cliente {
 			e.printStackTrace();
 		}
 		
-		conector.cerrar();
 		return historiales;
 	}
 

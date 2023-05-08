@@ -10,19 +10,18 @@ import modelo.DTO.Empleado;
 
 public class ModeloEmpleado {
 	
-	public ModeloEmpleado() {
-		
+	private Conector con;
+	
+	public ModeloEmpleado(Conector con) {
+		this.con = con;
 	}
 
 	public Empleado comprobarLogin(String dni, String password) {
 		Empleado empleado = new Empleado();
-		
-		Conector conector = new Conector();
-		conector.conectar();
-	
+
 		PreparedStatement gettear;
 		try {
-			gettear = conector.getCon().prepareStatement("SELECT * FROM empleados WHERE DNI_Emp= ? AND Contraseña = ?"); //TODO empleado o empleados?
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM empleados WHERE DNI_Emp= ? AND Contraseña = ?"); //TODO empleado o empleados?
 			gettear.setString(1, dni);
 			gettear.setString(2, password);
 			ResultSet resultado=gettear.executeQuery();
@@ -39,7 +38,6 @@ public class ModeloEmpleado {
 				empleado.setDni_Emp("-1");
 			}
 			gettear.close();
-			conector.cerrar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -49,12 +47,10 @@ public class ModeloEmpleado {
 	
 	public Empleado getEmpleado(String dni) { //TODO Eliminar esto?
 		Empleado empleado = new Empleado();
-		Conector conector = new Conector();
-		conector.conectar();
 	
 		PreparedStatement gettear;
 		try {
-			gettear = conector.getCon().prepareStatement("SELECT * FROM empleados WHERE DNI_Emp= ?");
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM empleados WHERE DNI_Emp= ?");
 			gettear.setString(1, dni);
 			ResultSet resultado=gettear.executeQuery();
 			if(resultado.next()) {
@@ -70,7 +66,6 @@ public class ModeloEmpleado {
 				empleado.setDni_Emp("-1");
 			}
 			gettear.close();
-			conector.cerrar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -79,13 +74,11 @@ public class ModeloEmpleado {
 	}
 	
 	public ArrayList<Empleado> getEmpleados() {
-		Conector conector = new Conector();
-		conector.conectar();
 		ArrayList<Empleado> empleados = new ArrayList<>();
 	
 		PreparedStatement gettear;
 		try {
-			gettear = conector.getCon().prepareStatement("SELECT * FROM empleados");
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM empleados");
 			ResultSet resultado=gettear.executeQuery();
 			while(resultado.next()) {
 				Empleado empleado = new Empleado();
@@ -100,7 +93,6 @@ public class ModeloEmpleado {
 				empleados.add(empleado);
 			}
 			gettear.close();
-			conector.cerrar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -109,13 +101,11 @@ public class ModeloEmpleado {
 	}
 
 	public boolean getDirector(int id_Puesto) {
-		Conector conector = new Conector();
-		conector.conectar();
 		boolean director = false;
 	
 		PreparedStatement gettear;
 		try {
-			gettear = conector.getCon().prepareStatement("SELECT Nombre_Puesto FROM puestos WHERE ID_Puesto = ?");
+			gettear = this.con.getCon().prepareStatement("SELECT Nombre_Puesto FROM puestos WHERE ID_Puesto = ?");
 			gettear.setInt(1, id_Puesto);
 			ResultSet resultado=gettear.executeQuery();
 			if(resultado.next()) {
@@ -123,7 +113,6 @@ public class ModeloEmpleado {
 				director = true;
 			}
 			gettear.close();
-			conector.cerrar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -132,29 +121,24 @@ public class ModeloEmpleado {
 	}
 
 	public void cambiarClinica(String dniDirector, int idNuevaClinica) {
-		Conector conector = new Conector();
-		conector.conectar();
 			PreparedStatement pstModificar;
 			try {
-	            pstModificar = conector.getCon().prepareStatement("UPDATE empleados SET ID_Clinica = ? WHERE DNI_Emp = ?;");
+	            pstModificar = this.con.getCon().prepareStatement("UPDATE empleados SET ID_Clinica = ? WHERE DNI_Emp = ?;");
 	            pstModificar.setInt(1, idNuevaClinica);
 	            pstModificar.setString(2, dniDirector);
 	            pstModificar.execute();
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
-		conector.cerrar();
 		
 	}
 
 	public boolean addEmpleado(String dni, String nombre, String apellidos, String correo, String pass, Date fecha_nacimiento, int puesto, int clinica) {
-		Conector conector = new Conector();
-		conector.conectar();
 		boolean insertado = false;
 	
 		PreparedStatement insertar;
 		try {
-			insertar = conector.getCon().prepareStatement("INSERT INTO `empleados`(`DNI_Emp`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`, `ID_Puesto`, `ID_Clinica`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			insertar = this.con.getCon().prepareStatement("INSERT INTO `empleados`(`DNI_Emp`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`, `ID_Puesto`, `ID_Clinica`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			insertar.setString(1, dni);
 			insertar.setString(2, nombre);
 			insertar.setString(3, apellidos);
@@ -170,7 +154,6 @@ public class ModeloEmpleado {
 			    insertado = false;
 			}
 			insertar.close();
-			conector.cerrar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -179,13 +162,11 @@ public class ModeloEmpleado {
 	}
 
 	public boolean eliminarEmpleado(String dni) {
-		Conector conector = new Conector();
-	    conector.conectar();
 	    boolean eliminado = true;
 	    
 	    PreparedStatement pstEliminarEmpleado;
 		try {
-			pstEliminarEmpleado = conector.getCon().prepareStatement("DELETE FROM `empleados` WHERE DNI_Emp = ?");
+			pstEliminarEmpleado = this.con.getCon().prepareStatement("DELETE FROM `empleados` WHERE DNI_Emp = ?");
 			pstEliminarEmpleado.setString(1, dni);
 			int filasAfectadas = pstEliminarEmpleado.executeUpdate();
 	        if(filasAfectadas == 0) {
@@ -196,16 +177,13 @@ public class ModeloEmpleado {
             e.printStackTrace();
         }
 	   
-		conector.cerrar();
 		return eliminado;
 	}
 
 	public void cambiarContrasenia(String dni, String passCifrada) {
-		Conector conector = new Conector();
-		conector.conectar();
 			PreparedStatement pstModificar;
 			try {
-	            pstModificar = conector.getCon().prepareStatement("UPDATE empleados SET Contraseña = ? WHERE DNI_Emp = ?;");
+	            pstModificar = this.con.getCon().prepareStatement("UPDATE empleados SET Contraseña = ? WHERE DNI_Emp = ?;");
 	            pstModificar.setString(1, passCifrada);
 	            pstModificar.setString(2, dni);
 	            pstModificar.execute();
@@ -213,16 +191,13 @@ public class ModeloEmpleado {
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
-		conector.cerrar();
 	}
 
 	public boolean modificarEmpleado(Empleado empleadoModificado) {
-		 Conector conector = new Conector();
-		    conector.conectar();
 		    boolean modificado = false;
 		    PreparedStatement pstModificar;
 		    try {
-		        pstModificar = conector.getCon().prepareStatement("UPDATE `empleados` SET `Nombre`= ?,`Apellidos`= ?,`Correo`= ?,`ID_Puesto`= ?,`ID_Clinica`= ? WHERE DNI_Emp = ?");
+		        pstModificar = this.con.getCon().prepareStatement("UPDATE `empleados` SET `Nombre`= ?,`Apellidos`= ?,`Correo`= ?,`ID_Puesto`= ?,`ID_Clinica`= ? WHERE DNI_Emp = ?");
 		        pstModificar.setString(1, empleadoModificado.getNombre());
 		        pstModificar.setString(2, empleadoModificado.getApellidos());
 		        pstModificar.setString(3, empleadoModificado.getCorreo());
@@ -236,7 +211,6 @@ public class ModeloEmpleado {
 		    } catch (SQLException e) {
 		        e.printStackTrace();
 		    }
-		    conector.cerrar();
 		    return modificado;
 	}
 

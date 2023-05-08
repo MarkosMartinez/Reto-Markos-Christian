@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import modelo.DAO.Conector;
 import modelo.DAO.ModeloClinica;
 import modelo.DAO.ModeloEmpleado;
 import modelo.DAO.ModeloPuesto;
@@ -45,21 +46,25 @@ public class EditarEmpleado extends HttpServlet {
 		if(empleadoLogueado == null || dniAEditar == null) {
 			response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp&aviso=error");
 		}else {
-			ModeloEmpleado mempleado = new ModeloEmpleado();
+			Conector con  = new Conector();
+			con.conectar();
+			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
 		if(director || empleadoLogueado.getDni_Emp().equals(dniAEditar)) {
 			Empleado empleado = new Empleado();
 			empleado = mempleado.getEmpleado(dniAEditar);
-			ModeloPuesto mpuesto = new ModeloPuesto();
-			ModeloClinica mclinica = new ModeloClinica();
+			ModeloPuesto mpuesto = new ModeloPuesto(con);
+			ModeloClinica mclinica = new ModeloClinica(con);
 			ArrayList<Puesto> puestos = mpuesto.getPuestos();
 			ArrayList<Clinica> clinicas = mclinica.getClinicas();
 			
 			request.setAttribute("empleado", empleado);
 			request.setAttribute("clinicas", clinicas);
 			request.setAttribute("puestos", puestos);
+			con.cerrar();
 			request.getRequestDispatcher("editarPerfilE.jsp").forward(request, response);
 		}else {
+			con.cerrar();
 			if(director) {
 			response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp&aviso=error");
 			}else {
@@ -86,7 +91,9 @@ public class EditarEmpleado extends HttpServlet {
 		HttpSession session = request.getSession();
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		
-		ModeloEmpleado mempleado = new ModeloEmpleado();
+		Conector con  = new Conector();
+		 con.conectar();
+		ModeloEmpleado mempleado = new ModeloEmpleado(con);
 		Empleado empleadoModificado = new Empleado();
 		empleadoModificado.setDni_Emp(dni);
 		empleadoModificado.setNombre(nombre);
@@ -108,6 +115,7 @@ public class EditarEmpleado extends HttpServlet {
 		if(modificado) {
 			if(cambiarpass) {
 				mempleado.cambiarContrasenia(dni, passCifrada);
+				con.cerrar();
 			}
 			if(empleadoLogueado.getDni_Emp().equals(dni)) {
 				empleadoLogueado.setNombre(nombre);
@@ -121,6 +129,7 @@ public class EditarEmpleado extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/EditarEmpleado?dni=" + dni + "&aviso=actualizado");
 			}
 		}else {
+			con.cerrar();
 			response.sendRedirect(request.getContextPath() + "/EditarEmpleado?dni=" + dni + "&aviso=error");
 		}
 	}

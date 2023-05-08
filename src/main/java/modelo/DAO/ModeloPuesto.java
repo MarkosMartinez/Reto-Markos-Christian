@@ -9,18 +9,18 @@ import modelo.DTO.Puesto;
 
 public class ModeloPuesto {
 	
-	public ModeloPuesto() {
-		
+	private Conector con;
+	
+	public ModeloPuesto(Conector con) {
+		this.con = con;
 	}
 
 	public ArrayList<Puesto> getPuestos() {
-		Conector conector = new Conector();
-		conector.conectar();
 		ArrayList<Puesto> puestos = new ArrayList<>();
 	
 		PreparedStatement gettear;
 		try {
-			gettear = conector.getCon().prepareStatement("SELECT * FROM `puestos`");
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM `puestos`");
 			ResultSet resultado=gettear.executeQuery();
 			while(resultado.next()) {
 				Puesto puesto = new Puesto();
@@ -29,7 +29,6 @@ public class ModeloPuesto {
 				puestos.add(puesto);
 			}
 			gettear.close();
-			conector.cerrar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import modelo.DAO.Conector;
 import modelo.DAO.ModeloCliente;
 import modelo.DTO.Cliente;
 import modelo.DTO.Empleado;
@@ -42,8 +43,10 @@ public class EditarPerfil extends HttpServlet {
 		if(clienteLogueado == null && empleadoLogueado == null) {
 			response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
 		}else {
+		 Conector con  = new Conector();
+		 con.conectar();
 		Cliente cliente = new Cliente();
-		ModeloCliente mcliente = new ModeloCliente();
+		ModeloCliente mcliente = new ModeloCliente(con);
 		String tipoLogin = "ninguno";
 			if(clienteLogueado != null) {
 				tipoLogin = "cliente";
@@ -65,7 +68,7 @@ public class EditarPerfil extends HttpServlet {
 			
 			ArrayList<Telefonos> telefonos = new ArrayList<>();
 			telefonos = mcliente.getTelefonos(cliente.getDni());
-			
+			con.cerrar();
 			if(!error) {
 		String aviso = request.getParameter("aviso");
 		request.setAttribute("aviso", aviso);
@@ -83,6 +86,10 @@ public class EditarPerfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Conector con  = new Conector();
+		 con.conectar();
+		
 		String dni = request.getParameter("dni"); //TODO No dejar que elimine todos los telefonos
 		String nombre = request.getParameter("nombre");
 		String apellidos = request.getParameter("apellidos");
@@ -94,7 +101,7 @@ public class EditarPerfil extends HttpServlet {
 		String confNuevaCon = request.getParameter("confNuevaCon");
 		boolean modificado = true;
 		boolean cambiarpass = false;
-		ModeloCliente mcliente = new ModeloCliente();
+		ModeloCliente mcliente = new ModeloCliente(con);
 		Cliente clienteModificado = new Cliente();
 		String passCifrada = "2be88ca4242c76e8253ac62474851065032d6833"; /*null por defecto por si algo fallase, aunque no deberia*/
 		HttpSession session = request.getSession();
@@ -155,17 +162,22 @@ public class EditarPerfil extends HttpServlet {
 				clienteLogueado.setCorreo(correo);
 				clienteLogueado.setDni(dni);
 				session.setAttribute("clienteLogueado", clienteLogueado);
+				con.cerrar();
 				response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=actualizado");
 				}else if(empleadoLogueado != null) {
+					con.cerrar();
 					response.sendRedirect(request.getContextPath() + "/EditarPerfil?dni=" + dni + "&aviso=actualizado");
 				}
 			}else {
+				con.cerrar();
 				response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=error");
 			}
 			}else {
+				con.cerrar();
 				response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=error");
 			}
 		}else {
+			con.cerrar();
 			response.sendRedirect(request.getContextPath() + "/EditarPerfil?aviso=error");
 		}
 		

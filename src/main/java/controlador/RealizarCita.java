@@ -14,10 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.DAO.Conector;
+import modelo.DAO.ModeloCita;
 import modelo.DAO.ModeloCliente;
 import modelo.DAO.ModeloClinica;
 import modelo.DAO.ModeloHabitacion;
-import modelo.DAO.ModeloCita;
 import modelo.DTO.Cliente;
 import modelo.DTO.Clinica;
 import modelo.DTO.Empleado;
@@ -44,8 +45,11 @@ public class RealizarCita extends HttpServlet {
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		ArrayList<Clinica> clinicas = new ArrayList<>();
-		ModeloClinica mclinica = new ModeloClinica();
-		clinicas = mclinica.getClinicas();	
+		Conector con  = new Conector();
+		con.conectar();
+		ModeloClinica mclinica = new ModeloClinica(con);
+		clinicas = mclinica.getClinicas();
+		con.cerrar();
 		String aviso = request.getParameter("aviso");
 		String clinica = request.getParameter("clinica");
 		String dni = request.getParameter("dni");
@@ -78,10 +82,13 @@ public class RealizarCita extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id_Clinica = Integer.parseInt(request.getParameter("ID_Clinica"));
 		String dni = request.getParameter("dni");
-		ModeloCliente mcliente = new ModeloCliente();
+		Conector con  = new Conector();
+		 con.conectar();
+		ModeloCliente mcliente = new ModeloCliente(con);
 		Cliente cliente = new Cliente();
 		cliente = mcliente.getCliente(dni);
 		if(cliente.getDni() == "-1") {
+			con.cerrar();
 			response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=dninoregistrado");
 		}else {
 			String fechaSinFormato = request.getParameter("fecha");
@@ -93,8 +100,8 @@ public class RealizarCita extends HttpServlet {
 			}
 			 LocalTime hora = LocalTime.parse(request.getParameter("hora"));
 			 
-			 ModeloCita modeloCita = new ModeloCita();
-			 ModeloHabitacion modeloHabitacion = new ModeloHabitacion();
+			 ModeloCita modeloCita = new ModeloCita(con);
+			 ModeloHabitacion modeloHabitacion = new ModeloHabitacion(con);
 			 int cantidadDeHabitaciones = modeloHabitacion.getCantHabitaciones(id_Clinica); //TODO check o algo en las habitaciones para no poder crear mismo num en la misma clinica. PK no vale.
 			 if(modeloCita.disponible(id_Clinica, fecha, hora, cantidadDeHabitaciones)) {
 			 modeloCita.crearCita(id_Clinica, dni, fecha, hora);
@@ -103,14 +110,18 @@ public class RealizarCita extends HttpServlet {
 			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 				if(clienteLogueado == null) {
 					if(empleadoLogueado == null) {
+						con.cerrar();
 						response.sendRedirect(request.getContextPath() + "/Principal");
 					}else {
+						con.cerrar();
 						response.sendRedirect(request.getContextPath() + "/VerCitas"); //TODO Cambiar esto?
 					}
 				}else {
+					con.cerrar();
 					response.sendRedirect(request.getContextPath() + "/VerCitas");
 				}
 			 }else{
+				 con.cerrar();
 				 response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=demasiadascitas&clinica=" + id_Clinica + "&dni=" + dni + "&fecha=" + fechaSinFormato + "&hora=" + hora);
 			 }
 		}

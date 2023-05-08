@@ -30,7 +30,7 @@ public class Principal extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { //EMPEZAR SIEMPRE DESDE AQUI PARA EVITAR ERRORES CON LA BBDD
 		Conector conector = new Conector();
 		conector.ssh();
 		HttpSession session = request.getSession();

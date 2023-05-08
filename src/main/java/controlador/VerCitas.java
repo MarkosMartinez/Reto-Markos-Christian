@@ -145,6 +145,8 @@ public class VerCitas extends HttpServlet {
 		String editardni = request.getParameter("editardni"); //TODO Hora revision tiene que ser PK?
 		String fechaSinFormato = request.getParameter("editarfecha");
 		String tipo = request.getParameter("tipo");
+		Conector con  = new Conector();
+		 con.conectar();
 		if(tipo.equals("formcita")) {
 		Date editarfecha = null;
 		try {
@@ -157,23 +159,23 @@ public class VerCitas extends HttpServlet {
 		 String informe = request.getParameter("informe");
 		 String equipamiento = request.getParameter("equipamiento"); /*null y on*/
 		 
-		 Conector con  = new Conector();
-		 con.conectar();
-		 
 		 ModeloCita mcita = new ModeloCita(con);
 		 Boolean actualizado = false;
-		 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe);
+		 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe); /*Permitir actualizaciones y no solo inserts!*/
 		 if(actualizado) {
 		 if(equipamiento == null) {
+			 con.cerrar();
 			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citaactualizada"); //TODO Cambiar el aviso correcto!
 		 }else if(equipamiento.equals("on")) {
+			 con.cerrar();
 			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento");
 		 }
 		 }else {
+			 con.cerrar();
 			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 		 }
 		}else if (tipo.equals("modclinica")) {
-			ModeloEmpleado mempleado = new ModeloEmpleado();
+			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));
 			String dniDirector = request.getParameter("dnidirector");
 			mempleado.cambiarClinica(dniDirector, idNuevaClinica);
@@ -181,8 +183,10 @@ public class VerCitas extends HttpServlet {
 			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 			empleadoLogueado.setId_Clinica(idNuevaClinica);
 			session.setAttribute("empleadoLogueado", empleadoLogueado);
+			con.cerrar();
 			response.sendRedirect(request.getContextPath() + "/VerCitas");
 		}else {
+			con.cerrar();
 			response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 		}
 	}

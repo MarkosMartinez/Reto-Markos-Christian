@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.DAO.Conector;
 import modelo.DAO.ModeloCliente;
 import modelo.DTO.Cliente;
 import modelo.DTO.Empleado;
@@ -35,9 +36,12 @@ public class EliminarCliente extends HttpServlet {
 		String dniAEliminar = request.getParameter("dni");
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
-		ModeloCliente mcliente = new ModeloCliente();
+		Conector con  = new Conector();
+		 con.conectar();
+		ModeloCliente mcliente = new ModeloCliente(con);
 		if(clienteLogueado != null){
 			boolean eliminado = mcliente.eliminarCliente(clienteLogueado.getDni());
+			con.cerrar();
 			if(!eliminado) {
 				response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 			}else {
@@ -47,6 +51,7 @@ public class EliminarCliente extends HttpServlet {
 			
 		}else if(empleadoLogueado != null && dniAEliminar != null) {
 			boolean eliminado = mcliente.eliminarCliente(dniAEliminar);
+			con.cerrar();
 			if(!eliminado) {
 				response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?aviso=error");
 			}else {
