@@ -90,7 +90,9 @@
 		</c:if>
 
          	<c:if test="${director eq 'false'}">
-          	  <h1 class="listaCitas">Lista de citas</h1>
+          	  <div style="max-width: 100%; margin: auto; display: flex; justify-content: center; align-items: center;">
+			    <h1 class="listaCitas">Lista de citas</h1>
+			  </div>
             </c:if>
       
        <div id="formularioCita" class="overlay">

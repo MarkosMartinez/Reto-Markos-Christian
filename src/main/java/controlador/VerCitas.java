@@ -80,6 +80,7 @@ public class VerCitas extends HttpServlet {
 				ModeloHistorial_Cliente mhistorial = new ModeloHistorial_Cliente();
 				historiales = mhistorial.getHistoriales(); //TODO enviar solo los del cliente si loguea el cliente?
 				
+				boolean director = false;
 				ModeloCliente mcliente = new ModeloCliente();
 				ModeloEmpleado mempleado = new ModeloEmpleado();
 				ArrayList<Empleado> empleados = mempleado.getEmpleados();
@@ -88,6 +89,7 @@ public class VerCitas extends HttpServlet {
 				if (empleadoLogueado != null) {
 					citasPosteriores = mcita.citasPosteriores(empleadoLogueado.getId_Clinica());
 					citasAnteriores = mcita.citasAnteriores(empleadoLogueado.getId_Clinica());
+					director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
 				}else if(clienteLogueado != null) {
 					citasPosteriores = mcita.getCitasClientePosteriores(clienteLogueado.getDni());
 					citasAnteriores = mcita.getCitasClienteAnteriores(clienteLogueado.getDni());
@@ -111,7 +113,7 @@ public class VerCitas extends HttpServlet {
 				} else if(empleadoLogueado != null) {
 					tipoLogin = "empleado";
 				}
-				boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
+				
 				request.setAttribute("director", director);
 				request.setAttribute("tipoLogin", tipoLogin);
 				request.setAttribute("historiales", historiales);

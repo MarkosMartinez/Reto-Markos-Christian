@@ -12,7 +12,7 @@ main {
 .listaCitas{
 	padding-top: 100px;
 	color: blue;
-	font-size: 50px;
+	font-size: 40px;
 	text-align: center;
 	display: inline-block;
 	text-align: center;
@@ -469,7 +469,7 @@ textarea {
 select.clinica {
   background-color: transparent;
   border: none;
-  font-size: 43px;
+  font-size: 33px;
   color: blue;
   margin-left: 5px;
 }
