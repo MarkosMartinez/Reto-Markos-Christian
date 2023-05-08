@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-05-2023 a las 14:20:37
+-- Tiempo de generación: 08-05-2023 a las 12:21:22
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -41,8 +41,8 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`DNI`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`) VALUES
-('11111111A', 'a', 'a', 'aaa@aaa.com', '2be88ca4242c76e8253ac62474851065032d6833', '2004-10-15'),
-('12345678A', 'Aitor', 'Escobar Gaviria', 'aitoretxaide@plaiaundi.net', '2be88ca4242c76e8253ac62474851065032d6833', '2023-10-15'),
+('11111111A', 'Oier', 'Lertxundi', 'olertxundi@gmail.com', '2be88ca4242c76e8253ac62474851065032d6833', '2004-10-15'),
+('12345678A', 'Aitor', 'Etxeberria', 'aitoretxaide@plaiaundi.net', '2be88ca4242c76e8253ac62474851065032d6833', '2023-10-15'),
 ('22222222A', 'Pepe', 'Perez', 'pperez@hotmail.com', '2be88ca4242c76e8253ac62474851065032d6833', '2004-04-23'),
 ('77777777V', 'Miguel', 'Torres', 'migueltorres@gmail.com', '2be88ca4242c76e8253ac62474851065032d6833', '2019-03-31');
 
@@ -90,7 +90,7 @@ CREATE TABLE `empleados` (
 
 INSERT INTO `empleados` (`DNI_Emp`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`, `ID_Puesto`, `ID_Clinica`) VALUES
 ('12345678B', 'Julen', 'Cano', 'jcano@gmail.com', '2be88ca4242c76e8253ac62474851065032d6833', '2004-11-17', 1, 1),
-('12345678C', 'Arnold', 'Bermel', 'abermell@yahoo.com', '2be88ca4242c76e8253ac62474851065032d6833', '2008-07-14', 2, 2);
+('12345678C', 'Arnold', 'Bermell', 'abermell@yahoo.com', '2be88ca4242c76e8253ac62474851065032d6833', '2008-07-14', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -111,7 +111,7 @@ CREATE TABLE `equipamiento` (
 --
 
 INSERT INTO `equipamiento` (`ID_Equipamiento`, `Nombre_Equipamiento`, `Precio`, `Stock`, `ID_Clinica`) VALUES
-(2, 'Cepillo de Dientes', 2.5, 33, 1),
+(2, 'Cepillo de Dientes', 2.5, 32, 1),
 (3, 'Invisalign', 1100.2, 5, 2),
 (4, 'Paste de dientes', 3.99, 20, 2),
 (10, 'Brackets metálicos', 50, 100, 1),
@@ -168,8 +168,9 @@ CREATE TABLE `historial_cliente` (
 --
 
 INSERT INTO `historial_cliente` (`DNI`, `Fecha_Revision`, `Hora_Revision`, `Observaciones`, `Atendido`) VALUES
-('12345678A', '2023-04-19', '11:11:00', 'Tiene Covid 3', '12345678C'),
-('12345678A', '2023-04-24', '12:00:00', 'Tiene caries', '12345678B');
+('12345678A', '2023-04-19', '11:11:00', 'Se le ha roto el diente', '12345678C'),
+('12345678A', '2023-04-24', '12:00:00', 'Tiene caries', '12345678B'),
+('77777777V', '2023-04-12', '03:33:00', 'Empaste en la paleta', '12345678B');
 
 -- --------------------------------------------------------
 
@@ -237,7 +238,7 @@ CREATE TABLE `telefonos` (
 --
 
 INSERT INTO `telefonos` (`DNI`, `Telefono`) VALUES
-('11111111A', 33),
+('11111111A', 610951578),
 ('12345678A', 666666666),
 ('22222222A', 617658745),
 ('77777777V', 600000003);

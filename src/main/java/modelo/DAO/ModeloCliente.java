@@ -67,11 +67,10 @@ public class ModeloCliente {
 				cliente.setDni("-1");
 			}
 			gettear.close();
-			conector.cerrar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		conector.cerrar();
 		return cliente;
 	}
 	

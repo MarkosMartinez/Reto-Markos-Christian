@@ -25,6 +25,7 @@ public class ModeloHabitacion {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		conector.cerrar();
 		
 		return cantidadDeHabitaciones;
 	}

@@ -97,7 +97,7 @@ public class EditarEmpleado extends HttpServlet {
 		
 		boolean modificado = mempleado.modificarEmpleado(empleadoModificado);
 		
-		if(nuevaCon != null) {
+		if(nuevaCon != null) { //TODO Comprobar que esto no salta cuando esta vacio!
 			if(nuevaCon.equals(confNuevaCon)) {
 			cambiarpass = true;
 			passCifrada = DigestUtils.sha1Hex(nuevaCon);

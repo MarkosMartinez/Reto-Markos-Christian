@@ -135,7 +135,7 @@ public class VerCitas extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String editardni = request.getParameter("editardni");
+		String editardni = request.getParameter("editardni"); //TODO Hora revision tiene que ser PK?
 		String fechaSinFormato = request.getParameter("editarfecha");
 		String tipo = request.getParameter("tipo");
 		if(tipo.equals("formcita")) {

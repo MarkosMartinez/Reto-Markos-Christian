@@ -2,36 +2,106 @@ package modelo.DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
+
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
 
 public class Conector {
 	
+	private boolean sshConectado = false;
+	
 	private Connection conexion;
+	private Session session;
 	
-	private static final String HOST = "localhost";
-	private static final String BBDD = "reto-3eva";
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "";
-	
-	public void conectar() {
-		
-		try {
-			
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conexion = DriverManager.getConnection("jdbc:mysql://" + HOST + "/" + BBDD, USERNAME, PASSWORD);
-
-			
-		} catch (Exception e) {
+	public void ssh(){
+		String host = "91.200.117.27"; // Remote host to connect to
+        String user = "1daw3"; // Remote shell username
+        String password = "1daw3"; // Remote shell password
+        int lport = 49161; // Local port to create
+        int rport = 49161; // Destination port
+        String rhost = "192.168.100.170"; // Destination address
+        
+		 java.util.Properties config = new java.util.Properties();
+         config.put("StrictHostKeyChecking", "no");
+         JSch jsch = new JSch();
+         try {
+			session = jsch.getSession(user, host, 10022);
+		} catch (JSchException e) {
 			e.printStackTrace();
 		}
+         session.setPassword(password);
+         session.setConfig(config);
+         try {
+			session.connect();
+		} catch (JSchException e) {
+			e.printStackTrace();
+		}
+         System.out.println("-- SSH connection successful");
+         int assinged_port = 0;
+		try {
+			assinged_port = session.setPortForwardingL(lport, rhost, rport);
+		} catch (JSchException e) {
+			e.printStackTrace();
+		}
+         System.out.println("-- localhost:" + assinged_port + " tunneled to " + host + ":" + rport);
+	}
+	
+	public void conectar() {
+
+        // SSL Tunnerl settings
+        String host = "91.200.117.27"; // Remote host to connect to
+        String user = "1daw3"; // Remote shell username
+        String password = "1daw3"; // Remote shell password
+        int lport = 49161; // Local port to create
+        int rport = 49161; // Destination port
+        String rhost = "192.168.100.170"; // Destination address
+
+        // MySQL Connection settings
+        String dbuserName = "smiling"; // mysql username
+        String dbpassword = "smiling"; // mysql password
+        String url = "jdbc:mysql://localhost:49161/smilingbbdd"; // connect to local end of SSL tunnel
+        String driverName = "com.mysql.cj.jdbc.Driver";
+
+        try {
+                // Set StrictHostKeyCheacking property to no to avoid UnknownHostKey issue
+                /*java.util.Properties config = new java.util.Properties();
+                config.put("StrictHostKeyChecking", "no");
+                JSch jsch = new JSch();
+                session = jsch.getSession(user, host, 10022);
+                session.setPassword(password);
+                session.setConfig(config);
+                session.connect();
+                System.out.println("-- SSH connection successful");
+                int assinged_port = session.setPortForwardingL(lport, rhost, rport);
+                System.out.println("-- localhost:" + assinged_port + " tunneled to " + host + ":" + rport);*/
+        		
+
+            // mysql database connectivity
+            Class.forName(driverName);
+            System.out.println("-- Mysql connect to " + url + " " + dbuserName + " " + dbpassword);
+            conexion = DriverManager.getConnection(url, dbuserName, dbpassword);
+
+            System.out.println("-- Database connection established");
+
+            System.out.println("DONE");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 	
 	public void cerrar() {
-		try {
-			conexion.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        try {
+            if (conexion != null && !conexion.isClosed()) {
+                System.out.println("Closing Database Connection");
+                conexion.close();
+            }
+        } catch (Exception e2) {
+        }
+        /*if (session != null && session.isConnected()) {
+            System.out.println("Closing SSH Connection");
+            session.disconnect();
+        }*/
 	}
 	
 	
