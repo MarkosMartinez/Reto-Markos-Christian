@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.DAO.Conector;
 import modelo.DAO.ModeloCita;
 import modelo.DAO.ModeloCliente;
 import modelo.DAO.ModeloClinica;
@@ -48,41 +49,45 @@ public class VerCitas extends HttpServlet {
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado"); //TODO Hacer un refactor de las clases y la BBDD de plural/singular. Ej: Empleado/s...
 		
-		String editarid_clinica = request.getParameter("editarid_clinica");
-		String editardni = request.getParameter("editardni");
-		String editarclinica = request.getParameter("editarclinica");
-		String editartelefono = request.getParameter("editartelefono");
-		String editarfecha = request.getParameter("editarfecha");
-		String editarhora = request.getParameter("editarhora");
-		String editarcliente = request.getParameter("editarcliente");
-		
-		request.setAttribute("editarid_clinica", editarid_clinica);
-		request.setAttribute("editardni", editardni);
-		request.setAttribute("editarclinica", editarclinica);
-		request.setAttribute("editartelefono", editartelefono);
-		request.setAttribute("editarfecha", editarfecha);
-		request.setAttribute("editarhora", editarhora);
-		request.setAttribute("editarcliente", editarcliente);
-		
-			if(clienteLogueado == null && empleadoLogueado == null) {
-				response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
-			} else {
-				
+		if(clienteLogueado == null && empleadoLogueado == null) {
+			response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
+		} else {
+			
+			String editarid_clinica = request.getParameter("editarid_clinica");
+			String editardni = request.getParameter("editardni");
+			String editarclinica = request.getParameter("editarclinica");
+			String editartelefono = request.getParameter("editartelefono");
+			String editarfecha = request.getParameter("editarfecha");
+			String editarhora = request.getParameter("editarhora");
+			String editarcliente = request.getParameter("editarcliente");
+			
+			request.setAttribute("editarid_clinica", editarid_clinica);
+			request.setAttribute("editardni", editardni);
+			request.setAttribute("editarclinica", editarclinica);
+			request.setAttribute("editartelefono", editartelefono);
+			request.setAttribute("editarfecha", editarfecha);
+			request.setAttribute("editarhora", editarhora);
+			request.setAttribute("editarcliente", editarcliente);
+			
 				ArrayList<Cita> citasPosteriores = new ArrayList<>();
 				ArrayList<Cita> citasAnteriores = new ArrayList<>();
 				String aviso = request.getParameter("aviso");
-				ModeloCita mcita = new ModeloCita();
+				
+				Conector con = new Conector();
+				con.conectar();
+
+				ModeloCita mcita = new ModeloCita(con);
 				ArrayList<Clinica> clinicas = new ArrayList<>();
-				ModeloClinica mclinica = new ModeloClinica();
+				ModeloClinica mclinica = new ModeloClinica(con);
 				clinicas = mclinica.getClinicas();
 				
 				ArrayList<Historial_Cliente> historiales = new ArrayList<>();
-				ModeloHistorial_Cliente mhistorial = new ModeloHistorial_Cliente();
+				ModeloHistorial_Cliente mhistorial = new ModeloHistorial_Cliente(con);
 				historiales = mhistorial.getHistoriales(); //TODO enviar solo los del cliente si loguea el cliente?
 				
 				boolean director = false;
-				ModeloCliente mcliente = new ModeloCliente();
-				ModeloEmpleado mempleado = new ModeloEmpleado();
+				ModeloCliente mcliente = new ModeloCliente(con);
+				ModeloEmpleado mempleado = new ModeloEmpleado(con);
 				ArrayList<Empleado> empleados = mempleado.getEmpleados();
 				ArrayList<Cliente> clientes = new ArrayList<>();
 				clientes = mcliente.getClientes();
@@ -106,6 +111,8 @@ public class VerCitas extends HttpServlet {
 					
 				}
 				ArrayList<Telefonos> telefonos = mcliente.cargarTelefonos();
+				
+				con.cerrar();
 				
 				String tipoLogin = "ninguno";
 				if(clienteLogueado != null) {
@@ -150,7 +157,10 @@ public class VerCitas extends HttpServlet {
 		 String informe = request.getParameter("informe");
 		 String equipamiento = request.getParameter("equipamiento"); /*null y on*/
 		 
-		 ModeloCita mcita = new ModeloCita();
+		 Conector con  = new Conector();
+		 con.conectar();
+		 
+		 ModeloCita mcita = new ModeloCita(con);
 		 Boolean actualizado = false;
 		 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe);
 		 if(actualizado) {

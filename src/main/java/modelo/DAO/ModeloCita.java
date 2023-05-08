@@ -13,16 +13,16 @@ import modelo.DTO.Cita;
 
 public class ModeloCita {
 	
-	public ModeloCita() {
-		
+	private Conector con;
+	
+	public ModeloCita(Conector con) {
+		this.con  = con;
 	}
 
 	public void crearCita(int id_Clinica, String dni, java.util.Date fecha, LocalTime hora) {
-		Conector conector = new Conector();
-		conector.conectar();
 		PreparedStatement insertar;
 		try {
-			insertar = conector.getCon().prepareStatement("INSERT INTO realizacitas (ID_Clinica, DNI_Cliente, Fecha_Cita, Hora_Cita) VALUES (?, ?, ?, ?);");
+			insertar = this.con.getCon().prepareStatement("INSERT INTO realizacitas (ID_Clinica, DNI_Cliente, Fecha_Cita, Hora_Cita) VALUES (?, ?, ?, ?);");
 			insertar.setInt(1, id_Clinica);
 			insertar.setString(2, dni);
 			insertar.setDate(3, new java.sql.Date(fecha.getTime()));
@@ -32,16 +32,13 @@ public class ModeloCita {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();	
 		
 	}
 
 	public ArrayList<Cita> getCitas(int id_Clinica) { //TODO Eliminar esto?
 		ArrayList<Cita> citas = new ArrayList<>();
-		Conector conector = new Conector();
-		conector.conectar();
 		try {
-			PreparedStatement pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE ID_Clinica = ?");
+			PreparedStatement pSt = this.con.getCon().prepareStatement("SELECT * FROM realizacitas WHERE ID_Clinica = ?");
 			pSt.setInt(1, id_Clinica);
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
@@ -56,13 +53,10 @@ public class ModeloCita {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();
 		return citas;
 	}
 
 	public boolean disponible(int id_Clinica, java.util.Date fecha, LocalTime hora, int cantidadDeHabitaciones) {
-		Conector conector = new Conector();
-		conector.conectar();
 		
 		int numCitas = 0;
 		boolean disponible = false;
@@ -73,7 +67,7 @@ public class ModeloCita {
          
              PreparedStatement pSt;
 			try {
-				pSt = conector.getCon().prepareStatement("SELECT COUNT(*) FROM realizacitas WHERE ID_Clinica =? AND Fecha_Cita = ? AND Hora_Cita BETWEEN ? AND ?");
+				pSt = this.con.getCon().prepareStatement("SELECT COUNT(*) FROM realizacitas WHERE ID_Clinica =? AND Fecha_Cita = ? AND Hora_Cita BETWEEN ? AND ?");
 				 pSt.setInt(1, id_Clinica);
 				 pSt.setDate(2, sqlFecha);
 	             pSt.setTime(3, Time.valueOf(horaInicio));
@@ -85,7 +79,6 @@ public class ModeloCita {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			conector.cerrar();
 		
         if(numCitas < cantidadDeHabitaciones) {
         	disponible = true;
@@ -96,12 +89,10 @@ public class ModeloCita {
 
 	public ArrayList<Cita> getCitasCliente(String dni) { //TODO Eliminar esto?
 		ArrayList<Cita> citas = new ArrayList<>();
-		Conector conector = new Conector();
-		conector.conectar();
-		
+
 		PreparedStatement pSt;
 		try {
-			pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE DNI_Cliente = ?");
+			pSt = this.con.getCon().prepareStatement("SELECT * FROM realizacitas WHERE DNI_Cliente = ?");
 			pSt.setString(1, dni);
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
@@ -117,18 +108,16 @@ public class ModeloCita {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		conector.cerrar();
+
 		return citas;
 	}
 
 	public boolean borrarCita(int id_clinica, String dni, java.util.Date fecha, LocalTime hora) {
-	    Conector conector = new Conector();
-	    conector.conectar();
+
 	    boolean eliminado = false;
 	    PreparedStatement pstDelete;
 	    try {
-	        pstDelete = conector.getCon().prepareStatement("DELETE FROM realizacitas WHERE ID_clinica = ? AND DNI_Cliente = ? AND Fecha_Cita = ? AND Hora_Cita =?");
+	        pstDelete = this.con.getCon().prepareStatement("DELETE FROM realizacitas WHERE ID_clinica = ? AND DNI_Cliente = ? AND Fecha_Cita = ? AND Hora_Cita =?");
 	        pstDelete.setInt(1, id_clinica);
 	        pstDelete.setString(2, dni);
 	        pstDelete.setDate(3, new Date(fecha.getTime()));
@@ -137,17 +126,16 @@ public class ModeloCita {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-	    conector.cerrar();
+
 	    return eliminado;
 	}
 
 
 	public ArrayList<Cita> citasPosteriores(int id_Clinica) {
 		ArrayList<Cita> citas = new ArrayList<>();
-		Conector conector = new Conector();
-		conector.conectar();
+		
 		try {
-			PreparedStatement pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE ID_Clinica = ? AND (Fecha_Cita > CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) > TIME(NOW()))) ORDER BY Fecha_Cita, Hora_Cita;");
+			PreparedStatement pSt = this.con.getCon().prepareStatement("SELECT * FROM realizacitas WHERE ID_Clinica = ? AND (Fecha_Cita > CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) > TIME(NOW()))) ORDER BY Fecha_Cita, Hora_Cita;");
 			pSt.setInt(1, id_Clinica);
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
@@ -162,16 +150,15 @@ public class ModeloCita {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();
+		
 		return citas;
 	}
 
 	public ArrayList<Cita> citasAnteriores(int id_Clinica) {
 		ArrayList<Cita> citas = new ArrayList<>();
-		Conector conector = new Conector();
-		conector.conectar();
+	
 		try {
-			PreparedStatement pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE ID_Clinica = ? AND (Fecha_Cita < CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) < TIME(NOW())))ORDER BY Fecha_Cita, Hora_Cita;");
+			PreparedStatement pSt = this.con.getCon().prepareStatement("SELECT * FROM realizacitas WHERE ID_Clinica = ? AND (Fecha_Cita < CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) < TIME(NOW())))ORDER BY Fecha_Cita, Hora_Cita;");
 			pSt.setInt(1, id_Clinica);
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
@@ -186,18 +173,17 @@ public class ModeloCita {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();
+		
 		return citas;
 	}
 
 	public ArrayList<Cita> getCitasClientePosteriores(String dni) {
 		ArrayList<Cita> citas = new ArrayList<>();
-		Conector conector = new Conector();
-		conector.conectar();
+	
 		
 		PreparedStatement pSt;
 		try {
-			pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE DNI_Cliente = ? AND (Fecha_Cita > CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) > TIME(NOW()))) ORDER BY Fecha_Cita, Hora_Cita;");
+			pSt = this.con.getCon().prepareStatement("SELECT * FROM realizacitas WHERE DNI_Cliente = ? AND (Fecha_Cita > CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) > TIME(NOW()))) ORDER BY Fecha_Cita, Hora_Cita;");
 			pSt.setString(1, dni);
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
@@ -213,18 +199,16 @@ public class ModeloCita {
 			e.printStackTrace();
 		}
 		
-		conector.cerrar();
 		return citas;
 	}
 	
 	public ArrayList<Cita> getCitasClienteAnteriores(String dni) {
 		ArrayList<Cita> citas = new ArrayList<>();
-		Conector conector = new Conector();
-		conector.conectar();
+		
 		
 		PreparedStatement pSt;
 		try {
-			pSt = conector.getCon().prepareStatement("SELECT * FROM realizacitas WHERE DNI_Cliente = ? AND (Fecha_Cita < CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) < TIME(NOW()))) ORDER BY Fecha_Cita, Hora_Cita;");
+			pSt = this.con.getCon().prepareStatement("SELECT * FROM realizacitas WHERE DNI_Cliente = ? AND (Fecha_Cita < CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) < TIME(NOW()))) ORDER BY Fecha_Cita, Hora_Cita;");
 			pSt.setString(1, dni);
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
@@ -240,19 +224,16 @@ public class ModeloCita {
 			e.printStackTrace();
 		}
 		
-		conector.cerrar();
 		return citas;
 	}
 
 	public Boolean actualizarCita(String editardni, java.util.Date editarfecha, LocalTime editarhora, String editarempleado, String informe) {
 		boolean actualizado = false;
 		
-		Conector conector = new Conector();
-		conector.conectar();
 		
 		PreparedStatement pSt;
 		try {
-			pSt = conector.getCon().prepareStatement("INSERT INTO historial_cliente(DNI, Fecha_Revision, Hora_Revision, Observaciones, Atendido) VALUES (?, ?, ?, ?, ?)");
+			pSt = this.con.getCon().prepareStatement("INSERT INTO historial_cliente(DNI, Fecha_Revision, Hora_Revision, Observaciones, Atendido) VALUES (?, ?, ?, ?, ?)");
 			pSt.setString(1, editardni);
 			pSt.setDate(2, new java.sql.Date(editarfecha.getTime()));
 			Time hora = Time.valueOf(editarhora);
@@ -266,7 +247,6 @@ public class ModeloCita {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();
 		
 		return actualizado;
 	}

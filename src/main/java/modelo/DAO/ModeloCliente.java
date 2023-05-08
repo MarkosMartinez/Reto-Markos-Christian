@@ -10,19 +10,18 @@ import modelo.DTO.Cliente;
 import modelo.DTO.Telefonos;
 
 public class ModeloCliente {
+	private Conector con;
 
-	public ModeloCliente() {
-		
+	public ModeloCliente(Conector con) {
+		this.con = con;
 	}
 
 	public Cliente getCliente(String dni){
 		Cliente cliente = new Cliente();
-		Conector conector = new Conector();
-		conector.conectar();
 	
 		PreparedStatement gettear;
 		try {
-			gettear = conector.getCon().prepareStatement("SELECT * FROM cliente WHERE DNI = ?");
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM cliente WHERE DNI = ?");
 			gettear.setString(1, dni);
 			ResultSet resultado=gettear.executeQuery();
 			if(resultado.next()) {
@@ -39,20 +38,16 @@ public class ModeloCliente {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();
 		return cliente;
 		
 	}
 
 	public Cliente comprobarLogin(String dni, String password) {
 		Cliente cliente = new Cliente();
-		
-		Conector conector = new Conector();
-		conector.conectar();
 	
 		PreparedStatement gettear;
 		try {
-			gettear = conector.getCon().prepareStatement("SELECT * FROM cliente WHERE DNI = ? AND Contraseña = ?");
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM cliente WHERE DNI = ? AND Contraseña = ?");
 			gettear.setString(1, dni);
 			gettear.setString(2, password);
 			ResultSet resultado=gettear.executeQuery();
@@ -70,16 +65,13 @@ public class ModeloCliente {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();
 		return cliente;
 	}
 	
 	public void registro(String dni, String nombre, String apellido, String correo, String password, Date fechanacimiento) {
-		Conector conector = new Conector();
-		conector.conectar();
 		PreparedStatement insertar;
 		try {
-			insertar = conector.getCon().prepareStatement("INSERT INTO `cliente`(`DNI`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`) VALUES (?, ?, ?, ?, ?, ?)");
+			insertar = this.con.getCon().prepareStatement("INSERT INTO `cliente`(`DNI`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`) VALUES (?, ?, ?, ?, ?, ?)");
 			insertar.setString(1, dni);
 			insertar.setString(2, nombre);
 			insertar.setString(3, apellido);
@@ -90,16 +82,13 @@ public class ModeloCliente {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();	
 	}
 
 	public boolean comprobarDNI(String dni) {
 		boolean encontrado = false;
-		Conector conector = new Conector();
-		conector.conectar();
 		
 		try {
-			PreparedStatement comprobardni = conector.getCon().prepareStatement("SELECT * FROM cliente WHERE dni = ?");
+			PreparedStatement comprobardni = this.con.getCon().prepareStatement("SELECT * FROM cliente WHERE dni = ?");
 			comprobardni.setString(1, dni);
 			ResultSet resultado=comprobardni.executeQuery();
 			if(resultado.next()) {
@@ -112,7 +101,7 @@ public class ModeloCliente {
 		
 		if(!encontrado) {
 		try {
-			PreparedStatement comprobardni = conector.getCon().prepareStatement("SELECT * FROM empleados WHERE DNI_Emp = ?");
+			PreparedStatement comprobardni = this.con.getCon().prepareStatement("SELECT * FROM empleados WHERE DNI_Emp = ?");
 			comprobardni.setString(1, dni);
 			ResultSet resultado=comprobardni.executeQuery();
 			if(resultado.next()) {
@@ -123,37 +112,28 @@ public class ModeloCliente {
 			e.printStackTrace();
 		}
 		}
-		
-		
-		conector.cerrar();
 		return encontrado;
 	}
 
 	public void addTel(String dni, Telefonos oTelefono) {
-		Conector conector = new Conector();
-		conector.conectar();
 		PreparedStatement insertar;
 
 			try {
-				insertar = conector.getCon().prepareStatement("INSERT INTO `telefonos`(`DNI`, `Telefono`) VALUES (?, ?)");
+				insertar = this.con.getCon().prepareStatement("INSERT INTO `telefonos`(`DNI`, `Telefono`) VALUES (?, ?)");
 				insertar.setString(1, dni);
 				insertar.setInt(2, oTelefono.getTelefono());
 				insertar.execute();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		
-		conector.cerrar();	
 	}
 
 	public ArrayList<Cliente> getClientes() {
-		Conector conector = new Conector();
-		conector.conectar();
 		ArrayList<Cliente> clientes = new ArrayList<>();
 	
 		PreparedStatement gettear;
 		try {
-			gettear = conector.getCon().prepareStatement("SELECT * FROM cliente");
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM cliente");
 			ResultSet resultado=gettear.executeQuery();
 			while(resultado.next()) {
 			Cliente cliente = new Cliente();
@@ -168,18 +148,15 @@ public class ModeloCliente {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();
 		return clientes;
 	}
 
 	public ArrayList<Telefonos> cargarTelefonos() {
-		Conector conector = new Conector();
-		conector.conectar();
 		ArrayList<Telefonos> telefonos = new ArrayList<>();
 		
 		PreparedStatement gettear;
 		try {
-			gettear = conector.getCon().prepareStatement("SELECT * FROM telefonos");
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM telefonos");
 			ResultSet resultado=gettear.executeQuery();
 			while(resultado.next()) {
 			Telefonos telefono = new Telefonos();
@@ -191,19 +168,16 @@ public class ModeloCliente {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();
 		
 		return telefonos;
 	}
 	
 	public ArrayList<Telefonos> getTelefonos(String dni) {
-		Conector conector = new Conector();
-		conector.conectar();
 		ArrayList<Telefonos> telefonos = new ArrayList<>();
 		
 		PreparedStatement gettear;
 		try {
-			gettear = conector.getCon().prepareStatement("SELECT * FROM telefonos WHERE DNI = ?");
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM telefonos WHERE DNI = ?");
 			gettear.setString(1, dni);
 			ResultSet resultado=gettear.executeQuery();
 			while(resultado.next()) {
@@ -216,17 +190,14 @@ public class ModeloCliente {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conector.cerrar();
 		
 		return telefonos;
 	}
 
 	public void cambiarContrasenia(String dni, String passCifrada) {
-		Conector conector = new Conector();
-		conector.conectar();
 			PreparedStatement pstModificar;
 			try {
-	            pstModificar = conector.getCon().prepareStatement("UPDATE cliente SET Contraseña = ? WHERE DNI = ?;");
+	            pstModificar = this.con.getCon().prepareStatement("UPDATE cliente SET Contraseña = ? WHERE DNI = ?;");
 	            pstModificar.setString(1, passCifrada);
 	            pstModificar.setString(2, dni);
 	            pstModificar.execute();
@@ -234,32 +205,26 @@ public class ModeloCliente {
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
-		conector.cerrar();
 		
 	}
 
 	public void eliminarTel(Telefonos telefono) {
-		Conector conector = new Conector();
-		conector.conectar();
 			PreparedStatement pstModificar;
 			try {
-	            pstModificar = conector.getCon().prepareStatement("DELETE FROM `telefonos` WHERE DNI = ? AND Telefono = ?");
+	            pstModificar = this.con.getCon().prepareStatement("DELETE FROM `telefonos` WHERE DNI = ? AND Telefono = ?");
 	            pstModificar.setString(1, telefono.getDni());
 	            pstModificar.setInt(2, telefono.getTelefono());
 	            pstModificar.execute();
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
-		conector.cerrar();
 	}
 
 	public boolean modificarUsuario(Cliente clienteModificado) {
-	    Conector conector = new Conector();
-	    conector.conectar();
 	    boolean modificado = false;
 	    PreparedStatement pstModificar;
 	    try {
-	        pstModificar = conector.getCon().prepareStatement("UPDATE cliente SET Nombre = ?, Apellidos = ?, Correo = ? WHERE DNI = ?;");
+	        pstModificar = this.con.getCon().prepareStatement("UPDATE cliente SET Nombre = ?, Apellidos = ?, Correo = ? WHERE DNI = ?;");
 	        pstModificar.setString(1, clienteModificado.getNombre());
 	        pstModificar.setString(2, clienteModificado.getApellidos());
 	        pstModificar.setString(3, clienteModificado.getCorreo());
@@ -271,18 +236,15 @@ public class ModeloCliente {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-	    conector.cerrar();
 	    return modificado;
 	}
 
 	public boolean eliminarCliente(String dni) {
-		Conector conector = new Conector();
-	    conector.conectar();
 	    boolean eliminado = true;
 	    
 	    PreparedStatement pstEliminarCitas;
 		try {
-			pstEliminarCitas = conector.getCon().prepareStatement("DELETE FROM `realizacitas` WHERE DNI_Cliente = ?");
+			pstEliminarCitas = this.con.getCon().prepareStatement("DELETE FROM `realizacitas` WHERE DNI_Cliente = ?");
 			pstEliminarCitas.setString(1, dni);
 			pstEliminarCitas.executeUpdate();
 	        pstEliminarCitas.close();
@@ -295,7 +257,7 @@ public class ModeloCliente {
 			
 		PreparedStatement pstEliminarTelefonos;
 		try {
-			pstEliminarTelefonos = conector.getCon().prepareStatement("DELETE FROM `telefonos` WHERE DNI = ?");
+			pstEliminarTelefonos = this.con.getCon().prepareStatement("DELETE FROM `telefonos` WHERE DNI = ?");
 			pstEliminarTelefonos.setString(1, dni);
 			int filasAfectadas = pstEliminarTelefonos.executeUpdate();
 	        if(filasAfectadas == 0) {
@@ -310,7 +272,7 @@ public class ModeloCliente {
 			
 			PreparedStatement pstEliminarHistorial;
 			try {
-				pstEliminarHistorial = conector.getCon().prepareStatement("DELETE FROM `historial_cliente` WHERE DNI = ?");
+				pstEliminarHistorial = this.con.getCon().prepareStatement("DELETE FROM `historial_cliente` WHERE DNI = ?");
 				pstEliminarHistorial.setString(1, dni);
 				pstEliminarHistorial.executeUpdate();
 				pstEliminarHistorial.close();
@@ -322,7 +284,7 @@ public class ModeloCliente {
 			if(eliminado) {
 				PreparedStatement pstEliminarCliente;
 				try {
-					pstEliminarCliente = conector.getCon().prepareStatement("DELETE FROM `cliente` WHERE DNI = ?");
+					pstEliminarCliente = this.con.getCon().prepareStatement("DELETE FROM `cliente` WHERE DNI = ?");
 					pstEliminarCliente.setString(1, dni);
 					int filasAfectadas = pstEliminarCliente.executeUpdate();
 			        if(filasAfectadas == 0) {
@@ -336,7 +298,6 @@ public class ModeloCliente {
 
 		}
 		}
-		conector.cerrar();
 		return eliminado;
 	}
 
