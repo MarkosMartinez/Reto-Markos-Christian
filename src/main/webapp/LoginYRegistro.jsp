@@ -103,10 +103,10 @@
                         <div class="inputbox">
                             <i class="fas fa-id-card"></i>
                             <c:if test = "${dnilogin == null}">
-					         	<input type="text" name="dni" id="dnilogin"required="required">
+					         	<input type="text" name="dni" id="dnilogin"required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" minlength="9" maxlength="9">
 						      </c:if>
 						      <c:if test = "${dnilogin != null}">
-					         	 <input type="text" name="dni" id=dnilogin" value="${dnilogin}" required="required">
+					         	 <input type="text" name="dni" id=dnilogin" value="${dnilogin}" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" minlength="9" maxlength="9">
 						     </c:if>
                             <label for="dnilogin">DNI</label>
                         </div>
@@ -166,6 +166,8 @@
                             <label for="correo">Email</label>
                         </div>
                         <div class="inputbox">
+                                                    <i class="fas fa-calendar-alt"></i>
+                        
                             <c:if test = "${fechanacimiento == null}">
 				         	<input type="date" name="fechanacimiento" id="fechanacimiento" min='1899-01-01' max="<fmt:formatDate value="${hoy}" pattern='yyyy-MM-dd' />" value="${fecha}" required="required"> <%//TODO Cambiar la fecha min/max %>
 					      </c:if>

@@ -1,3 +1,4 @@
+
 body{
   background: url("../img/fondoNuestroEquipo.png") fixed no-repeat;
   background-size: cover;
@@ -33,11 +34,37 @@ body{
   margin: 250px 0 10px 0;
 }
 
+
+.botonmenu{
+  margin-right: 15%;
+}
+@media(max-width:905px){
+  .tarjetas.salto{
+    flex-wrap: wrap;
+  }
+
+  .textos{
+    display: none;
+    visibility: hidden;
+  }
+}
+
 @media(max-width: 765px){
 
   .tarjeta{
     margin-left: 10px;
     margin-right: 10px;
+  }
+}
+
+@media(max-width: 639px){
+
+  .footer{
+    width: 115%;
+  }
+  .textosOdontologos{
+    display: none;
+    visibility: hidden;
   }
 }
 

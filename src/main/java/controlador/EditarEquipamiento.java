@@ -24,66 +24,68 @@ import modelo.DTO.Equipamiento;
 @WebServlet("/EditarEquipamiento")
 public class EditarEquipamiento extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EditarEquipamiento() {
-        super();
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public EditarEquipamiento() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
-		if(empleadoLogueado == null) {
+		if (empleadoLogueado == null) {
 			response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 		} else {
-			Conector con  = new Conector();
-			 con.conectar();
+			Conector con = new Conector();
+			con.conectar();
 			ArrayList<Clinica> clinicas = new ArrayList<>();
 			ModeloClinica mclinica = new ModeloClinica(con);
 			clinicas = mclinica.getClinicas();
 			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
 			ModeloEquipamiento mequipamiento = new ModeloEquipamiento(con);
-			ArrayList<Equipamiento> equipamiento = new ArrayList<>(); 
+			ArrayList<Equipamiento> equipamiento = new ArrayList<>();
 			equipamiento = mequipamiento.cargarEquipamiento(empleadoLogueado.getId_Clinica());
-			
-			if(request.getParameter("c") != null && request.getParameter("v") != null) {
+
+			if (request.getParameter("c") != null && request.getParameter("v") != null) {
 				int cantidad = Integer.parseInt(request.getParameter("c"));
 				int valor = Integer.parseInt(request.getParameter("v"));
-				if(valor>= 0) {
+				if (valor >= 0) {
 					mequipamiento.actualizarStock(equipamiento.get(cantidad).getId_Equipamiento(), valor);
 					equipamiento = mequipamiento.cargarEquipamiento(empleadoLogueado.getId_Clinica());
-				}else {
+				} else {
 					request.setAttribute("equipamiento", equipamiento);
 					con.cerrar();
 					request.getRequestDispatcher("editarEquipamiento.jsp?aviso=error").forward(request, response);
 				}
-				}
-			
-			if(request.getParameter("d") != null && director) {
+			}
+
+			if (request.getParameter("d") != null && director) {
 				int delete = Integer.parseInt(request.getParameter("d"));
 				boolean eliminado = mequipamiento.eliminarStock(delete);
-				if(!eliminado) {
+				if (!eliminado) {
 					request.setAttribute("equipamiento", equipamiento);
 					con.cerrar();
 					request.getRequestDispatcher("editarEquipamiento.jsp?aviso=error").forward(request, response);
-				}else {
+				} else {
 					equipamiento = mequipamiento.cargarEquipamiento(empleadoLogueado.getId_Clinica());
 				}
-				}
-			
+			}
+
 			String aviso = request.getParameter("aviso");
 			request.setAttribute("aviso", aviso);
-			
+
 			request.setAttribute("empleadoLogueado", empleadoLogueado);
 			request.setAttribute("equipamiento", equipamiento);
 			request.setAttribute("director", director);
-			if(director) {
+			if (director) {
 				request.setAttribute("clinicas", clinicas);
 			}
 			con.cerrar();
@@ -92,57 +94,60 @@ public class EditarEquipamiento extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String tipo = request.getParameter("tipo");
-		Conector con  = new Conector();
-		 con.conectar();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String tipo = request.getParameter("tipo"); //TODO Arreglar que los botones desaparezcan cuando el stock sea < 0
+		Conector con = new Conector();
+		con.conectar();
 		ModeloEquipamiento mequipamiento = new ModeloEquipamiento(con);
-		if(tipo.equals("insert")) {
-			
-			if(request.getParameter("nombre") != null && request.getParameter("precio") != null && request.getParameter("stock") !=null) {
-			String nombre = request.getParameter("nombre");
-			Double precio = Double.parseDouble(request.getParameter("precio"));
-			int stock = Integer.parseInt(request.getParameter("stock"));
-			int idClinica = Integer.parseInt(request.getParameter("idClinica"));
-			mequipamiento.insertar(nombre, precio, stock, idClinica);
-			con.cerrar();
-			response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=insertado");
-			}else {
+		if (tipo.equals("insert")) {
+
+			if (request.getParameter("nombre") != null && request.getParameter("precio") != null
+					&& request.getParameter("stock") != null) {
+				String nombre = request.getParameter("nombre");
+				Double precio = Double.parseDouble(request.getParameter("precio"));
+				int stock = Integer.parseInt(request.getParameter("stock"));
+				int idClinica = Integer.parseInt(request.getParameter("idClinica"));
+				mequipamiento.insertar(nombre, precio, stock, idClinica);
+				con.cerrar();
+				response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=insertado");
+			} else {
 				con.cerrar();
 				response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
 			}
-		}else if(tipo.equals("actualizar")){
-		int cantidadStock = Integer.parseInt(request.getParameter("cantidad"));
-		
-		HttpSession session = request.getSession();
-		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
-			ArrayList<Equipamiento> equipamiento = new ArrayList<>(); 
+		} else if (tipo.equals("actualizar")) {
+			int cantidadStock = Integer.parseInt(request.getParameter("cantidad"));
+
+			HttpSession session = request.getSession();
+			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
+			ArrayList<Equipamiento> equipamiento = new ArrayList<>();
 			equipamiento = mequipamiento.cargarEquipamiento(empleadoLogueado.getId_Clinica());
-		
-		ArrayList<Integer> nuevoStock = new ArrayList<>();
-		for (int i = 0; i < cantidadStock; i++) {
-			nuevoStock.add(Integer.parseInt(request.getParameter("stock-" + i)));
-		}
-		
-		ArrayList<Equipamiento> equipamientoFinal = new ArrayList<>(); //TODO Optimizar esto?
-		for (int j = 0; j < equipamiento.size(); j++) {
+
+			ArrayList<Integer> nuevoStock = new ArrayList<>();
+			for (int i = 0; i < cantidadStock; i++) {
+				nuevoStock.add(Integer.parseInt(request.getParameter("stock-" + i)));
+			}
+
+			ArrayList<Equipamiento> equipamientoFinal = new ArrayList<>(); // TODO Optimizar esto?
+			for (int j = 0; j < equipamiento.size(); j++) {
 				equipamiento.get(j).setStock(nuevoStock.get(j));
 				equipamientoFinal.add(equipamiento.get(j));
-			
-		}
-		
-		boolean actualizado = false;
-		actualizado = mequipamiento.actualizarTodos(equipamientoFinal);
-		con.cerrar();
-		if(actualizado) {
-			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=actualizado");
-		}else {
-			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
 
-		}
-		}else if(tipo.equals("modclinica")){
+			}
+
+			boolean actualizado = false;
+			actualizado = mequipamiento.actualizarTodos(equipamientoFinal);
+			con.cerrar();
+			if (actualizado) {
+				response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=actualizado");
+			} else {
+				response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
+
+			}
+		} else if (tipo.equals("modclinica")) {
 			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));
 			String dniDirector = request.getParameter("dnidirector");
@@ -153,9 +158,9 @@ public class EditarEquipamiento extends HttpServlet {
 			empleadoLogueado.setId_Clinica(idNuevaClinica);
 			session.setAttribute("empleadoLogueado", empleadoLogueado);
 			response.sendRedirect(request.getContextPath() + "/EditarEquipamiento");
-		}else {
+		} else {
 			con.cerrar();
-			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
+			response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
 
 		}
 	}

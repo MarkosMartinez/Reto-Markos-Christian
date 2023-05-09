@@ -1,6 +1,8 @@
 body {
-  background-image: url("https://fancywalls.eu/wp-content/uploads/blue-and-white-minimalist-unpasted-wallpaper-540x540.jpg");
+  background-image: url("../img/fondoVerCitas.jpg");
   background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
   position: relative;
 }
 
@@ -469,7 +471,8 @@ textarea {
 select.clinica {
   background-color: transparent;
   border: none;
-  font-size: 33px;
+  font-size: 36px;
   color: blue;
+  margin-top: -1px;
   margin-left: 5px;
 }
