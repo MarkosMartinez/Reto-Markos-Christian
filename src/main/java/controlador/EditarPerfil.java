@@ -14,6 +14,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import modelo.DAO.Conector;
 import modelo.DAO.ModeloCliente;
+import modelo.DAO.ModeloEmpleado;
 import modelo.DTO.Cliente;
 import modelo.DTO.Empleado;
 import modelo.DTO.Telefonos;
@@ -40,6 +41,7 @@ public class EditarPerfil extends HttpServlet {
 		boolean error = false;
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
+		boolean director = false;
 		if(clienteLogueado == null && empleadoLogueado == null) {
 			response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
 		}else {
@@ -52,6 +54,8 @@ public class EditarPerfil extends HttpServlet {
 				tipoLogin = "cliente";
 				cliente = clienteLogueado;
 			} else if(empleadoLogueado != null) {
+				ModeloEmpleado mempleado = new ModeloEmpleado(con);
+				director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
 				Cliente clienteAModificar = new Cliente();
 				if(request.getParameter("dni") == null) {
 					error = true;
@@ -72,6 +76,7 @@ public class EditarPerfil extends HttpServlet {
 			if(!error) {
 		String aviso = request.getParameter("aviso");
 		request.setAttribute("aviso", aviso);
+		request.setAttribute("director", director);
 		request.setAttribute("tipoLogin", tipoLogin);
 		request.setAttribute("cliente", cliente);
 		request.setAttribute("telefonos", telefonos);

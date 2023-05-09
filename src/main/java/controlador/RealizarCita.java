@@ -18,6 +18,7 @@ import modelo.DAO.Conector;
 import modelo.DAO.ModeloCita;
 import modelo.DAO.ModeloCliente;
 import modelo.DAO.ModeloClinica;
+import modelo.DAO.ModeloEmpleado;
 import modelo.DAO.ModeloHabitacion;
 import modelo.DTO.Cliente;
 import modelo.DTO.Clinica;
@@ -41,7 +42,7 @@ public class RealizarCita extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(); //TODO Añadir los avisos de errores y cambiar el fondo?
+		HttpSession session = request.getSession();
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		ArrayList<Clinica> clinicas = new ArrayList<>();
@@ -49,7 +50,7 @@ public class RealizarCita extends HttpServlet {
 		con.conectar();
 		ModeloClinica mclinica = new ModeloClinica(con);
 		clinicas = mclinica.getClinicas();
-		con.cerrar();
+		boolean director = false; 
 		String aviso = request.getParameter("aviso");
 		String clinica = request.getParameter("clinica");
 		String dni = request.getParameter("dni");
@@ -64,7 +65,12 @@ public class RealizarCita extends HttpServlet {
 			tipoLogin = "cliente";
 		} else if(empleadoLogueado != null) {
 			tipoLogin = "empleado";
+			ModeloEmpleado mempleado = new ModeloEmpleado(con);
+			director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
 		}
+		con.cerrar();
+		
+		request.setAttribute("director", director);
 		request.setAttribute("tipoLogin", tipoLogin);
 		request.setAttribute("aviso", aviso);
 		request.setAttribute("clinica", clinica);

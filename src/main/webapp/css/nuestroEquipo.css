@@ -1,25 +1,50 @@
-main {
-  position: relative;
-  z-index: 1;
-  min-height: 75vh;
+body{
+  background: url("../img/fondoNuestroEquipo.png") fixed no-repeat;
+  background-size: cover;
 }
 
+.tituloSuperior{
+  padding-top: 100px;
+  text-align: center;
+  color: #1a39b8;
+}
+
+.tituloSuperior span{
+  font-size: 0.5em;
+  color: rgb(13, 90, 255);
+  z-index: -2;
+  position: relative;
+}
+
+.tarjetas{
+  margin-top: -100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 .tarjeta {
-  width: 200px;
+  width: 300px;
   height: 300px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   padding: 0 36px;
-  perspective: 2500px;
-  margin: 0 50px;
+  margin: 250px 0 10px 0;
+}
+
+@media(max-width: 765px){
+
+  .tarjeta{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 .cover-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  background-size: cover;
 }
 
 .wrapper {
@@ -79,7 +104,7 @@ main {
 }
 
 .title {
-  width: 150%;
+  width: 100%;
   transition: transform 0.5s;
 }
 
@@ -89,6 +114,7 @@ main {
 
 .character {
   width: 100%;
+  top: 20px;
   opacity: 0;
   transition: all 0.5s;
   position: absolute;
@@ -98,4 +124,16 @@ main {
 .tarjeta:hover .character {
   opacity: 1;
   transform: translate3d(0%, -30%, 100px);
+}
+
+.texto-tarjeta h1{
+  color: rgb(0, 119, 255);
+}
+
+.texto-tarjeta {
+  width: 280px;
+  margin: auto;
+  text-align: center;
+  margin-top: 10px;
+  color: white;
 }

@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="css/verCitas.css" />
   </head>
 
-<header> <% //TODO Arreglar el header y añadir lo que falte. Por ejemplo GestionarUsuarios %>
+<header>
     <nav>
       <input type="checkbox" id="check" />
       <label for="check" class="botonmenu">
@@ -40,23 +40,29 @@
       </a>
       <ul class="opciones">
         <li><a href="Principal">Inicio</a></li>
-        <li><a href="nuestroEquipo.html">Nuestro equipo</a></li>
-        <li><a href="">Tratamientos</a></li>
+        <li><a href="NuestroEquipo">Nuestro equipo</a></li>
+        <li><a href="Tratamientos">Tratamientos</a></li>
         <c:if test="${tipoLogin eq 'ninguno'}">
         	<li><a href="LoginYRegistro">Iniciar sesión/Registrarse</a></li>
         </c:if>
         <li><a href="RealizarCita">Pedir Cita</a></li>
-        <li><a href="">Contactanos</a></li>
         <li><a class="activo" href="VerCitas">Consultar Citas</a></li>
+        <c:if test="${tipoLogin eq 'empleado'}">
+        <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
+        </c:if>
+        <c:if test="${director eq true}">
+        <li><a href="GestionarClinicas">Gestionar Clinicas</a></li>
+        </c:if>
+        <c:if test="${tipoLogin eq 'empleado'}">
+        <li><a href="GestionarUsuarios">Gestionar Usuarios</a></li>
+        </c:if>
         <c:if test="${tipoLogin eq 'cliente'}">
         <li><a href="EditarPerfil">Editar Perfil</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'empleado'}">
-        <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
+        <li><a href="EditarEmpleado">Editar Perfil</a></li>
         </c:if>
-        <c:if test="${tipoLogin != 'ninguno'}">
         <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
-        </c:if>
       </ul>
     </nav>
   </header>

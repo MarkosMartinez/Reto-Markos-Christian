@@ -23,5 +23,6 @@ Mas webs: https://flowbite.com/docs/forms/floating-label/ - https://mdbootstrap.
 Ejemplo tabla de empleados: https://mdbootstrap.com/docs/standard/data/tables/#:~:text=EDIT%20IN%20SANDBOX-,Advanced%20example,-An%20advanced%20example
 
 FALTA:
+Eliminar tratamientos del Header?
 Corregir todos los TODOs
 ARREGLAR EL HOVER DEL FOOTER!!

@@ -42,14 +42,17 @@ public class EditarEmpleado extends HttpServlet {
 		String dniAEditar = request.getParameter("dni");
 		String aviso = request.getParameter("aviso");
 		request.setAttribute("aviso", aviso);
+		Conector con = new Conector();
+		con.conectar();
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
-		if(empleadoLogueado == null || dniAEditar == null) {
+		ModeloEmpleado mempleado = new ModeloEmpleado(con);
+		boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
+		if((empleadoLogueado == null) || (dniAEditar != null && !director)) {
+			con.cerrar();
 			response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp&aviso=error");
 		}else {
-			Conector con  = new Conector();
-			con.conectar();
-			ModeloEmpleado mempleado = new ModeloEmpleado(con);
-			boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
+		if(dniAEditar == null)
+			dniAEditar = empleadoLogueado.getDni_Emp();
 		if(director || empleadoLogueado.getDni_Emp().equals(dniAEditar)) {
 			Empleado empleado = new Empleado();
 			empleado = mempleado.getEmpleado(dniAEditar);

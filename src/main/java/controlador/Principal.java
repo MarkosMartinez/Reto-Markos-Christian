@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.DAO.Conector;
+import modelo.DAO.ModeloEmpleado;
 import modelo.DTO.Cliente;
 import modelo.DTO.Empleado;
 
@@ -36,13 +37,20 @@ public class Principal extends HttpServlet {
 		HttpSession session = request.getSession();
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
+		boolean director = false;
 		String tipoLogin = "ninguno";
 			if(clienteLogueado != null) {
 				tipoLogin = "cliente";
 			} else if(empleadoLogueado != null) {
+				Conector con  = new Conector();
+				con.conectar();
+				ModeloEmpleado mempleado = new ModeloEmpleado(con);
+				director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
+				con.cerrar();
 				tipoLogin = "empleado";
 			}
-			request.setAttribute("tipoLogin", tipoLogin);
+		request.setAttribute("director", director);
+		request.setAttribute("tipoLogin", tipoLogin);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 

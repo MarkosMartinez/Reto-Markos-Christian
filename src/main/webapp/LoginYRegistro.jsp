@@ -43,10 +43,11 @@
       </a>
       <ul class="opciones">
         <li><a href="Principal">Inicio</a></li>
-        <li><a href="nuestroEquipo.html">Nuestro equipo</a></li>
-        <li><a href="">Tratamientos</a></li>
+        <li><a href="NuestroEquipo">Nuestro equipo</a></li>
+        <li><a href="Tratamientos">Tratamientos</a></li>
         <li><a href="RealizarCita">Pedir Cita</a></li>
-        <li><a href="">Contactanos</a></li>
+        <li><a href="VerCitas">Consultar Citas</a></li>
+       	<li><a class="activo" href="LoginYRegistro">Iniciar sesión/Registrarse</a></li>
       </ul>
     </nav>
   </header>
