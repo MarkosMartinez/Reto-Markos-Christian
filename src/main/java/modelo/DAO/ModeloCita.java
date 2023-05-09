@@ -122,7 +122,7 @@ public class ModeloCita {
 	        pstDelete.setString(2, dni);
 	        pstDelete.setDate(3, new Date(fecha.getTime()));
 	        pstDelete.setTime(4, Time.valueOf(hora));
-	        eliminado = pstDelete.executeUpdate() > 0; // Comprueba si se ha eliminado alguna fila
+	        eliminado = pstDelete.executeUpdate() > 0;
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
@@ -227,7 +227,7 @@ public class ModeloCita {
 		return citas;
 	}
 
-	public Boolean actualizarCita(String editardni, java.util.Date editarfecha, LocalTime editarhora, String editarempleado, String informe) {
+	public Boolean actualizarCita(String editardni, java.util.Date editarfecha, LocalTime editarhora, String editarempleado, String informe) { //TODO Primero que haga un Update y si no lo consigue que haga un insert.
 		boolean actualizado = false;
 		
 		
@@ -249,6 +249,21 @@ public class ModeloCita {
 		}
 		
 		return actualizado;
+	}
+
+	public boolean borrarCitas(int id) {
+		boolean eliminado = true;
+	    PreparedStatement pstDelete;
+	    try {
+	        pstDelete = this.con.getCon().prepareStatement("DELETE FROM citas WHERE ID_Clinica = ?");
+	        pstDelete.setInt(1, id);
+	        pstDelete.execute();
+	    } catch (SQLException e) {
+	    	eliminado = false;
+	        e.printStackTrace();
+	    }
+
+	    return eliminado;
 	}
 
 }

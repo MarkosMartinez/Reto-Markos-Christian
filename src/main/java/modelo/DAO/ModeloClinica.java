@@ -39,4 +39,36 @@ public class ModeloClinica {
 		
 	}
 
+		public boolean crearClinica(Clinica nuevaClinica) {
+		    boolean creado = false;
+		    PreparedStatement pstInsert;
+		    try {
+		        pstInsert = this.con.getCon().prepareStatement("INSERT INTO `clinica`(`Nombre_Clinica`, `Direccion`, `Telefono`) VALUES (?, ?, ?)");
+		        pstInsert.setString(1, nuevaClinica.getNombre_clinica());
+		        pstInsert.setString(2, nuevaClinica.getDireccion());
+		        pstInsert.setInt(3, nuevaClinica.getTelefono());
+		        int filasAfectadas = pstInsert.executeUpdate();
+		        creado = filasAfectadas > 0;
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return creado;
+		}
+
+		public boolean borrarClinica(int id) {
+			boolean eliminado = true;
+		    PreparedStatement pstDelete;
+		    try {
+		        pstDelete = this.con.getCon().prepareStatement("DELETE FROM clinica WHERE ID_Clinica = ?");
+		        pstDelete.setInt(1, id);
+		        pstDelete.execute();
+		    } catch (SQLException e) {
+		    	eliminado = false;
+		        e.printStackTrace();
+		    }
+
+		    return eliminado;
+		}
+
+
 }

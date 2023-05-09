@@ -214,5 +214,20 @@ public class ModeloEmpleado {
 		    return modificado;
 	}
 
+	public boolean eliminarEmpleados(int id) {
+		boolean eliminado = true;
+	    PreparedStatement pstDelete;
+	    try {
+	        pstDelete = this.con.getCon().prepareStatement("DELETE FROM empleados WHERE ID_Clinica = ?");
+	        pstDelete.setInt(1, id);
+	        pstDelete.execute();
+	    } catch (SQLException e) {
+	    	eliminado = false;
+	        e.printStackTrace();
+	    }
+
+	    return eliminado;
+	}
+
 
 }

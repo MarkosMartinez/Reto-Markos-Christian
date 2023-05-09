@@ -16,6 +16,7 @@ import modelo.DAO.ModeloEmpleado;
 import modelo.DAO.ModeloHabitacion;
 import modelo.DTO.Clinica;
 import modelo.DTO.Empleado;
+import modelo.DTO.Habitacion;
 
 /**
  * Servlet implementation class GestionarClinicas
@@ -35,7 +36,7 @@ public class GestionarClinicas extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(); //TODO Añadir los avisos de error y correctos (Tambien recibe avisos al eliminar/crear clinicas y habitaciones)
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		if(empleadoLogueado == null) {
 			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
@@ -45,13 +46,17 @@ public class GestionarClinicas extends HttpServlet {
 			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
 			if(director) {
+				String aviso = request.getParameter("aviso");
+				if(aviso == null)
+					aviso = "ninguno";
 				ModeloClinica mclinica = new ModeloClinica(con);
 				ModeloHabitacion mhabitacion = new ModeloHabitacion(con);
 				ArrayList<Clinica> clinicas = mclinica.getClinicas();
-				/*ArrayList<Habitacion> habitaciones = mhabitacion.getHabitaciones(empleadoLogueado.getId_Clinica());*/
+				ArrayList<Habitacion> habitaciones = mhabitacion.getHabitaciones(empleadoLogueado.getId_Clinica());
 				
 				request.setAttribute("clinicas", clinicas);
-				/*request.setAttribute("habitaciones", habitaciones);*/
+				request.setAttribute("habitaciones", habitaciones);
+				request.setAttribute("aviso", aviso);
 				con.cerrar();
 				request.getRequestDispatcher("listaHabitacionesClinicas.jsp").forward(request, response);
 			}else {
@@ -65,7 +70,68 @@ public class GestionarClinicas extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String tipo = request.getParameter("tipo");
+		Conector con  = new Conector();
+		 con.conectar();
+		if(tipo.equals("modclinica")) {
+			ModeloEmpleado mempleado = new ModeloEmpleado(con);
+			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));
+			String dniDirector = request.getParameter("dnidirector");
+			mempleado.cambiarClinica(dniDirector, idNuevaClinica);
+			HttpSession session = request.getSession();
+			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
+			empleadoLogueado.setId_Clinica(idNuevaClinica);
+			session.setAttribute("empleadoLogueado", empleadoLogueado);
+			con.cerrar();
+			response.sendRedirect(request.getContextPath() + "/GestionarClinicas");
+			
+		}else if(tipo.equals("addHabitacion")) {
+			String numHabitacion = request.getParameter("numHabitacion");
+			String especialidad = request.getParameter("especialidad");
+			String idClinica = request.getParameter("clinica");
+			
+			boolean añadido = false;
+			
+			Habitacion nuevaHabitacion = new Habitacion();
+			nuevaHabitacion.setNum_Habitacion(Integer.parseInt(numHabitacion));
+			nuevaHabitacion.setEspecialidad(especialidad);
+			nuevaHabitacion.setId_Clinica(Integer.parseInt(idClinica));
+			
+			ModeloHabitacion mhabitacion = new ModeloHabitacion(con);
+			boolean disponible = mhabitacion.comprobarDisponibilidad(nuevaHabitacion);
+			if(disponible)
+			añadido = mhabitacion.crearHabitacion(nuevaHabitacion);
+			
+			con.cerrar();
+			if(añadido){
+				response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=habitacioncreada");
+			}else {
+				response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=error");
+			}
+			
+		}else if(tipo.equals("addClinica")) {
+			String nombre = request.getParameter("nombre");
+			String direccion = request.getParameter("direccion");
+			String telefono = request.getParameter("telefono");
+			
+			Clinica nuevaClinica = new Clinica();
+			nuevaClinica.setNombre_clinica(nombre);
+			nuevaClinica.setDireccion(direccion);
+			nuevaClinica.setTelefono(Integer.parseInt(telefono));
+			
+			ModeloClinica mclinica = new ModeloClinica(con);
+			boolean creado = mclinica.crearClinica(nuevaClinica);
+			
+			con.cerrar();
+			if(creado) {
+				response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=clinicacreada");
+			}else {
+				response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=error");
+			}
+		}else {
+			con.cerrar();
+			response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=error");
+		}
 	}
 
 }

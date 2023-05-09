@@ -46,11 +46,15 @@ public class EditarEmpleado extends HttpServlet {
 		con.conectar();
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		ModeloEmpleado mempleado = new ModeloEmpleado(con);
-		boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
-		if((empleadoLogueado == null) || (dniAEditar != null && !director)) {
+		boolean director = false;
+		if(empleadoLogueado == null) {
 			con.cerrar();
 			response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp&aviso=error");
 		}else {
+			director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
+			if(dniAEditar != null && !director) {
+				response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp&aviso=error");
+			}else {
 		if(dniAEditar == null)
 			dniAEditar = empleadoLogueado.getDni_Emp();
 		if(director || empleadoLogueado.getDni_Emp().equals(dniAEditar)) {
@@ -75,6 +79,7 @@ public class EditarEmpleado extends HttpServlet {
 			}
 		}
 		}
+		 }
 	}
 
 	/**

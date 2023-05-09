@@ -55,14 +55,18 @@ section{
   }
 
   .tituloYopcion select{
-    background-color: #2A2774;
+    background: transparent;
     border: none;
     color: white;
+  }
+  
+ .tituloYopcion select option{
+   background-color: #2A2774;
   }
 
   .opcionGestion{
     font-size: 30px;
-    margin-top: 59.1px;
+    margin-top: 60px;
     margin-left: 5px;
     height: 40px;
   }

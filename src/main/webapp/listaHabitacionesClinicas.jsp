@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="modelo.DTO.Clinica"%>
 
     <!DOCTYPE html>
 <html lang="es">
@@ -35,8 +37,8 @@
         <li><a href="Tratamientos">Tratamientos</a></li>
         <li><a href="RealizarCita">Pedir Cita</a></li>
         <li><a href="VerCitas">Consultar Citas</a></li>
-        <li><a class="activo" href="EditarEquipamiento">Editar Equipamiento</a></li>
-        <li><a href="GestionarClinicas">Gestionar Clinicas</a></li>
+        <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
+        <li><a class="activo" href="GestionarClinicas">Gestionar Clinicas</a></li>
         <li><a href="GestionarUsuarios">Gestionar Usuarios</a></li>
         <li><a href="EditarEmpleado">Editar Perfil</a></li>
         <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
@@ -50,12 +52,21 @@
     
     <main>
       <section>
-        <div class="tituloYopcion">
-          <h1 class="titulo">Lista de habitaciones de</h1>
-          <select class="opcionGestion" name="opcionGestion">
-            <option value="clinica1">CLINICA1</option>
-            <option value="clinica2">CLINICA2</option>
-          </select>
+        <div class="tituloYopcion" style="max-width: 100%; margin: auto; display: flex; justify-content: center; align-items: center;">
+          <h1 class="titulo">Lista de habitaciones de</h1> <%//TODO Arreglar el modo de ver en el movil. Y lo mismo en VerCitas en el movil (al ser director) %>
+          <form action="GestionarClinicas" method="POST" style="display: inline-block; margin-top: -61px;">
+          <input type="text" value="modclinica" name="tipo" readonly="readonly" hidden required="required">
+	          <select class="opcionGestion" name="clinica" onchange="this.form.submit()">
+		          <c:forEach var="clinica" items="${clinicas}">
+		          	<c:if test="${clinica.id_clinica eq empleadoLogueado.getId_Clinica()}">
+					   <option selected="selected" value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
+					</c:if>
+					<c:if test="${clinica.id_clinica ne empleadoLogueado.getId_Clinica()}">
+					   <option value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
+					</c:if>
+		          </c:forEach>
+	          </select>
+          </form>
         </div>
 
         <div class="botonesAñaEli">
@@ -65,15 +76,16 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <li>
-                    <form style="padding: 10px;">
+                    <form action="GestionarClinicas" method="POST" style="padding: 10px;">
+                   	 <input type="text" value="addClinica" name="tipo" readonly="readonly" hidden required="required">
                       <label for="nombre">Nombre:</label>
-                      <input type="text" id="nombre" name="nombre">
+                      <input type="text" id="nombre" name="nombre" required="required" >
                       <br><br>
                       <label for="direccion">Direccion:</label>
-                      <input type="text" id="direccion" name="direccion">
+                      <input type="text" id="direccion" name="direccion" required="required" >
                       <br><br>
                       <label for="telefono">Teléfono:</label>
-                      <input type="number" id="telefono" name="telefono" min="600000000">
+                      <input type="number" id="telefono" name="telefono" min="600000000" required="required" >
                       <br><br>
                       <button type="submit" class="btn btn-primary">Añadir</button>
                     </form>
@@ -82,14 +94,10 @@
               </div>
     
               <div>
-                <a href="" class="btn btn-danger">
-                    Eliminar Clínica <i class="fa-solid fa-building-circle-xmark"></i>
-                  </a>
+                <a href="EliminarClinica?id=${empleadoLogueado.getId_Clinica()}" class="btn btn-danger">Eliminar Clínica <i class="fa-solid fa-building-circle-xmark"></i></a>
               </div>
               
         </div>
-     
-          
 
         <div class="tbl-header">
           <table cellpadding="0" cellspacing="0" border="0">
@@ -105,42 +113,17 @@
         <div class="tbl-content">
           <table cellpadding="0" cellspacing="0" border="0">
             <tbody>
-              <tr>
-                <td>33</td>
-                <td>Radiología</td>
-                <td>
-                  <a href="" class="btn btn-danger"
-                    ><i class="fa-solid fa-trash-can" style="color: #ffffff"></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>33</td>
-                <td>Radiología</td>
-                <td>
-                  <a href="" class="btn btn-danger"
-                    ><i class="fa-solid fa-trash-can" style="color: #ffffff"></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>33</td>
-                <td>Radiología</td>
-                <td>
-                  <a href="" class="btn btn-danger"
-                    ><i class="fa-solid fa-trash-can" style="color: #ffffff"></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>33</td>
-                <td>Radiología</td>
-                <td>
-                  <a href="" class="btn btn-danger"
-                    ><i class="fa-solid fa-trash-can" style="color: #ffffff"></i
-                  ></a>
-                </td>
-              </tr>
+              <c:forEach var="habitacion" items="${habitaciones}">
+	              <tr>
+	                <td>${habitacion.num_Habitacion}</td>
+	                <td>${habitacion.especialidad }</td>
+	                <td>
+	                  <a href="EliminarHabitacion?id=${habitacion.id_Habitacion}" class="btn btn-danger"
+	                    ><i class="fa-solid fa-trash-can" style="color: #ffffff"></i
+	                  ></a>
+	                </td>
+	              </tr>
+              </c:forEach>
             </tbody>
           </table>
         </div>
@@ -156,22 +139,24 @@
             <h2 style="color: rgb(0, 132, 255)">Añadir habitación</h2>
             <a class="close" href="#">&times;</a>
             <div class="content">
-              <form action="https://i.redd.it/bn2mhngwvm391.jpg">
+              <form action="GestionarClinicas" method="POST">
+              <input type="text" value="addHabitacion" name="tipo" readonly="readonly" hidden required="required">
                 <label for="numHabitacion">Número de habitacion:</label>
-                <input
-                  type="number"
-                  name="numHabitacion"
-                  required
-                  id="numHabitacion" min="0"
-                />
+                <input type="number" name="numHabitacion" required id="numHabitacion" min="0"/>
                 <br /><br />
                 <label for="especialidad">Especialidad:</label>
                 <input type="text" name="especialidad" required id="especialidad" />
                 <br /><br />
                 <label for="clinica">Clinica:</label>
-                <select name="Clinica" id="clinica">
-                  <option value="clinica1">Clinica1</option>
-                  <option value="clinica2">Clinica2</option>
+                <select name="clinica" id="clinica" required="required">
+                  <c:forEach var="clinica" items="${clinicas}">
+		          	<c:if test="${clinica.id_clinica eq empleadoLogueado.getId_Clinica()}">
+					   <option selected="selected" value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
+					</c:if>
+					<c:if test="${clinica.id_clinica ne empleadoLogueado.getId_Clinica()}">
+					   <option value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
+					</c:if>
+		          </c:forEach>
                 </select>
                 <br /><br />
                 <button type="submit" class="botonFormulario">Enviar</button>

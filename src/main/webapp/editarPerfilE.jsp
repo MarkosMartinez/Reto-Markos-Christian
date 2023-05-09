@@ -30,7 +30,7 @@
         <i class="fas fa-bars"></i>
       </label>
       <a href="Principal" class="enlaceLogo">
-        <img src="img/logoProv.png" class="logo" />
+        <img src="img/logoProv.png" class="logo" style="z-index: 999;" />
       </a>
       <ul class="opciones">
         <li><a href="Principal">Inicio</a></li>
@@ -50,6 +50,7 @@
   </header>
 
   <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <main>
     <c:if test="${aviso eq 'actualizado'}">
       <div class="alerta">
@@ -78,7 +79,7 @@
               <div class="card-body">
                 <div class="editarPerfil">
                   <div class="foto">
-                    <div class="logo">
+                    <div class="logoDos">
                       <img src="img/logoProv.png" />
                     </div>
                     <h5 class="titulo">Editar perfil de Empleado Smiling</h5>
