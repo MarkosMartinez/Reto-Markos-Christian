@@ -21,7 +21,7 @@ public class ModeloCliente {
 	
 		PreparedStatement gettear;
 		try {
-			gettear = this.con.getCon().prepareStatement("SELECT * FROM cliente WHERE DNI = ?");
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM clientes WHERE DNI = ?");
 			gettear.setString(1, dni);
 			ResultSet resultado=gettear.executeQuery();
 			if(resultado.next()) {
@@ -47,7 +47,7 @@ public class ModeloCliente {
 	
 		PreparedStatement gettear;
 		try {
-			gettear = this.con.getCon().prepareStatement("SELECT * FROM cliente WHERE DNI = ? AND Contraseña = ?");
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM clientes WHERE DNI = ? AND Contraseña = ?");
 			gettear.setString(1, dni);
 			gettear.setString(2, password);
 			ResultSet resultado=gettear.executeQuery();
@@ -71,7 +71,7 @@ public class ModeloCliente {
 	public void registro(String dni, String nombre, String apellido, String correo, String password, Date fechanacimiento) {
 		PreparedStatement insertar;
 		try {
-			insertar = this.con.getCon().prepareStatement("INSERT INTO `cliente`(`DNI`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`) VALUES (?, ?, ?, ?, ?, ?)");
+			insertar = this.con.getCon().prepareStatement("INSERT INTO `clientes`(`DNI`, `Nombre`, `Apellidos`, `Correo`, `Contraseña`, `Fecha_Nacimiento`) VALUES (?, ?, ?, ?, ?, ?)");
 			insertar.setString(1, dni);
 			insertar.setString(2, nombre);
 			insertar.setString(3, apellido);
@@ -88,7 +88,7 @@ public class ModeloCliente {
 		boolean encontrado = false;
 		
 		try {
-			PreparedStatement comprobardni = this.con.getCon().prepareStatement("SELECT * FROM cliente WHERE dni = ?");
+			PreparedStatement comprobardni = this.con.getCon().prepareStatement("SELECT * FROM clientes WHERE dni = ?");
 			comprobardni.setString(1, dni);
 			ResultSet resultado=comprobardni.executeQuery();
 			if(resultado.next()) {
@@ -133,7 +133,7 @@ public class ModeloCliente {
 	
 		PreparedStatement gettear;
 		try {
-			gettear = this.con.getCon().prepareStatement("SELECT * FROM cliente");
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM clientes");
 			ResultSet resultado=gettear.executeQuery();
 			while(resultado.next()) {
 			Cliente cliente = new Cliente();
@@ -197,7 +197,7 @@ public class ModeloCliente {
 	public void cambiarContrasenia(String dni, String passCifrada) {
 			PreparedStatement pstModificar;
 			try {
-	            pstModificar = this.con.getCon().prepareStatement("UPDATE cliente SET Contraseña = ? WHERE DNI = ?;");
+	            pstModificar = this.con.getCon().prepareStatement("UPDATE clientes SET Contraseña = ? WHERE DNI = ?;");
 	            pstModificar.setString(1, passCifrada);
 	            pstModificar.setString(2, dni);
 	            pstModificar.execute();
@@ -224,7 +224,7 @@ public class ModeloCliente {
 	    boolean modificado = false;
 	    PreparedStatement pstModificar;
 	    try {
-	        pstModificar = this.con.getCon().prepareStatement("UPDATE cliente SET Nombre = ?, Apellidos = ?, Correo = ? WHERE DNI = ?;");
+	        pstModificar = this.con.getCon().prepareStatement("UPDATE clientes SET Nombre = ?, Apellidos = ?, Correo = ? WHERE DNI = ?;");
 	        pstModificar.setString(1, clienteModificado.getNombre());
 	        pstModificar.setString(2, clienteModificado.getApellidos());
 	        pstModificar.setString(3, clienteModificado.getCorreo());
@@ -244,7 +244,7 @@ public class ModeloCliente {
 	    
 	    PreparedStatement pstEliminarCitas;
 		try {
-			pstEliminarCitas = this.con.getCon().prepareStatement("DELETE FROM `realizacitas` WHERE DNI_Cliente = ?");
+			pstEliminarCitas = this.con.getCon().prepareStatement("DELETE FROM `citas` WHERE DNI_Cliente = ?");
 			pstEliminarCitas.setString(1, dni);
 			pstEliminarCitas.executeUpdate();
 	        pstEliminarCitas.close();
@@ -272,7 +272,7 @@ public class ModeloCliente {
 			
 			PreparedStatement pstEliminarHistorial;
 			try {
-				pstEliminarHistorial = this.con.getCon().prepareStatement("DELETE FROM `historial_cliente` WHERE DNI = ?");
+				pstEliminarHistorial = this.con.getCon().prepareStatement("DELETE FROM `historiales_clientes` WHERE DNI = ?");
 				pstEliminarHistorial.setString(1, dni);
 				pstEliminarHistorial.executeUpdate();
 				pstEliminarHistorial.close();
@@ -284,7 +284,7 @@ public class ModeloCliente {
 			if(eliminado) {
 				PreparedStatement pstEliminarCliente;
 				try {
-					pstEliminarCliente = this.con.getCon().prepareStatement("DELETE FROM `cliente` WHERE DNI = ?");
+					pstEliminarCliente = this.con.getCon().prepareStatement("DELETE FROM `clientes` WHERE DNI = ?");
 					pstEliminarCliente.setString(1, dni);
 					int filasAfectadas = pstEliminarCliente.executeUpdate();
 			        if(filasAfectadas == 0) {

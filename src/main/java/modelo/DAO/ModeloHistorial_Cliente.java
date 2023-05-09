@@ -21,7 +21,7 @@ public class ModeloHistorial_Cliente {
 		
 		PreparedStatement pSt;
 		try {
-			pSt = this.con.getCon().prepareStatement("SELECT * FROM historial_cliente;");
+			pSt = this.con.getCon().prepareStatement("SELECT * FROM historiales_clientes;");
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
 				Historial_Cliente historial = new Historial_Cliente();
