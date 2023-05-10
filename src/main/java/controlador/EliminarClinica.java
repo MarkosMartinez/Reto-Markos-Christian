@@ -62,6 +62,9 @@ public class EliminarClinica extends HttpServlet {
 								encontrado = true;
 							}
 						}
+						mempleado.cambiarClinica(empleadoLogueado.getDni_Emp(),nuevoID);
+						empleadoLogueado.setId_Clinica(nuevoID);
+						session.setAttribute("empleadoLogueado", empleadoLogueado);
 						if(encontrado) {
 						borrado = mempleado.eliminarEmpleados(Integer.parseInt(id));
 						}else {
@@ -74,9 +77,6 @@ public class EliminarClinica extends HttpServlet {
 								ModeloHabitacion mhabitacion = new ModeloHabitacion(con);
 								borrado = mhabitacion.eliminarHabitaciones(Integer.parseInt(id));
 								if(borrado) {
-									mempleado.cambiarClinica(empleadoLogueado.getDni_Emp(),nuevoID);
-									empleadoLogueado.setId_Clinica(nuevoID);
-									session.setAttribute("empleadoLogueado", empleadoLogueado);
 									borrado = mclinica.borrarClinica(Integer.parseInt(id));
 								}
 							}
