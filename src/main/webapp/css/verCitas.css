@@ -1,6 +1,5 @@
 body {
-  background-image: url("../img/fondoVerCitas.jpg");
-  background-attachment: fixed;
+  background: url("../img/fondoVerCitas.jpg") fixed;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
@@ -13,7 +12,9 @@ main {
 }
 .listaCitas{
 	padding-top: 100px;
-	color: blue;
+	color: rgb(0, 132, 255);
+  	text-transform: uppercase;
+  	text-shadow: 1px 1px 1px white;
 	font-size: 40px;
 	text-align: center;
 	display: inline-block;
@@ -126,7 +127,7 @@ main {
 .ag-courses-item_link {
   display: block;
   padding: 30px 20px;
-  background-color: whitesmoke;
+  background-color: rgba(245, 245, 245, 0.747);
   text-decoration: none;
 
   overflow: hidden;

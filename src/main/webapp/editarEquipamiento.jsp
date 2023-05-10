@@ -128,14 +128,17 @@
 				  <c:forEach var="equip" items="${equipamiento}">
 				    <tr>
 				      <th scope="row">${equip.id_Equipamiento}</th>
-				      <td>${equip.getNombre_Equipamiento()}</td>
-				      <td>${equip.getPrecio()} €</td>
-				      <td><input type="number" value="${equip.getStock()}" min="0" name="stock-${cantidad}" required="required" class="inputs"> Uds</td>
-				      <c:if test="${director eq 'true'}">
-				      <td><a type="button" style="margin-right: 6px;" href="EditarEquipamiento?c=${cantidad}&v=${equip.getStock()-1}" class="btn btn-danger">-1</a><a type="button" href="EditarEquipamiento?d=${equip.getId_Equipamiento()}" class="btn btn-danger eliminar"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></a></td>
+				      <td>${equip.nombre_Equipamiento}</td>
+				      <td>${equip.precio} €</td>
+				      <td><input type="number" value="${equip.stock}" min="0" name="stock-${cantidad}" required="required" class="inputs"> Uds</td>
+				      <c:if test="${director eq 'true' && equip.stock > 0}">
+				      <td><a type="button" style="margin-right: 6px;" href="EditarEquipamiento?c=${cantidad}&v=${equip.stock-1}" class="btn btn-danger">-1</a><a type="button" href="EditarEquipamiento?d=${equip.id_Equipamiento}" class="btn btn-danger eliminar"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></a></td>
+				      </c:if>
+				      <c:if test="${director eq 'true' && equip.stock <= 0}">
+				      <td><a type="button" style="margin-right: 6px;" href="" class="btn btn-danger disabled">-1</a><a type="button" href="EditarEquipamiento?d=${equip.id_Equipamiento}" class="btn btn-danger eliminar"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></a></td>
 				      </c:if>
 				      <c:if test="${director eq 'false'}">
-				      <td><a type="button" href="EditarEquipamiento?c=${cantidad}&v=${equip.getStock()-1}" class="btn btn-danger">-1</a></td>
+				      <td><a type="button" href="EditarEquipamiento?c=${cantidad}&v=${equip.stock-1}" class="btn btn-danger">-1</a></td>
 				      </c:if>
 				      <c:set var="cantidad" value="${cantidad + 1}"/>
 				    </tr>
@@ -143,7 +146,7 @@
 				  </tbody>
               </table>
              </div>
-				<input type="text" value="${cantidad}" name="cantidad" readonly="readonly" hidden required="required">
+					<input type="text" value="${cantidad}" name="cantidad" readonly="readonly" hidden required="required">
 				<a href="#formularioEquip" type="button" class="btn btn-success btnInsertar">Insertar Equipamiento</a>
 				<button type="submit" class="btn btn-warning botonFormulario">Actualizar todos!</button>
 				
@@ -160,7 +163,7 @@
             <div class="content">
               <form action="EditarEquipamiento" method="POST">
 				<input type="text" value="insert" name="tipo" readonly="readonly" hidden required="required">
-				<input type="number" value="${equipamiento.get(0).id_Clinica}" name="idClinica" readonly="readonly" hidden required="required">
+				<input type="number" value="${empleadoLogueado.id_Clinica}" name="idClinica" readonly="readonly" hidden required="required">
                 <label for="nombre" >Nombre:</label>
                 <input type="text" required id="nombre" name="nombre">
                 <br><br>

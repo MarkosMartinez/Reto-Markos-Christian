@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,9 @@ import modelo.DAO.Conector;
 import modelo.DAO.ModeloCita;
 import modelo.DAO.ModeloClinica;
 import modelo.DAO.ModeloEmpleado;
+import modelo.DAO.ModeloEquipamiento;
+import modelo.DAO.ModeloHabitacion;
+import modelo.DTO.Clinica;
 import modelo.DTO.Empleado;
 
 /**
@@ -50,8 +54,26 @@ public class EliminarClinica extends HttpServlet {
 					if(borrado) {
 						borrado = mempleado.eliminarEmpleados(Integer.parseInt(id));
 						if(borrado) {
-							ModeloClinica mclinica = new ModeloClinica(con);
-							borrado = mclinica.borrarClinica(Integer.parseInt(id));
+							ModeloEquipamiento mequipamiento = new ModeloEquipamiento(con);
+							borrado = mequipamiento.eliminarStocks(Integer.parseInt(id));
+							if(borrado) {
+								ModeloHabitacion mhabitacion = new ModeloHabitacion(con);
+								borrado = mhabitacion.eliminarHabitaciones(Integer.parseInt(id));
+								if(borrado) {
+									ModeloClinica mclinica = new ModeloClinica(con);
+									ArrayList<Clinica> clinicas = mclinica.getClinicas();
+									boolean encontrado = false;
+									int nuevoID = 0;
+									for (int i = 0; i < clinicas.size() || !encontrado; i++) {
+										if(clinicas.get(i).getId_clinica() != empleadoLogueado.getId_Clinica()) {
+											nuevoID = clinicas.get(i).getId_clinica();
+											encontrado = true;
+										}
+									}
+									mempleado.cambiarClinica(empleadoLogueado.getDni_Emp(),nuevoID);
+									borrado = mclinica.borrarClinica(Integer.parseInt(id));
+								}
+							}
 						}
 					}
 					con.cerrar();

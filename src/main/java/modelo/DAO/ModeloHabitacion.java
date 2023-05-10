@@ -105,6 +105,21 @@ public class ModeloHabitacion {
 	    return disponible;
 	}
 
+	public boolean eliminarHabitaciones(int id) {
+		boolean eliminado = true;
+	    PreparedStatement pstDelete;
+	    try {
+	        pstDelete = this.con.getCon().prepareStatement("DELETE FROM habitaciones WHERE ID_Clinica = ?");
+	        pstDelete.setInt(1, id);
+	        pstDelete.execute();
+	    } catch (SQLException e) {
+	    	eliminado = false;
+	        e.printStackTrace();
+	    }
+
+	    return eliminado;
+	}
+
 	
 	
 

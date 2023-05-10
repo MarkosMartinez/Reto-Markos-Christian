@@ -1,0 +1,121 @@
+@charset "ISO-8859-1";
+.brackets {
+  background: url("../img/brackets.jpg") fixed no-repeat center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.endodoncia {
+  background: url("../img/endodoncia.jpg") fixed no-repeat center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.protesis {
+  background: url("../img/protesis.jpg") fixed no-repeat center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.odonPreventiva {
+  background: url("../img/odonPreventiva.jpg") fixed no-repeat center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.titulos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 300px;
+}
+
+.titulos h1 {
+  font-size: 7em;
+  color: rgb(4, 104, 255);
+}
+
+@media(max-width: 1119px){
+  .titulos h1 {
+    font-size: 2.3em;
+  }
+}
+.titulos p {
+  margin-top: 10px;
+  width: 350px;
+  text-align: justify;
+  opacity: 0;
+  transition: all ease-in-out 1s;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  z-index: 99;
+  box-shadow: 2px 2px 5px rgb(14, 14, 14);
+}
+
+/*boton de Leer más*/
+
+.descripcion {
+  border: none;
+  background: none;
+}
+
+.titulos .descripcion:hover + p, .titulos .descripcion:focus + p {
+  opacity: 1;
+}
+
+.descripcion span {
+  padding-bottom: 7px;
+  letter-spacing: 4px;
+  font-size: 14px;
+  padding-right: 15px;
+}
+
+.descripcion svg {
+  transform: translateX(-8px);
+  transition: all 0.3s ease;
+}
+
+.descripcion:hover svg {
+  transform: translateX(0);
+}
+
+.descripcion:active svg {
+  transform: scale(0.9);
+}
+
+.hover-underline-animation {
+  position: relative;
+  color: rgb(255, 255, 255);
+  padding-bottom: 20px;
+}
+
+.hover-underline-animation:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #025fca;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.descripcion:hover .hover-underline-animation:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

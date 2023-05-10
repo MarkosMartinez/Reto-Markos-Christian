@@ -100,5 +100,20 @@ public class ModeloEquipamiento {
 	    return eliminado;
 	}
 
+	public boolean eliminarStocks(int id) {
+		boolean eliminado = true;
+	    PreparedStatement pstDelete;
+	    try {
+	        pstDelete = this.con.getCon().prepareStatement("DELETE FROM equipamiento WHERE ID_Clinica = ?");
+	        pstDelete.setInt(1, id);
+	        pstDelete.execute();
+	    } catch (SQLException e) {
+	    	eliminado = false;
+	        e.printStackTrace();
+	    }
+
+	    return eliminado;
+	}
+
 
 }

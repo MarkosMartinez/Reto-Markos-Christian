@@ -51,7 +51,7 @@ public class GestionarClinicas extends HttpServlet {
 					aviso = "ninguno";
 				ModeloClinica mclinica = new ModeloClinica(con);
 				ModeloHabitacion mhabitacion = new ModeloHabitacion(con);
-				ArrayList<Clinica> clinicas = mclinica.getClinicas();
+				ArrayList<Clinica> clinicas = mclinica.getClinicas(); //TODO Añadir un link para poder ver con distinto orden
 				ArrayList<Habitacion> habitaciones = mhabitacion.getHabitaciones(empleadoLogueado.getId_Clinica());
 				
 				request.setAttribute("clinicas", clinicas);
@@ -73,7 +73,7 @@ public class GestionarClinicas extends HttpServlet {
 		String tipo = request.getParameter("tipo");
 		Conector con  = new Conector();
 		 con.conectar();
-		if(tipo.equals("modclinica")) {
+		if(tipo.equals("modclinica")) { //TODO Arreglar que se vea bien despues de cambiar de clinica, para no tener que cerrar sesion
 			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));
 			String dniDirector = request.getParameter("dnidirector");
