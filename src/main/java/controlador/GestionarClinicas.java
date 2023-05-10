@@ -76,10 +76,9 @@ public class GestionarClinicas extends HttpServlet {
 		if(tipo.equals("modclinica")) { //TODO Arreglar que se vea bien despues de cambiar de clinica, para no tener que cerrar sesion
 			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));
-			String dniDirector = request.getParameter("dnidirector");
-			mempleado.cambiarClinica(dniDirector, idNuevaClinica);
 			HttpSession session = request.getSession();
 			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
+			mempleado.cambiarClinica(empleadoLogueado.getDni_Emp(), idNuevaClinica);
 			empleadoLogueado.setId_Clinica(idNuevaClinica);
 			session.setAttribute("empleadoLogueado", empleadoLogueado);
 			con.cerrar();

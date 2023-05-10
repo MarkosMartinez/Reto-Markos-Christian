@@ -31,8 +31,6 @@ public class Tratamientos extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Conector conector = new Conector();
-		conector.ssh();
 		HttpSession session = request.getSession();
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");

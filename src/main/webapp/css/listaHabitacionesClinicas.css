@@ -9,7 +9,7 @@ section {
 }
 
 .titulo {
-  font-size: 30px;
+  font-size: 40px;
   color: #0077ff;
   text-transform: uppercase;
   font-weight: 300;
@@ -30,10 +30,42 @@ section {
 }
 
 .opcionGestion{
-    font-size: 30px;
+    font-size: 40px;
     margin-top: 59.1px;
     margin-left: 5px;
     height: 100%;
+    text-transform: uppercase;
+  }
+  
+  @media(max-width: 773px){
+  	.titulo{
+  	font-size: 1.5em;
+  	}
+  	
+  	.opcionGestion{
+  	font-size: 1.5em;
+  	}
+  }
+  
+    @media(max-width: 515px){
+  	.titulo{
+  	font-size: 1em;
+  	}
+  	
+  	.opcionGestion{
+  	font-size: 1em;
+  	}
+  }
+
+    @media(max-width: 386px){
+  	.titulo{
+  	font-size: 0.8em;
+  	}
+  	
+  	.opcionGestion{
+  	margin-top: 60px;
+  	font-size: 0.8em;
+  	}
   }
 
 select option {

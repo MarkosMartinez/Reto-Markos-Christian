@@ -9,7 +9,7 @@ body{
   }
 
 h1{
-    font-size: 30px;
+    font-size: 40px;
     color: #fff;
     text-transform: uppercase;
     font-weight: 300;
@@ -20,7 +20,7 @@ h1{
 .clinica{
 	background: transparent;
 	color: white;
-	font-size: 30px;
+	font-size: 40px;
 	border: none;
 	text-transform: uppercase;
 }
@@ -248,4 +248,30 @@ textarea {
   cursor: pointer;
   position: absolute;
   right: 6px;
+}
+
+@media(max-width: 744px){
+	h1{
+		font-size: 1.5em;
+	}
+	
+	.clinica{
+		font-size: 1.5em;
+	}
+}
+
+@media(max-width: 568px){
+	.clinica{
+		margin-top: 40px;
+	}
+}
+
+@media(max-width: 507px){
+		h1{
+		font-size: 1em;
+	}
+	
+	.clinica{
+		font-size: 1em;
+	}
 }

@@ -50,9 +50,23 @@ public class EliminarClinica extends HttpServlet {
 				if(id != null) {
 					
 					ModeloCita mcita = new ModeloCita(con);
-					boolean borrado = mcita.borrarCitas(Integer.parseInt(id)); //TODO Arreglar desde aqui.
+					boolean borrado = mcita.borrarCitas(Integer.parseInt(id));
 					if(borrado) {
+						ModeloClinica mclinica = new ModeloClinica(con);
+						ArrayList<Clinica> clinicas = mclinica.getClinicas();
+						boolean encontrado = false;
+						int nuevoID = 0;
+						for (int i = 0; i < clinicas.size() || !encontrado; i++) {
+							if(clinicas.get(i).getId_clinica() != empleadoLogueado.getId_Clinica()) {
+								nuevoID = clinicas.get(i).getId_clinica();
+								encontrado = true;
+							}
+						}
+						if(encontrado) {
 						borrado = mempleado.eliminarEmpleados(Integer.parseInt(id));
+						}else {
+							borrado = false;
+						}
 						if(borrado) {
 							ModeloEquipamiento mequipamiento = new ModeloEquipamiento(con);
 							borrado = mequipamiento.eliminarStocks(Integer.parseInt(id));
@@ -60,17 +74,9 @@ public class EliminarClinica extends HttpServlet {
 								ModeloHabitacion mhabitacion = new ModeloHabitacion(con);
 								borrado = mhabitacion.eliminarHabitaciones(Integer.parseInt(id));
 								if(borrado) {
-									ModeloClinica mclinica = new ModeloClinica(con);
-									ArrayList<Clinica> clinicas = mclinica.getClinicas();
-									boolean encontrado = false;
-									int nuevoID = 0;
-									for (int i = 0; i < clinicas.size() || !encontrado; i++) {
-										if(clinicas.get(i).getId_clinica() != empleadoLogueado.getId_Clinica()) {
-											nuevoID = clinicas.get(i).getId_clinica();
-											encontrado = true;
-										}
-									}
 									mempleado.cambiarClinica(empleadoLogueado.getDni_Emp(),nuevoID);
+									empleadoLogueado.setId_Clinica(nuevoID);
+									session.setAttribute("empleadoLogueado", empleadoLogueado);
 									borrado = mclinica.borrarClinica(Integer.parseInt(id));
 								}
 							}

@@ -20,6 +20,8 @@ main {
 	display: inline-block;
 	text-align: center;
 }
+
+
 .check {
   border-radius: 5px;
   width: 190px;
@@ -358,7 +360,6 @@ main {
   border-radius: 5px;
   width: 30%;
   position: relative;
- 
   transition: all 1.5s ease-in-out;
   z-index: 99;
 }
@@ -405,9 +406,7 @@ textarea {
 }
 
 .botonFormulario{
-  position: absolute;
-  top: 430px;
-  right: 20px;
+  position: relative;
   border-radius: 6px;
   padding: 10px;
   height: 50px;
@@ -472,8 +471,25 @@ textarea {
 select.clinica {
   background-color: transparent;
   border: none;
-  font-size: 36px;
-  color: blue;
-  margin-top: -1px;
+  font-size: 40px;
+  margin-top: -6px;
   margin-left: 5px;
+  text-transform: uppercase;	
+  color: rgb(0, 132, 255);
+  text-shadow: 1px 1px 1px white;
+}
+
+select option{
+	text-transform: uppercase;
+}
+
+@media(max-width:564px){
+	.listaCitas{
+		font-size: 1.5em;
+	}
+	
+	select.clinica{
+		font-size: 1.5em;
+	}
+	
 }

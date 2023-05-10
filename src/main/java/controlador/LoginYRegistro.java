@@ -41,7 +41,9 @@ public class LoginYRegistro extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		session.invalidate();
+		/*session.invalidate(); //Con esto, cerrarias tambien la sesion del SSH, por lo que al cerrar sesion y volver al principal apareceria el error de nuevo */
+		session.removeAttribute("empleadoLogueado");
+		session.removeAttribute("clienteLogueado");
 		String aviso = request.getParameter("aviso");
 		String dni = request.getParameter("dni");
 		String dnilogin = request.getParameter("dnilogin");

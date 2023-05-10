@@ -33,8 +33,17 @@ public class Principal extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { //EMPEZAR SIEMPRE DESDE AQUI PARA EVITAR ERRORES CON LA BBDD
 		Conector conector = new Conector();
-		conector.ssh();
+		
 		HttpSession session = request.getSession();
+		
+		
+		
+		if (session.getAttribute("ssh") == null) {
+			conector.ssh(request);
+			session.setAttribute("ssh", true);
+		}
+		
+		
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		boolean director = false;
