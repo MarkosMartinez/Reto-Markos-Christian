@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="java.util.Date"%>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -48,6 +50,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <main>
     
+    <fmt:formatDate value="${hoy}" pattern="dd/MM/yyyy" />
+        <%Date hoy = new Date();%>
+		<c:set var="hoy" value="<%= hoy %>" />
+    
 	     <c:if test="${aviso eq 'usucreado'}">
 	        	<div class="alerta">
 					  <div class="alert alert-success check alert-dismissible fade show" role="alert">
@@ -72,7 +78,7 @@
         	<div class="alerta">
         	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert" style="background-color: red; box-shadow: none;">
   				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
- 				<i class="fa-solid fa-triangle-exclamation fa-spin fa-lg" style="color: #ffffff;"></i> <% //TODO Cambiar el icono! %>
+ 				<i class="fa-solid fa-triangle-exclamation fa-bounce fa-lg"></i>
   				&nbsp; &nbsp;
   				<span>Error, esto no deberia de haber ocurrido!</span>
 			  </div>
@@ -131,18 +137,18 @@
 		                 	</c:if>
 		                  </c:forEach>
 		                <td>
-		                  <a href="EditarEmpleado?dni=${empleado.dni_Emp}" class="btn btn-success"> <%//TODO Hacer que funcione! %>
+		                  <a href="EditarEmpleado?dni=${empleado.dni_Emp}" class="btn btn-success">
 		                  <i class="fa-solid fa-pen-to-square" style="color: #ffffff"></i>
 		                  </a>
 		                </td>
 		                <td>
 		                <c:if test="${empleado.dni_Emp eq empleadoLogueado.dni_Emp}">
-		                  <a href="http://localhost:8080/Reto-3EVA/GestionarUsuarios?v=emp&aviso=error" class="btn btn-danger disabled"> <%//TODO Hacer que funcione! %>
+		                  <a href="http://localhost:8080/Reto-3EVA/GestionarUsuarios?v=emp&aviso=error" class="btn btn-danger disabled">
 		                  <i class="fa-solid fa-user-slash" style="color: #ffffff"></i>
 		                  </a>
 		                </c:if>
 		                <c:if test="${empleado.dni_Emp ne empleadoLogueado.dni_Emp}">
-		                  <a href="EliminarEmpleado?dni=${empleado.dni_Emp}" class="btn btn-danger"> <%//TODO Hacer que funcione! %>
+		                  <a href="EliminarEmpleado?dni=${empleado.dni_Emp}" class="btn btn-danger">
 		                  <i class="fa-solid fa-user-slash" style="color: #ffffff"></i>
 		                  </a>
 		                </c:if>
@@ -198,11 +204,11 @@
                 <label for="correo">Correo:</label>
                 <input type="email" name="Correo" required id="correo" />
                 <br /><br />
-                <label for="contraseña">Contraseña:</label> <% //TODO Confirmar contraseña? %>
+                <label for="contraseña">Contraseña:</label>
                 <input type="password" name="pass" required id="contraseña" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros"/>
                 <br /><br />
                 <label for="fecha_nac">Fecha de Nacimiento:</label>
-                <input type="date" name="Fecha_Nacimiento" required id="fecha_nac"/>
+                <input type="date" name="Fecha_Nacimiento" min='1899-01-01' max="<fmt:formatDate value="${hoy}" pattern='yyyy-MM-dd' />" value="${fecha}" required id="fecha_nac"/>
                 <br /><br />
                 <label for="puesto">Puesto:</label>
                 <select name="Puesto" id="puesto" required="required">

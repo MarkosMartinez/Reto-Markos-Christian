@@ -32,10 +32,17 @@ public class ModeloHabitacion {
 		return cantidadDeHabitaciones;
 	}
 
-	public ArrayList<Habitacion> getHabitaciones(int id_Clinica) {
+	public ArrayList<Habitacion> getHabitaciones(int id_Clinica, String orden) {
 		ArrayList<Habitacion> habitaciones = new ArrayList<>();
+		
+		if(orden.toUpperCase() == "ASC") {
+			orden = "ASC";
+		}else {
+			orden = "DESC";
+		}
+		
 		try {
-			PreparedStatement pSt = this.con.getCon().prepareStatement("SELECT * FROM habitaciones WHERE ID_Clinica = ? ORDER BY Num_Habitacion");
+			PreparedStatement pSt = this.con.getCon().prepareStatement("SELECT * FROM habitaciones WHERE ID_Clinica = ? ORDER BY Num_Habitacion " + orden);
 			pSt.setInt(1, id_Clinica);
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {

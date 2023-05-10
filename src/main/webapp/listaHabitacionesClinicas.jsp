@@ -10,15 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista de habitaciones</title>
-    <link rel="stylesheet" href="css/menu.css" />
-    <link rel="stylesheet" href="css/listaHabitacionesClinicas.css" />
-
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
       crossorigin="anonymous"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/menu.css" />
+    <link rel="stylesheet" href="css/listaHabitacionesClinicas.css" />
   </head>
 
   
@@ -51,9 +54,61 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     
     <main>
+    
+    <c:if test="${aviso eq 'habitacioncreada'}">
+		<div class="alerta">
+			<div class="alert alert-success check alert-dismissible fade show" role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				<i class="fa-solid fa-tooth fa-bounce fa-xl"></i> &nbsp; &nbsp;
+				<span>Habitacion creada correctamente!</span>
+			</div>
+		</div>
+    </c:if>
+    
+    <c:if test="${aviso eq 'clinicacreada'}">
+		<div class="alerta">
+			<div class="alert alert-success check checkclinica alert-dismissible fade show" role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				<i class="fa-solid fa-building-circle-check fa-beat fa-lg"></i> &nbsp; &nbsp;
+				<span>Clinica creada correctamente!</span>
+			</div>
+		</div>
+    </c:if>
+    
+    <c:if test="${aviso eq 'clinicaeliminada'}">
+		<div class="alerta">
+			<div class="alert alert-success check checkclinica alert-dismissible fade show" role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				<i class="fas fa-trash fa-shake fa-lg" style="color: #ffffff;"></i> &nbsp; &nbsp;
+				<span>Clinica eliminada correctamente!</span>
+			</div>
+		</div>
+    </c:if>
+    
+    <c:if test="${aviso eq 'habitacioneliminada'}">
+		<div class="alerta">
+			<div class="alert alert-success check alert-dismissible fade show" role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				<i class="fas fa-trash fa-shake fa-lg" style="color: #ffffff;"></i> &nbsp; &nbsp;
+				<span>Habitacion eliminada correctamente!</span>
+			</div>
+		</div>
+    </c:if>
+        
+    <c:if test="${aviso eq 'error'}">
+    	<div class="alerta">
+    		<div class="alert alert-warning warning alert-dismissible fade show" role="alert" style="background-color: red; box-shadow: none;">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				<i class="fa-solid fa-triangle-exclamation fa-bounce fa-lg"></i>
+				&nbsp; &nbsp;
+				<span>Error, esto no deberia de haber ocurrido!</span>
+			</div>
+    	</div>
+   </c:if>
+    
       <section>
         <div class="tituloYopcion" style="max-width: 100%; margin: auto; display: flex; justify-content: center; align-items: center;">
-          <h1 class="titulo">Lista de habitaciones de</h1> <%//TODO Arreglar el modo de ver en el movil. Y lo mismo en VerCitas en el movil (al ser director) %>
+          <h1 class="titulo">Lista de habitaciones de</h1>
           <form action="GestionarClinicas" method="POST" style="display: inline-block; margin-top: -61px;">
           <input type="text" value="modclinica" name="tipo" readonly="readonly" hidden required="required">
 	          <select class="opcionGestion" name="clinica" onchange="this.form.submit()">
@@ -103,7 +158,12 @@
           <table cellpadding="0" cellspacing="0" border="0">
             <thead>
               <tr>
-                <th>Nº Habitación</th>
+              	<c:if test="${orden ne 'DESC'}">
+                <th><a href="GestionarClinicas?o=DESC" class="linkorden">Nº Habitación ⬇</a></th>
+                </c:if>
+                <c:if test="${orden eq 'DESC'}">
+                <th><a href="GestionarClinicas?o=ASC" class="linkorden">Nº Habitación ⬆</a></th>
+                </c:if>
                 <th>Especialidad</th>
                 <th>Eliminar</th>
               </tr>

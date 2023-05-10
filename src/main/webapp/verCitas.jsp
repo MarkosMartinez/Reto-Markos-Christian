@@ -3,10 +3,6 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="modelo.DTO.Cita"%>
-<%@ page import="modelo.DTO.Clinica"%>
-<%@ page import="modelo.DAO.ModeloClinica"%>
-<%@ page import="modelo.DAO.ModeloCita"%>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -174,9 +170,9 @@
         
         <c:if test="${aviso eq 'error'}">
         <div class="alerta">
-        	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert" style="background-color: red; box-shadow: none;"> <% //TODO Arreglar sombra %>
+        	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert" style="background-color: red; box-shadow: none;">
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
- <i class="fa-solid fa-triangle-exclamation fa-spin fa-lg" style="color: #ffffff;"></i> <% //TODO Cambiar el icono! %>
+ <i class="fa-solid fa-triangle-exclamation fa-bounce fa-lg"></i>
   &nbsp; &nbsp;
   <span>Error, esto no deberia de haber ocurrido!</span>
 </div>
@@ -185,7 +181,6 @@
 
 		
  		<c:if test="${citasPosteriores.size() == 0 && tipoLogin ne 'empleado'}">
- 		<%//TODO Aqui estara la card o lo que tenga que mostrarse cuando no haya ninguna cita posterior! Las anteriores se veran? %>
  		
  		<div class="ag-courses_box">
           <div class="ag-courses_item">
@@ -207,7 +202,6 @@
  		</c:if>
  		
  		<c:if test="${citasPosteriores.size() == 0 && tipoLogin eq 'empleado'}">
- 		<%//TODO Aqui estara la card o lo que tenga que mostrarse cuando no haya ninguna cita posterior! Las anteriores se veran? %>
  		
  		<div class="ag-courses_box">
           <div class="ag-courses_item">
@@ -276,8 +270,10 @@
 
         </div>
       
-            <h1 style="color: red;text-align: center;">Citas Anteriores</h1>
-
+      		<c:if test="${citasPosteriores.size() >= 1}">
+            	<h1 style="color: red;text-align: center;">Citas Anteriores</h1>
+            </c:if>
+            	
 <div class="ag-courses_box">
   <c:set var="actual" value="0"/>
  <c:if test="${citasAnteriores.size() >= 1}">
@@ -322,7 +318,7 @@
                   </span>
                   <c:if test="${tipoLogin eq 'empleado'}">
                     <span>
-                    <c:set var="encontrado" value="0"/> <% //TODO Para que el telefono que editas siempre muestre el primero (el menor), consultar si quitar %>
+                    <c:set var="encontrado" value="0"/>
                     <c:forEach var="telefono" items="${telefonos}">
 					<c:if test="${telefono.dni eq cliente.dni}">
 					<c:if test="${encontrado < 1}">

@@ -35,27 +35,6 @@ public class ModeloCita {
 		
 	}
 
-	public ArrayList<Cita> getCitas(int id_Clinica) { //TODO Eliminar esto?
-		ArrayList<Cita> citas = new ArrayList<>();
-		try {
-			PreparedStatement pSt = this.con.getCon().prepareStatement("SELECT * FROM citas WHERE ID_Clinica = ?");
-			pSt.setInt(1, id_Clinica);
-			ResultSet resultado = pSt.executeQuery();
-			while(resultado.next()) {
-				Cita cita = new Cita();
-				cita.setId_Clinica(resultado.getInt("ID_Clinica"));
-				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
-				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
-				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
-				citas.add(cita);
-			}
-			pSt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return citas;
-	}
-
 	public boolean disponible(int id_Clinica, java.util.Date fecha, LocalTime hora, int cantidadDeHabitaciones) {
 		
 		int numCitas = 0;
@@ -85,31 +64,6 @@ public class ModeloCita {
         }
         
 		return disponible;
-	}
-
-	public ArrayList<Cita> getCitasCliente(String dni) { //TODO Eliminar esto?
-		ArrayList<Cita> citas = new ArrayList<>();
-
-		PreparedStatement pSt;
-		try {
-			pSt = this.con.getCon().prepareStatement("SELECT * FROM citas WHERE DNI_Cliente = ?");
-			pSt.setString(1, dni);
-			ResultSet resultado = pSt.executeQuery();
-			while(resultado.next()) {
-				Cita cita = new Cita();
-				cita.setId_Clinica(resultado.getInt("ID_Clinica"));
-				cita.setDni_Cliente(resultado.getString("DNI_Cliente"));
-				cita.setFecha_Cita(resultado.getDate("Fecha_Cita"));
-				cita.setHora_Cita(LocalTime.parse(resultado.getString("Hora_Cita")));
-				cita.setAtendido(resultado.getString("Atendido"));
-				citas.add(cita);
-			}
-			pSt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return citas;
 	}
 
 	public boolean borrarCita(int id_clinica, String dni, java.util.Date fecha, LocalTime hora) {

@@ -47,7 +47,7 @@ public class VerCitas extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
-		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado"); //TODO Hacer un refactor de las clases y la BBDD de plural/singular. Ej: Empleado/s...
+		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		
 		if(clienteLogueado == null && empleadoLogueado == null) {
 			response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
@@ -83,7 +83,7 @@ public class VerCitas extends HttpServlet {
 				
 				ArrayList<Historial_Cliente> historiales = new ArrayList<>();
 				ModeloHistorial_Cliente mhistorial = new ModeloHistorial_Cliente(con);
-				historiales = mhistorial.getHistoriales(); //TODO enviar solo los del cliente si loguea el cliente?
+				historiales = mhistorial.getHistoriales();
 				
 				boolean director = false;
 				ModeloCliente mcliente = new ModeloCliente(con);
@@ -142,7 +142,7 @@ public class VerCitas extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String editardni = request.getParameter("editardni"); //TODO Hora revision tiene que ser PK?
+		String editardni = request.getParameter("editardni");
 		String fechaSinFormato = request.getParameter("editarfecha");
 		String tipo = request.getParameter("tipo");
 		Conector con  = new Conector();
@@ -161,11 +161,11 @@ public class VerCitas extends HttpServlet {
 		 
 		 ModeloCita mcita = new ModeloCita(con);
 		 Boolean actualizado = false;
-		 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe); /*Permitir actualizaciones y no solo inserts!*/
+		 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe); /*//TODO Permitir actualizaciones y no solo inserts!*/
 		 if(actualizado) {
 		 if(equipamiento == null) {
 			 con.cerrar();
-			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citaactualizada"); //TODO Cambiar el aviso correcto!
+			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citaactualizada");
 		 }else if(equipamiento.equals("on")) {
 			 con.cerrar();
 			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento");

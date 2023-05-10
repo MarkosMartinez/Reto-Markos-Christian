@@ -99,7 +99,7 @@ public class EditarEquipamiento extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String tipo = request.getParameter("tipo"); //TODO Arreglar que los botones desaparezcan cuando el stock sea < 0
+		String tipo = request.getParameter("tipo");
 		Conector con = new Conector();
 		con.conectar();
 		ModeloEquipamiento mequipamiento = new ModeloEquipamiento(con);
@@ -131,7 +131,7 @@ public class EditarEquipamiento extends HttpServlet {
 				nuevoStock.add(Integer.parseInt(request.getParameter("stock-" + i)));
 			}
 
-			ArrayList<Equipamiento> equipamientoFinal = new ArrayList<>(); // TODO Optimizar esto?
+			ArrayList<Equipamiento> equipamientoFinal = new ArrayList<>();
 			for (int j = 0; j < equipamiento.size(); j++) {
 				equipamiento.get(j).setStock(nuevoStock.get(j));
 				equipamientoFinal.add(equipamiento.get(j));

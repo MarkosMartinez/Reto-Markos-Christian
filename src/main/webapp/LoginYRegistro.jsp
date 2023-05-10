@@ -169,7 +169,7 @@
                                                     <i class="fas fa-calendar-alt"></i>
                         
                             <c:if test = "${fechanacimiento == null}">
-				         	<input type="date" name="fechanacimiento" id="fechanacimiento" min='1899-01-01' max="<fmt:formatDate value="${hoy}" pattern='yyyy-MM-dd' />" value="${fecha}" required="required"> <%//TODO Cambiar la fecha min/max %>
+				         	<input type="date" name="fechanacimiento" id="fechanacimiento" min='1899-01-01' max="<fmt:formatDate value="${hoy}" pattern='yyyy-MM-dd' />" value="${fecha}" required="required">
 					      </c:if>
 					      <c:if test = "${fechanacimiento != null}">
 				         	 <input type="date" name="fechanacimiento" id="fechanacimiento" value="${fechanacimiento}" min='1899-01-01' max="<fmt:formatDate value="${hoy}" pattern='yyyy-MM-dd' />" value="${fecha}" required="required">

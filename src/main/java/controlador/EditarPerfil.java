@@ -95,7 +95,7 @@ public class EditarPerfil extends HttpServlet {
 		Conector con  = new Conector();
 		 con.conectar();
 		
-		String dni = request.getParameter("dni"); //TODO No dejar que elimine todos los telefonos
+		String dni = request.getParameter("dni");
 		String nombre = request.getParameter("nombre");
 		String apellidos = request.getParameter("apellidos");
 		String correo = request.getParameter("correo");
@@ -128,7 +128,7 @@ public class EditarPerfil extends HttpServlet {
 						modificado = false;
 					}
 				}else {
-				Cliente clienteLogueado = mcliente.comprobarLogin(dni, DigestUtils.sha1Hex(contrasena)); //TODO Actualizarlo a un boolean.
+				Cliente clienteLogueado = mcliente.comprobarLogin(dni, DigestUtils.sha1Hex(contrasena));
 				if(clienteLogueado.getDni() != "-1") {
 					if(nuevaCon != contrasena && nuevaCon.equals(confNuevaCon)) {
 						passCifrada = DigestUtils.sha1Hex(nuevaCon);
@@ -140,6 +140,18 @@ public class EditarPerfil extends HttpServlet {
 					modificado = false;
 				}
 				}
+			}
+			
+			if(telefonos != null) {
+				boolean eliminartel = mcliente.comprobarTelefonos(dni);
+				if(!eliminartel)
+					modificado = false;
+			}
+			
+			if(nuevoTelefono != "") {
+				boolean telefonodisponible = mcliente.comprobarDisponibilidadTelefono(dni, Integer.parseInt(nuevoTelefono));
+				if(!telefonodisponible)
+					modificado = false;
 			}
 			
 			if(modificado) {

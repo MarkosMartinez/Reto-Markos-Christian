@@ -229,3 +229,95 @@ td {
   opacity: 4;
   right: 0;
 }
+
+.check {
+  border-radius: 5px;
+  width: 235px;
+  height: 60px;
+  text-align: right;
+  position: absolute;
+  display: flex;
+  top: 100px;
+  left:-300px;
+  align-items: center;
+  background-color: #08c41b;
+  cursor: pointer;
+  box-shadow: 9px 9px 18px whitesmoke, -9px -9px 18px whitesmoke;
+  color: white;
+  margin: 20px;
+  transition: all ease-in-out 0.5s;
+}
+
+.checkclinica {
+  width: 190px;
+}
+
+
+.warning {
+  border-radius: 5px;
+  width: 220px;
+  height: 60px;
+  text-align: right;
+  position: absolute;
+  display: flex;
+  top: 100px;
+  left:-300px;
+  align-items: center;
+  background-color: orange;
+  cursor: pointer;
+  box-shadow: 9px 9px 18px whitesmoke, -9px -9px 18px whitesmoke;
+  color: white;
+  margin: 20px;
+  transition: all ease-in-out 0.5s;
+}
+
+.warningclinica {
+  width: 190px;
+}
+
+.warning:hover{
+  background-color: rgb(222, 126, 0);
+  transition:0.5s;
+}
+
+
+.rotate {
+  animation: rotate 2s linear infinite;
+}
+
+.alerta{
+	position: absolute;
+	top: 0px;
+	transition: all ease-in-out 0.5s;
+	animation: entrada 0.5s ease-in-out 0.5s forwards;
+}
+
+@keyframes entrada {
+  from {
+    left: -300px;
+  }
+  to {
+    left: 300px;
+  }
+}
+
+.check:hover {
+  background-color: green;
+  transition: 0.5s;
+}
+
+.close-btn {
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  right: 6px;
+}
+
+.linkorden{
+	text-decoration: none;
+	color:white;
+}
+.linkorden:hover{
+	color:white;
+}

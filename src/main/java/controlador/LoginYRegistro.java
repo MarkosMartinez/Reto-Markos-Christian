@@ -3,7 +3,6 @@ package controlador;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -41,6 +40,12 @@ public class LoginYRegistro extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		Conector conector = new Conector();
+		if (session.getAttribute("ssh") == null) {
+			conector.ssh(request);
+			session.setAttribute("ssh", true);
+		}
+		
 		/*session.invalidate(); //Con esto, cerrarias tambien la sesion del SSH, por lo que al cerrar sesion y volver al principal apareceria el error de nuevo */
 		session.removeAttribute("empleadoLogueado");
 		session.removeAttribute("clienteLogueado");
@@ -131,9 +136,7 @@ public class LoginYRegistro extends HttpServlet {
 					mcliente.registro(dni, nombre, apellido, correo, password, fechanacimiento);
 					
 					Cliente cliente = new Cliente();
-					ArrayList<Telefonos> telefonos = new ArrayList<>();
 					Telefonos oTelefono = new Telefonos(dni, telefono);
-					telefonos.add(oTelefono);
 					mcliente.addTel(dni, oTelefono);
 					
 					cliente.setDni(dni);
@@ -142,7 +145,6 @@ public class LoginYRegistro extends HttpServlet {
 					cliente.setCorreo(correo);
 					cliente.setContrasena(password);
 					cliente.setFecha_Nacimiento(fechanacimiento);
-					cliente.setTelefonos(telefonos);
 					
 					session.setAttribute("clienteLogueado", cliente);
 					response.sendRedirect(request.getContextPath() + "/VerCitas");

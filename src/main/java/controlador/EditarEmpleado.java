@@ -49,7 +49,7 @@ public class EditarEmpleado extends HttpServlet {
 		boolean director = false;
 		if(empleadoLogueado == null) {
 			con.cerrar();
-			response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp&aviso=error");
+			response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 		}else {
 			director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
 			if(dniAEditar != null && !director) {
@@ -60,6 +60,8 @@ public class EditarEmpleado extends HttpServlet {
 		if(director || empleadoLogueado.getDni_Emp().equals(dniAEditar)) {
 			Empleado empleado = new Empleado();
 			empleado = mempleado.getEmpleado(dniAEditar);
+			if(empleado.getDni_Emp() != "-1") {
+				
 			ModeloPuesto mpuesto = new ModeloPuesto(con);
 			ModeloClinica mclinica = new ModeloClinica(con);
 			ArrayList<Puesto> puestos = mpuesto.getPuestos();
@@ -70,6 +72,9 @@ public class EditarEmpleado extends HttpServlet {
 			request.setAttribute("puestos", puestos);
 			con.cerrar();
 			request.getRequestDispatcher("editarPerfilE.jsp").forward(request, response);
+			}else {
+				response.sendRedirect(request.getContextPath() + "/GestionarUsuarios?v=emp&aviso=error");
+			}
 		}else {
 			con.cerrar();
 			if(director) {
@@ -99,6 +104,8 @@ public class EditarEmpleado extends HttpServlet {
 		HttpSession session = request.getSession();
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		
+		if(empleadoLogueado != null) {
+		
 		Conector con  = new Conector();
 		 con.conectar();
 		ModeloEmpleado mempleado = new ModeloEmpleado(con);
@@ -112,7 +119,7 @@ public class EditarEmpleado extends HttpServlet {
 		
 		boolean modificado = mempleado.modificarEmpleado(empleadoModificado);
 		
-		if(nuevaCon != null) { //TODO Comprobar que esto no salta cuando esta vacio!
+		if(nuevaCon != "") {
 			if(nuevaCon.equals(confNuevaCon)) {
 			cambiarpass = true;
 			passCifrada = DigestUtils.sha1Hex(nuevaCon);
@@ -139,6 +146,9 @@ public class EditarEmpleado extends HttpServlet {
 		}else {
 			con.cerrar();
 			response.sendRedirect(request.getContextPath() + "/EditarEmpleado?dni=" + dni + "&aviso=error");
+		}
+		}else {
+			response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 		}
 	}
 

@@ -55,8 +55,6 @@ public class EliminarCita extends HttpServlet {
 					if(!dni.equals(clienteLogueado.getDni())) {
 						con.cerrar();
 						response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=borradoincorrecto");
-						//TODO Despues de esto, tiene que salir!
-						//TODO Arreglar el Bug de que deje de funconar despues de esto!
 					}else {
 						
 						String fechaSinFormato = request.getParameter("fecha");

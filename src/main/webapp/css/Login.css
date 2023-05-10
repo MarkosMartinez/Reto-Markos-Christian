@@ -158,6 +158,7 @@ input:valid ~ label{
 }
 
 .alerta{
+	z-index: 998;
 	position: absolute;
 	top: 0px;
 	transition: all ease-in-out 0.5s;

@@ -36,7 +36,7 @@ public class GestionarClinicas extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(); //TODO Añadir los avisos de error y correctos (Tambien recibe avisos al eliminar/crear clinicas y habitaciones)
+		HttpSession session = request.getSession();
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		if(empleadoLogueado == null) {
 			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
@@ -47,13 +47,22 @@ public class GestionarClinicas extends HttpServlet {
 			boolean director = mempleado.getDirector(empleadoLogueado.getId_Puesto());
 			if(director) {
 				String aviso = request.getParameter("aviso");
+				String orden = request.getParameter("o");
+				if(orden == null) {
+					orden = "ASC";
+				}else if(orden.toUpperCase().equals("DESC")){
+					orden = "DESC";
+				}else {
+					orden = "ASC";
+				}
 				if(aviso == null)
 					aviso = "ninguno";
 				ModeloClinica mclinica = new ModeloClinica(con);
 				ModeloHabitacion mhabitacion = new ModeloHabitacion(con);
-				ArrayList<Clinica> clinicas = mclinica.getClinicas(); //TODO Añadir un link para poder ver con distinto orden
-				ArrayList<Habitacion> habitaciones = mhabitacion.getHabitaciones(empleadoLogueado.getId_Clinica());
+				ArrayList<Clinica> clinicas = mclinica.getClinicas();
+				ArrayList<Habitacion> habitaciones = mhabitacion.getHabitaciones(empleadoLogueado.getId_Clinica(), orden);
 				
+				request.setAttribute("orden", orden);
 				request.setAttribute("clinicas", clinicas);
 				request.setAttribute("habitaciones", habitaciones);
 				request.setAttribute("aviso", aviso);
@@ -73,7 +82,7 @@ public class GestionarClinicas extends HttpServlet {
 		String tipo = request.getParameter("tipo");
 		Conector con  = new Conector();
 		 con.conectar();
-		if(tipo.equals("modclinica")) { //TODO Arreglar que se vea bien despues de cambiar de clinica, para no tener que cerrar sesion
+		if(tipo.equals("modclinica")) {
 			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));
 			HttpSession session = request.getSession();

@@ -62,11 +62,11 @@
 	  </div>
   	</c:if>
         
-		 <c:if test="${aviso eq 'error'}"> <% //TODO Cambiar el error que no de vueltas %>
+		 <c:if test="${aviso eq 'error'}">
 			 <div class="alerta">
 		     <div class="alert alert-warning warning alert-dismissible fade show" role="alert" style="background-color: red; box-shadow: none;">
 		 		 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				 <i class="fa-solid fa-triangle-exclamation fa-spin fa-lg" style="color: #ffffff;"></i> <% //TODO Cambiar el icono! %>
+				 <i class="fa-solid fa-triangle-exclamation fa-bounce fa-lg"></i>
 		  		&nbsp; &nbsp;
 		 		 <span>Error, esto no deberia de haber ocurrido!</span>
 			</div>

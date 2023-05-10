@@ -21,7 +21,7 @@ public class ModeloEmpleado {
 
 		PreparedStatement gettear;
 		try {
-			gettear = this.con.getCon().prepareStatement("SELECT * FROM empleados WHERE DNI_Emp= ? AND Contraseña = ?"); //TODO empleado o empleados?
+			gettear = this.con.getCon().prepareStatement("SELECT * FROM empleados WHERE DNI_Emp= ? AND Contraseña = ?");
 			gettear.setString(1, dni);
 			gettear.setString(2, password);
 			ResultSet resultado=gettear.executeQuery();
@@ -45,7 +45,7 @@ public class ModeloEmpleado {
 		return empleado;
 	}
 	
-	public Empleado getEmpleado(String dni) { //TODO Eliminar esto?
+	public Empleado getEmpleado(String dni) {
 		Empleado empleado = new Empleado();
 	
 		PreparedStatement gettear;

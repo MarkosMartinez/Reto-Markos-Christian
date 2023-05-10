@@ -32,7 +32,7 @@ public class EliminarCliente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(); //TODO Solo para clientes! Para empleados hacer otro
+		HttpSession session = request.getSession();
 		String dniAEliminar = request.getParameter("dni");
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
@@ -46,7 +46,7 @@ public class EliminarCliente extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 			}else {
 				session.invalidate();
-				response.sendRedirect(request.getContextPath() + "/LoginYRegistro");//TODO ?aviso=eliminado ?
+				response.sendRedirect(request.getContextPath() + "/LoginYRegistro");
 			}
 			
 		}else if(empleadoLogueado != null && dniAEliminar != null) {

@@ -219,6 +219,25 @@ public class ModeloCliente {
 	            e.printStackTrace();
 	        }
 	}
+	
+	public boolean comprobarTelefonos(String dni) {
+	    PreparedStatement pstContar;
+	    ResultSet rs;
+	    try {
+	        pstContar = this.con.getCon().prepareStatement("SELECT COUNT(*) FROM `telefonos` WHERE DNI = ?");
+	        pstContar.setString(1, dni);
+	        rs = pstContar.executeQuery();
+	        rs.next();
+	        int cantidad = rs.getInt(1);
+	        
+	        return cantidad > 1;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return false;
+	}
+
 
 	public boolean modificarUsuario(Cliente clienteModificado) {
 	    boolean modificado = false;
@@ -300,5 +319,25 @@ public class ModeloCliente {
 		}
 		return eliminado;
 	}
+
+	public boolean comprobarDisponibilidadTelefono(String dni, int nuevoTelefono) {
+	    PreparedStatement pstContar;
+	    ResultSet rs;
+	    try {
+	        pstContar = this.con.getCon().prepareStatement("SELECT COUNT(*) FROM `telefonos` WHERE DNI = ? AND Telefono = ?");
+	        pstContar.setString(1, dni);
+	        pstContar.setInt(2, nuevoTelefono);
+	        rs = pstContar.executeQuery();
+	        rs.next();
+	        int cantidad = rs.getInt(1);
+
+	        return cantidad == 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return false;
+	}
+
 
 }

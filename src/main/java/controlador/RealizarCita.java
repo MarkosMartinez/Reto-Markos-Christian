@@ -120,7 +120,7 @@ public class RealizarCita extends HttpServlet {
 						response.sendRedirect(request.getContextPath() + "/Principal");
 					}else {
 						con.cerrar();
-						response.sendRedirect(request.getContextPath() + "/VerCitas"); //TODO Cambiar esto?
+						response.sendRedirect(request.getContextPath() + "/VerCitas"); //TODO Cambiar esto (el redirect) y poner msg (aviso) cita creada?
 					}
 				}else {
 					con.cerrar();
