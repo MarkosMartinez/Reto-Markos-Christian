@@ -145,6 +145,8 @@ public class VerCitas extends HttpServlet {
 		String editardni = request.getParameter("editardni");
 		String fechaSinFormato = request.getParameter("editarfecha");
 		String tipo = request.getParameter("tipo");
+		HttpSession session = request.getSession();
+		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 		Conector con  = new Conector();
 		 con.conectar();
 		if(tipo.equals("formcita")) {
@@ -161,7 +163,7 @@ public class VerCitas extends HttpServlet {
 		 
 		 ModeloCita mcita = new ModeloCita(con);
 		 Boolean actualizado = false;
-		 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe); /*//TODO Permitir actualizaciones y no solo inserts!*/
+		 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe, empleadoLogueado.getId_Clinica());
 		 if(actualizado) {
 		 if(equipamiento == null) {
 			 con.cerrar();
@@ -179,8 +181,6 @@ public class VerCitas extends HttpServlet {
 			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));
 			String dniDirector = request.getParameter("dnidirector");
 			mempleado.cambiarClinica(dniDirector, idNuevaClinica);
-			HttpSession session = request.getSession();
-			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
 			empleadoLogueado.setId_Clinica(idNuevaClinica);
 			session.setAttribute("empleadoLogueado", empleadoLogueado);
 			con.cerrar();

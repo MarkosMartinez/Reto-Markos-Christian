@@ -181,19 +181,20 @@ public class ModeloCita {
 		return citas;
 	}
 
-	public Boolean actualizarCita(String editardni, java.util.Date editarfecha, LocalTime editarhora, String editarempleado, String informe) { //TODO Primero que haga un Update y si no lo consigue que haga un insert.
+	public Boolean actualizarCita(String editardni, java.util.Date editarfecha, LocalTime editarhora, String editarempleado, String informe, int ID_Clinica) { //TODO Primero que haga un Update y si no lo consigue que haga un insert.
 		boolean actualizado = false;
 		Time hora = Time.valueOf(editarhora);
 		
 		PreparedStatement pSt;
 		
 		try {
-			pSt = this.con.getCon().prepareStatement("INSERT INTO historiales_clientes(DNI, Fecha_Revision, Hora_Revision, Observaciones, Atendido) VALUES (?, ?, ?, ?, ?)");
+			pSt = this.con.getCon().prepareStatement("INSERT INTO historiales_clientes(DNI, Fecha_Revision, Hora_Revision, Observaciones, Atendido, ID_Clinica) VALUES (?, ?, ?, ?, ?, ?)");
 			pSt.setString(1, editardni);
 			pSt.setDate(2, new java.sql.Date(editarfecha.getTime()));			
 			pSt.setTime(3, hora);
 			pSt.setString(4, informe);
 			pSt.setString(5, editarempleado);
+			pSt.setInt(6, ID_Clinica);
 			int filasAfectadas = pSt.executeUpdate();
 			if (filasAfectadas > 0) {
 			actualizado = true;
