@@ -156,6 +156,16 @@
 </div>
         </c:if>
         
+        <c:if test="${aviso eq 'citacreada'}">
+        	<div class="alerta">
+	  <div class="alert alert-success check alert-dismissible fade show" role="alert">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <i class="fa-solid fa-calendar-plus fa-bounce fa-lg" style="color: #ffffff;"></i> &nbsp; &nbsp;
+  <span>Cita creada correctamente!</span>
+</div>
+</div>
+        </c:if>
+        
         <c:if test="${aviso eq 'borradoincorrecto'}">
         <div class="alerta">
         	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert">

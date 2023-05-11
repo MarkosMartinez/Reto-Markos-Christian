@@ -71,7 +71,8 @@ public class ModeloEquipamiento {
 		return actualizado;
 	}
 
-	public void insertar(String nombre, Double precio, int stock, int idClinica) {
+	public boolean insertar(String nombre, Double precio, int stock, int idClinica) {
+			boolean insertado = true;
 			PreparedStatement pstInsertar;
 			try {
 				pstInsertar = this.con.getCon().prepareStatement("INSERT INTO `equipamiento`(`Nombre_Equipamiento`, `Precio`, `Stock`, `ID_Clinica`) VALUES (?, ?, ?, ?)");
@@ -81,8 +82,11 @@ public class ModeloEquipamiento {
 				pstInsertar.setInt(4, idClinica);
 				pstInsertar.execute();
 	        } catch (SQLException e) {
+	        	insertado = false;
 	            e.printStackTrace();
 	        }
+			
+			return insertado;
 	}
 
 	public boolean eliminarStock(int delete) {

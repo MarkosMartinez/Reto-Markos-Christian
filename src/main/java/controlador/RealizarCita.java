@@ -108,9 +108,10 @@ public class RealizarCita extends HttpServlet {
 			 
 			 ModeloCita modeloCita = new ModeloCita(con);
 			 ModeloHabitacion modeloHabitacion = new ModeloHabitacion(con);
-			 int cantidadDeHabitaciones = modeloHabitacion.getCantHabitaciones(id_Clinica); //TODO check o algo en las habitaciones para no poder crear mismo num en la misma clinica. PK no vale.
+			 int cantidadDeHabitaciones = modeloHabitacion.getCantHabitaciones(id_Clinica);
 			 if(modeloCita.disponible(id_Clinica, fecha, hora, cantidadDeHabitaciones)) {
-			 modeloCita.crearCita(id_Clinica, dni, fecha, hora);
+			 boolean creado = modeloCita.crearCita(id_Clinica, dni, fecha, hora);
+			if(creado) {
 			HttpSession session = request.getSession();
 			Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
@@ -120,15 +121,18 @@ public class RealizarCita extends HttpServlet {
 						response.sendRedirect(request.getContextPath() + "/Principal");
 					}else {
 						con.cerrar();
-						response.sendRedirect(request.getContextPath() + "/VerCitas"); //TODO Cambiar esto (el redirect) y poner msg (aviso) cita creada?
+						response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citacreada"); //TODO Cambiar esto (el redirect) y poner msg (aviso) cita creada?
 					}
 				}else {
 					con.cerrar();
-					response.sendRedirect(request.getContextPath() + "/VerCitas");
+					response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citacreada");
 				}
 			 }else{
 				 con.cerrar();
 				 response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=demasiadascitas&clinica=" + id_Clinica + "&dni=" + dni + "&fecha=" + fechaSinFormato + "&hora=" + hora);
+			 }
+			 }else {
+					response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 			 }
 		}
 		

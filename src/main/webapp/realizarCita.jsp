@@ -97,6 +97,17 @@
 		 </div>
         </c:if>
         
+        <c:if test="${aviso eq 'error'}">
+      	<div class="alerta">
+			     <div style="width:250px;height:90px" class="alert alert-danger danger alert-dismissible fade show" role="alert">
+			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			 <i class="fa-solid fa-triangle-exclamation fa-bounce" style="color: #ffffff;"></i>
+			  &nbsp; &nbsp;
+			  <span>Ha ocurrido un error, eso no deberia de haber sucedido!</span>
+			</div>
+		 </div>
+        </c:if>
+        
         <fmt:formatDate value="${hoy}" pattern="dd/MM/yyyy" />
         <%Date hoy = new Date();%>
 		<c:set var="hoy" value="<%= hoy %>" />

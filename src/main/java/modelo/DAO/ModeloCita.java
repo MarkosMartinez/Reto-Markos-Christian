@@ -19,8 +19,9 @@ public class ModeloCita {
 		this.con  = con;
 	}
 
-	public void crearCita(int id_Clinica, String dni, java.util.Date fecha, LocalTime hora) {
+	public boolean crearCita(int id_Clinica, String dni, java.util.Date fecha, LocalTime hora) {
 		PreparedStatement insertar;
+		boolean creado = true;
 		try {
 			insertar = this.con.getCon().prepareStatement("INSERT INTO citas (ID_Clinica, DNI_Cliente, Fecha_Cita, Hora_Cita) VALUES (?, ?, ?, ?);");
 			insertar.setInt(1, id_Clinica);
@@ -30,9 +31,10 @@ public class ModeloCita {
 			insertar.setObject(4, horas);
 			insertar.execute();
 		} catch (SQLException e) {
+			creado = false;
 			e.printStackTrace();
 		}
-		
+		return creado;
 	}
 
 	public boolean disponible(int id_Clinica, java.util.Date fecha, LocalTime hora, int cantidadDeHabitaciones) {

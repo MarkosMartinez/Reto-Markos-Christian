@@ -111,9 +111,13 @@ public class EditarEquipamiento extends HttpServlet {
 				Double precio = Double.parseDouble(request.getParameter("precio"));
 				int stock = Integer.parseInt(request.getParameter("stock"));
 				int idClinica = Integer.parseInt(request.getParameter("idClinica"));
-				mequipamiento.insertar(nombre, precio, stock, idClinica);
+				boolean insertado = mequipamiento.insertar(nombre, precio, stock, idClinica);
 				con.cerrar();
+				if(insertado) {
 				response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=insertado");
+				}else {
+					response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
+				}
 			} else {
 				con.cerrar();
 				response.sendRedirect(request.getContextPath() + "/EditarEquipamiento?aviso=error");
