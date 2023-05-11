@@ -112,7 +112,7 @@ public class ModeloCita {
 		ArrayList<Cita> citas = new ArrayList<>();
 	
 		try {
-			PreparedStatement pSt = this.con.getCon().prepareStatement("SELECT * FROM citas WHERE ID_Clinica = ? AND (Fecha_Cita < CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) < TIME(NOW())))ORDER BY Fecha_Cita, Hora_Cita;");
+			PreparedStatement pSt = this.con.getCon().prepareStatement("SELECT * FROM citas WHERE ID_Clinica = ? AND (Fecha_Cita < CURDATE() OR (Fecha_Cita = CURDATE() AND TIME(Hora_Cita) < TIME(NOW()))) ORDER BY Fecha_Cita, Hora_Cita;");
 			pSt.setInt(1, id_Clinica);
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
@@ -183,36 +183,36 @@ public class ModeloCita {
 
 	public Boolean actualizarCita(String editardni, java.util.Date editarfecha, LocalTime editarhora, String editarempleado, String informe) { //TODO Primero que haga un Update y si no lo consigue que haga un insert.
 		boolean actualizado = false;
-		String update = "incorrecto";
+		Time hora = Time.valueOf(editarhora);
 		
 		PreparedStatement pSt;
 		
-	
 		try {
-			pSt = this.con.getCon().prepareStatement("UPDATE historiales_clientes SET Observaciones = ?, Atendido = ?");
-			pSt.setString(1, informe);
-			pSt.setString(2, editarempleado);
-			pSt.executeUpdate();
-			update = "correcto";
+			pSt = this.con.getCon().prepareStatement("INSERT INTO historiales_clientes(DNI, Fecha_Revision, Hora_Revision, Observaciones, Atendido) VALUES (?, ?, ?, ?, ?)");
+			pSt.setString(1, editardni);
+			pSt.setDate(2, new java.sql.Date(editarfecha.getTime()));			
+			pSt.setTime(3, hora);
+			pSt.setString(4, informe);
+			pSt.setString(5, editarempleado);
+			int filasAfectadas = pSt.executeUpdate();
+			if (filasAfectadas > 0) {
 			actualizado = true;
-		} catch (SQLException e) {
-			e.printStackTrace();
+			}
+		}catch (SQLException e) {
+			/*e.printStackTrace();*/
 		}
 		
-		if (update == "incorrecto") {
+		if (!actualizado) {
 			try {
-				pSt = this.con.getCon().prepareStatement("INSERT INTO historiales_clientes(DNI, Fecha_Revision, Hora_Revision, Observaciones, Atendido) VALUES (?, ?, ?, ?, ?)");
-				pSt.setString(1, editardni);
-				pSt.setDate(2, new java.sql.Date(editarfecha.getTime()));
-				Time hora = Time.valueOf(editarhora);
-				pSt.setTime(3, hora);
-				pSt.setString(4, informe);
-				pSt.setString(5, editarempleado);
-				int filasAfectadas = pSt.executeUpdate();
-				if (filasAfectadas > 0) {
+				pSt = this.con.getCon().prepareStatement("UPDATE historiales_clientes SET Observaciones = ?, Atendido = ? WHERE DNI = ? AND Fecha_Revision = ? AND Hora_Revision = ?");
+				pSt.setString(1, informe);
+				pSt.setString(2, editarempleado);
+				pSt.setString(3, editardni);
+				pSt.setDate(4, new java.sql.Date(editarfecha.getTime()));
+				pSt.setTime(5, hora);
+				pSt.executeUpdate();
 				actualizado = true;
-				}
-			}catch (SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
