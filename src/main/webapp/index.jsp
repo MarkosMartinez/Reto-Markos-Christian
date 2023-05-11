@@ -76,8 +76,8 @@
           nos importa.
         </h1>
         <a href="RealizarCita">
-          <button class="btn-cita"> <% //TODO Cambiar nombre de algunas clases como esta. %>
-            Pide tu cita ya pulsando aqui! →
+          <button class="btn-cita">
+            Pide tu cita ya pulsando aqui!
         </button>
         </a>
       </section>

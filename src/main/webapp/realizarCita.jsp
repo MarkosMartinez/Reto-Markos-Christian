@@ -145,7 +145,7 @@
                         </div>
                         <div class="inputbox">
                             <i class="fas fa-calendar-alt"></i>
-                            <c:if test = "${fecha == null}"> <%//TODO Añadir limite maximo a la fecha%>
+                            <c:if test = "${fecha == null}">
 						       <input type="date" id="fecha" name="fecha" min="<fmt:formatDate value="${hoy}" pattern='yyyy-MM-dd' />" required="required">
 							</c:if>
 							<c:if test = "${fecha != null}">

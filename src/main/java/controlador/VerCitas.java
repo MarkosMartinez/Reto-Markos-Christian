@@ -142,7 +142,7 @@ public class VerCitas extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String editardni = request.getParameter("editardni"); //TODO MSG Cita pedida / Cita error
+		String editardni = request.getParameter("editardni");
 		String fechaSinFormato = request.getParameter("editarfecha");
 		String tipo = request.getParameter("tipo");
 		HttpSession session = request.getSession();

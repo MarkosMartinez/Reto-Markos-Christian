@@ -77,8 +77,7 @@ public class RealizarCita extends HttpServlet {
 		request.setAttribute("dni", dni);
 		request.setAttribute("fecha", fecha);
 		request.setAttribute("hora", hora);
-		request.setAttribute("clinicas", clinicas);
-		//TODO evitar que el mismo cliente pueda crear mas de una cita a la misma hora (y que una vez logueado pida citas con otros users, si ponemos lo del correo?) 
+		request.setAttribute("clinicas", clinicas); 
 		request.getRequestDispatcher("realizarCita.jsp").forward(request, response);
 	}
 
@@ -121,7 +120,7 @@ public class RealizarCita extends HttpServlet {
 						response.sendRedirect(request.getContextPath() + "/Principal");
 					}else {
 						con.cerrar();
-						response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citacreada"); //TODO Cambiar esto (el redirect) y poner msg (aviso) cita creada?
+						response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citacreada");
 					}
 				}else {
 					con.cerrar();

@@ -183,7 +183,7 @@ public class ModeloCita {
 		return citas;
 	}
 
-	public Boolean actualizarCita(String editardni, java.util.Date editarfecha, LocalTime editarhora, String editarempleado, String informe, int ID_Clinica) { //TODO Primero que haga un Update y si no lo consigue que haga un insert.
+	public Boolean actualizarCita(String editardni, java.util.Date editarfecha, LocalTime editarhora, String editarempleado, String informe, int ID_Clinica) {
 		boolean actualizado = false;
 		Time hora = Time.valueOf(editarhora);
 		
