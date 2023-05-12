@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import modelo.DAO.Conector;
 import modelo.DAO.ModeloCliente;
+import modelo.DAO.ModeloHistorial_Cliente;
 import modelo.DTO.Cliente;
 import modelo.DTO.Empleado;
 

@@ -261,12 +261,12 @@ public class ModeloCliente {
 	public boolean eliminarCliente(String dni) {
 	    boolean eliminado = true;
 	    
-	    PreparedStatement pstEliminarCitas;
+	    PreparedStatement pstEliminarHistorial;
 		try {
-			pstEliminarCitas = this.con.getCon().prepareStatement("DELETE FROM `citas` WHERE DNI_Cliente = ?");
-			pstEliminarCitas.setString(1, dni);
-			pstEliminarCitas.executeUpdate();
-	        pstEliminarCitas.close();
+			pstEliminarHistorial = this.con.getCon().prepareStatement("DELETE FROM `historiales_clientes` WHERE DNI = ?");
+			pstEliminarHistorial.setString(1, dni);
+			pstEliminarHistorial.executeUpdate();
+			pstEliminarHistorial.close();
         } catch (SQLException e) {
         	eliminado = false;
             e.printStackTrace();
@@ -289,12 +289,12 @@ public class ModeloCliente {
 		
 		if(eliminado) {
 			
-			PreparedStatement pstEliminarHistorial;
+			PreparedStatement pstEliminarCitas;
 			try {
-				pstEliminarHistorial = this.con.getCon().prepareStatement("DELETE FROM `historiales_clientes` WHERE DNI = ?");
-				pstEliminarHistorial.setString(1, dni);
-				pstEliminarHistorial.executeUpdate();
-				pstEliminarHistorial.close();
+				pstEliminarCitas = this.con.getCon().prepareStatement("DELETE FROM `citas` WHERE DNI_Cliente = ?");
+				pstEliminarCitas.setString(1, dni);
+				pstEliminarCitas.executeUpdate();
+		        pstEliminarCitas.close();
 	        } catch (SQLException e) {
 	        	eliminado = false;
 	            e.printStackTrace();

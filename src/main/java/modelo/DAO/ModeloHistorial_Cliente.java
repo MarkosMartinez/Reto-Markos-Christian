@@ -40,4 +40,9 @@ public class ModeloHistorial_Cliente {
 		return historiales;
 	}
 
+	public boolean eliminarHistorial(String dniAEliminar) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

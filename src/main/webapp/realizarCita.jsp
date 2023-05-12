@@ -123,7 +123,7 @@
                     <form class="form-inline" action="RealizarCita" method="POST">
                         <h2>Pedir cita</h2>
                         <div class="inputbox">
-                            <label for="clinica">Cl�nica</label>
+                            <label for="clinica">Clínica</label>
 						      <c:if test = "${clinica == null}">
 						       <select name="ID_Clinica" required="required" style="margin-left: 70px; margin-bottom: 2px; background-color: rgb(255, 255, 255); color: rgb(0, 140, 255);">
 							</c:if>
