@@ -1,134 +1,139 @@
-body{
-    position: relative;
+body {
+  position: relative;
 }
 
-main{
-    position: relative;
-    z-index: 1;
+main {
+  position: relative;
+  z-index: 1;
 }
-section{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100%;
-    background-image: url("../img/fondoLogin.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.form-box1{
-    position: relative;
-    width: 400px;
-    height: 450px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    margin: 0px 100px 0px 0px;
+section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-image: url("../img/fondoLogin.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.form-box2{
-    position: relative;
-    width: 400px;
-    height: 850px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    margin: -15px 0px 0px 100px;
+/*estilos para contenedor de Inicar Sesion*/
+.form-box1 {
+  position: relative;
+  width: 400px;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  margin: 0px 100px 0px 0px;
 }
 
-@media(max-width:1000px){
-    .form-box1{
-        margin: 2%;
-    }
-    .form-box2{
-        margin: 2px;
-    }
+/*estilos para contenedor de Registrarse*/
+.form-box2 {
+  position: relative;
+  width: 400px;
+  height: 850px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  margin: -15px 0px 0px 100px;
 }
 
-h2{
-    font-size: 30px;
-    color: rgb(0, 119, 255);
-    text-align: center;
+/*hacer que los contenedores se vean bien en 1000px (sin esto quedan muy juntos)*/
+@media (max-width: 1000px) {
+  .form-box1 {
+    margin: 2%;
+  }
+  .form-box2 {
+    margin: 2px;
+  }
 }
 
-.inputbox{
-    position: relative;
-    margin: 30px 0;
-    border-bottom: 2px solid white;
+/*Estilos de los titulos de los dos contenedores*/
+h2 {
+  font-size: 30px;
+  color: rgb(0, 119, 255);
+  text-align: center;
 }
 
-.inputbox label{
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    transform: translateY(-50%);
-    color: white;
-    font-size: 1em;
-    transition: 0.5s;
+/*estilos de lso inputs*/
+.inputbox {
+  position: relative;
+  margin: 30px 0;
+  border-bottom: 2px solid white;
 }
 
-
-.inputbox .fecha{
-    top: -5px;
+.inputbox label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 1em;
+  transition: 0.5s;
 }
 
-input:focus ~ label, 
-input:valid ~ label{
-    top: -5px;
-    
+.inputbox .fecha {
+  top: -5px;
 }
 
-.inputbox input{
-    width: 100%;
-    height: 50px;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    padding: 0 35px 0 5px;
-    color: white;
+input:focus ~ label,
+input:valid ~ label {
+  top: -5px;
 }
 
-.inputbox i{
-    position: absolute;
-    right: 8px;
-    color: white;
-    font-size: 1.2em;
-    top: 20px;
+.inputbox input {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  padding: 0 35px 0 5px;
+  color: white;
 }
 
-.boton{
-    width: 100%;
-    height: 40px;
-    border-radius: 40px;
-    background: white;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: bolder;
-    transition: ease-in-out 0.5s;
-    border-color: white;
-    color: rgb(0, 116, 248);
+.inputbox i {
+  position: absolute;
+  right: 8px;
+  color: white;
+  font-size: 1.2em;
+  top: 20px;
+}
+/*fin inputs*/
 
+/*estilos para los botones finales de Inicar sesion/Registrarse*/
+.boton {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bolder;
+  transition: ease-in-out 0.5s;
+  border-color: white;
+  color: rgb(0, 116, 248);
 }
 
-.boton:hover{
-    color: white;
-    background-color: rgb(0, 116, 248);
+.boton:hover {
+  color: white;
+  background-color: rgb(0, 116, 248);
 }
 
+/*estilos para los avisos*/
 .danger {
   border-radius: 5px;
   width: 220px;
@@ -137,7 +142,7 @@ input:valid ~ label{
   position: absolute;
   display: flex;
   top: 100px;
-  left:-300px;
+  left: -300px;
   align-items: center;
   background-color: red;
   cursor: pointer;
@@ -146,23 +151,22 @@ input:valid ~ label{
   transition: all ease-in-out 0.5s;
 }
 
-.danger:hover{
+.danger:hover {
   transition: all ease-in-out 0.5s;
   background-color: #b50f04;
-  transition:0.5s;
+  transition: 0.5s;
 }
-
 
 .rotate {
   animation: rotate 2s linear infinite;
 }
 
-.alerta{
-	z-index: 998;
-	position: absolute;
-	top: 0px;
-	transition: all ease-in-out 0.5s;
-	animation: entrada 0.5s ease-in-out 0.5s forwards;
+.alerta {
+  z-index: 998;
+  position: absolute;
+  top: 0px;
+  transition: all ease-in-out 0.5s;
+  animation: entrada 0.5s ease-in-out 0.5s forwards;
 }
 
 @keyframes entrada {
@@ -181,3 +185,4 @@ input:valid ~ label{
   position: absolute;
   right: 6px;
 }
+/*fin esilos avisos*/

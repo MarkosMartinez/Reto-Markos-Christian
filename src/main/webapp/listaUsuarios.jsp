@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/listaEmpleadosClientes.css" />
   </head>
 
+    <!--Inicio del menu de navegación-->
 <header>
     <nav>
       <input type="checkbox" id="check" />
@@ -45,6 +46,7 @@
       </ul>
     </nav>
   </header>
+  <!--Fin del menu de navegación-->
 
   <body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -54,6 +56,7 @@
         <%Date hoy = new Date();%>
 		<c:set var="hoy" value="<%= hoy %>" />
     
+    <!-- Lista de avisos que aparecen depende las acciones del usuario -->
 	     <c:if test="${aviso eq 'usucreado'}">
 	        	<div class="alerta">
 					  <div class="alert alert-success check alert-dismissible fade show" role="alert">
@@ -84,8 +87,11 @@
 			  </div>
         	</div>
         </c:if>
-    
+      <!-- Fin avisos -->
+
+
       <section>
+        <!-- Titulo superior con select para director -->
         <div class="tituloYopcion">
         <c:if test="${director eq true}">
           <h1 class="titulo">Lista de</h1>
@@ -101,13 +107,16 @@
             	<option selected="selected" value="clientes">CLIENTES</option>
             	</c:if>
           	</select>
-		</form>
+		  </form>
           </c:if>
+          
+          <!-- Lista solo de clientes para empleados -->
           <c:if test="${director eq false}">
           <h1 class="titulo">Lista de Clientes</h1>
           </c:if>
         </div>
 
+        <!-- estilos tabla -->
         <div class="tbl-header">
           <table cellpadding="0" cellspacing="0" border="0">
             <thead>
@@ -178,6 +187,10 @@
             </tbody>
           </table>
         </div>
+
+        <!-- fin estilos tablas -->
+
+        <!-- Boton añadir empleado -->
         <c:if test="${director eq true and visualizar eq 'emp'}">
           <a href="#añadir">
           <button class="button" style="vertical-align: middle">
@@ -185,6 +198,7 @@
           </button>
         </a>
 
+        <!-- popup para añadir empleado -->
         <div id="añadir" class="overlay">
           <div class="popup">
           <h2 style="color: rgb(0, 132, 255)">Añadir empleado</h2>
@@ -229,20 +243,17 @@
             </div>
           </div>
         </div>
+        <!-- fin popup añadir empleado -->
         </c:if>
       </section>
     </main>
   </body>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer-izquierda col-md-4 col-sm-6">
       <p class="about">
-        <span> Sobre Smiling</span> Ut congue augue non tellus bibendum, in
-        varius tellus condimentum. In scelerisque nibh tortor, sed rhoncus odio
-        condimentum in. Sed sed est ut sapien ultrices eleifend. Integer tellus
-        est, vehicula eu lectus tincidunt, ultricies feugiat leo. Suspendisse
-        tellus elit, pharetra in hendrerit ut, aliquam quis augue. Nam ut nibh
-        mollis, tristique ante sed, viverra massa.
+        <span> Sobre Smiling</span> En nuestra clínica odontológica, nos dedicamos a brindar la mejor atención dental para cada uno de nuestros pacientes. Contamos con un equipo altamente capacitado y comprometido en ofrecer servicios de calidad y personalizados para satisfacer las necesidades de cada uno de nuestros pacientes. Nuestra misión es ayudar a nuestros pacientes a mantener una buena salud bucal y una sonrisa radiante. ¡Estamos encantados de servirle!
       </p>
 
       <div class="iconos">

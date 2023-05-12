@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="css/equipamiento.css">
 </head>
 
+<!--Inicio del menu de navegación-->
 <header>
     <nav>
       <input type="checkbox" id="check" />
@@ -46,10 +47,12 @@
       </ul>
     </nav>
   </header>
+<!--Fin del menu de navegación-->
 
 <body>
     <main>
     
+      <!--Avisos que saltarán dependiendo de las acciones que realice el usuario-->
     <c:if test="${aviso eq 'insertado'}">
         	<div class="alerta">
 	  <div class="alert alert-success check alert-dismissible fade show" role="alert">
@@ -80,9 +83,12 @@
 </div>
         </div>
         </c:if>
-    
-        <section>
-       		<c:if test="${director eq 'true'}">
+      <!--Fin de avisos-->  
+
+      <!--Titulo superior, depende del rol con el que se entre a la pagina web aparecerán unas opciones u
+      otras, en caso del director será capaz de cambiar de clinica para ver el quipamiento de otra-->
+    <section>
+      <c:if test="${director eq 'true'}">
 		    <div style="max-width: 100%; margin: auto; display: flex; justify-content: center; align-items: center;">
 		        <h1>Lista de equipamiento de </h1>
 		        <form action="EditarEquipamiento" method="POST">
@@ -100,15 +106,17 @@
 		            <input type="text" value="${empleadoLogueado.dni_Emp}" name="dnidirector" readonly="readonly" hidden required="required">
 		        </form>
 		    </div>
-		</c:if>
+		  </c:if>
 
-         	<c:if test="${director eq 'false'}">
-          	  <h1>Lista de equipamiento</h1>
-            </c:if>
-            <div class="form-value">
-            <form class="form-inline" action="EditarEquipamiento" method="POST">
+      <c:if test="${director eq 'false'}">
+         <h1>Lista de equipamiento</h1>
+       </c:if>
+           <div class="form-value">
+           <form class="form-inline" action="EditarEquipamiento" method="POST">
             <input type="text" value="actualizar" name="tipo" readonly="readonly" hidden required="required">
   			 <c:set var="cantidad" value="0"/>
+            
+            <!--Tabla en la que se mostrarán los campos del equipamiento-->
             <div class="tbl-header">
               <table cellpadding="0" cellspacing="0" border="0">
                 <thead>
@@ -122,6 +130,8 @@
                 </thead>
               </table>
             </div>
+            
+            <!--Tabla en la que se mostrará el equipamiento-->
             <div class="tbl-content">
               <table cellpadding="0" cellspacing="0" border="0">
                 <tbody>
@@ -146,16 +156,19 @@
 				  </tbody>
               </table>
              </div>
+             
+             <!--Botones para insertar equipamiento o para actualizar los cambios-->
 					<input type="text" value="${cantidad}" name="cantidad" readonly="readonly" hidden required="required">
-				<a href="#formularioEquip" type="button" class="btn btn-success btnInsertar">Insertar Equipamiento</a>
-				<button type="submit" class="btn btn-warning botonFormulario">Actualizar todos!</button>
+				  <a href="#formularioEquip" type="button" class="btn btn-success btnInsertar">Insertar Equipamiento</a>
+				  <button type="submit" class="btn btn-warning botonFormulario">Actualizar todos!</button>
 				
+        <!--Link de javascript de bootrap-->
 				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-				
-				       
         
 			</form>
 		</div>
+    
+    <!--Formulario popup que aparecerá al darle al boton de insertar Equipamiento-->
 		<div id="formularioEquip" class="overlay">
           <div class="popup">
             <h2 style="color: rgb(0, 132, 255);">Insertar Equipamiento</h2>
@@ -183,15 +196,12 @@
     </main>
 </body>
 
+<!--Footer-->
 <footer class="footer">
     <div class="footer-izquierda col-md-4 col-sm-6">
       <p class="about">
-        <span> Sobre Smiling</span> Ut congue augue non tellus bibendum, in
-        varius tellus condimentum. In scelerisque nibh tortor, sed rhoncus odio
-        condimentum in. Sed sed est ut sapien ultrices eleifend. Integer tellus
-        est, vehicula eu lectus tincidunt, ultricies feugiat leo. Suspendisse
-        tellus elit, pharetra in hendrerit ut, aliquam quis augue. Nam ut nibh
-        mollis, tristique ante sed, viverra massa.
+        <span> Sobre Smiling</span> 
+        En nuestra clínica odontológica, nos dedicamos a brindar la mejor atención dental para cada uno de nuestros pacientes. Contamos con un equipo altamente capacitado y comprometido en ofrecer servicios de calidad y personalizados para satisfacer las necesidades de cada uno de nuestros pacientes. Nuestra misión es ayudar a nuestros pacientes a mantener una buena salud bucal y una sonrisa radiante. ¡Estamos encantados de servirle!
       </p>
 
       <div class="iconos">

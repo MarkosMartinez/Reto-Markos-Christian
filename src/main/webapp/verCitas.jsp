@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="css/verCitas.css" />
   </head>
 
+<!--Inicio del menu de navegaci贸n-->
 <header>
     <nav>
       <input type="checkbox" id="check" />
@@ -38,7 +39,7 @@
         <li><a href="NuestroEquipo">Nuestro equipo</a></li>
         <li><a href="Tratamientos">Tratamientos</a></li>
         <c:if test="${tipoLogin eq 'ninguno'}">
-        	<li><a href="LoginYRegistro">Iniciar sesi髇/Registrarse</a></li>
+        	<li><a href="LoginYRegistro">Iniciar sesi贸n/Registrarse</a></li>
         </c:if>
         <li><a href="RealizarCita">Pedir Cita</a></li>
         <li><a class="activo" href="VerCitas">Consultar Citas</a></li>
@@ -61,15 +62,17 @@
       </ul>
     </nav>
   </header>
+  <!--Fin del menu de navegaci贸n-->
 
   <body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    
     <main>
-    
-    
+      <!-- contenedor para todas las cards -->
       <div class="ag-format-container">
       
       <c:if test="${director eq 'true'}">
+        <!-- Titulo superior con select -->
 		    <div style="max-width: 100%; margin: auto; display: flex; justify-content: center; align-items: center;">
 			    <h1 class="listaCitas">Lista de citas de</h1>
 			    <form action="VerCitas" method="POST" style="display: inline-block; margin-top: 98px;">
@@ -88,14 +91,15 @@
 			    </form>
 			</div>
 
-		</c:if>
-
+		  </c:if>
+      <!-- Titulo superior para empleados -->
          	<c:if test="${director eq 'false'}">
           	  <div style="max-width: 100%; margin: auto; display: flex; justify-content: center; align-items: center;">
 			    <h1 class="listaCitas">Lista de citas</h1>
 			  </div>
             </c:if>
       
+        <!-- Formulario para los empleados al insertar/editar el formulario una cita que ya ha pasado -->
        <div id="formularioCita" class="overlay">
           <div class="popup">
             <h2 style="color: rgb(0, 132, 255);">Formulario de cita</h2>
@@ -103,16 +107,16 @@
             <div class="content">
               <form action="VerCitas" method="POST">
               	<input type="text" value="formcita" name="tipo" readonly="readonly" hidden required="required">
-				<input type="text" value="${editardni}" name="editardni" readonly="readonly" hidden required="required">
-				<input type="date" required readonly="readonly" name="editarfecha" value="${editarfecha}" hidden>
-				<input type="time" required readonly="readonly" name="editarhora" value="${editarhora}" hidden>
-                <label>Cl韓ica:</label>
+				  <input type="text" value="${editardni}" name="editardni" readonly="readonly" hidden required="required">
+				  <input type="date" required readonly="readonly" name="editarfecha" value="${editarfecha}" hidden>
+				  <input type="time" required readonly="readonly" name="editarhora" value="${editarhora}" hidden>
+                <label>Cl铆nica:</label>
                 <input type="text" required value="${editarclinica}" name="editarclinica" readonly="readonly">
                 <br><br>
                 <label for="cliente">Cliente:</label>
                 <input type="text" required id="cliente" value="${editarcliente}" readonly="readonly">
                 <br><br>
-                <label for="editartelefono">Tel閒ono:</label>
+                <label for="editartelefono">Tel茅fono:</label>
                 <input type="number" required id="editartelefono" name="editartelefono" readonly="readonly" value="${editartelefono}">
                 <br><br>
                 <label for="editarempleado">Empleado:</label>
@@ -135,7 +139,9 @@
             </div>
           </div>
         </div>
-      
+        <!-- fin del formulario -->
+
+        <!-- Avisos que apareceran dependiendo de las acciones dle usuario -->
         <c:if test="${aviso eq 'borradocorrecto'}">
         	<div class="alerta">
 	  <div class="alert alert-success check alert-dismissible fade show" role="alert">
@@ -187,8 +193,11 @@
 </div>
         </div>
         </c:if>
-
+        <!-- fin avisos -->
 		
+
+    
+    <!-- card que se mostrar谩 a los clientes cuando no hayan pedido ninguna cita nunca -->
  		<c:if test="${citasPosteriores.size() == 0 && tipoLogin ne 'empleado'}">
  		
  		<div class="ag-courses_box">
@@ -210,6 +219,7 @@
  		
  		</c:if>
  		
+    <!-- card que se mostrar谩 a los empleados cuando no haya ninguna cita en ese dia -->
  		<c:if test="${citasPosteriores.size() == 0 && tipoLogin eq 'empleado'}">
  		
  		<div class="ag-courses_box">
@@ -227,7 +237,7 @@
  		</c:if>
         
 		
-
+      <!-- cards con las citas pendientes -->
         <div class="ag-courses_box">
         <c:set var="actual" value="0"/>
         <c:if test="${citasPosteriores.size() >= 1}">
@@ -242,15 +252,15 @@
 
               <div class="ag-courses-item_title">
                 <p>Nombre: ${cliente.nombre} ${cliente.apellidos}</p>
-                <p style="font-size: 18px;">Tel閒ono/s:
+                <p style="font-size: 18px;">Tel茅fono/s:
                 <c:forEach var="telefono" items="${telefonos}">
                   <c:if test="${telefono.dni eq cita.dni_Cliente}">
                		 ${telefono.telefono} 
                	  </c:if>
                 </c:forEach>
                 </p>
-                <p style="font-size: smaller;">Cl韓ica: ${clinica.nombre_clinica}</p>
-                <p style="font-size: 16px;">Direcci髇: ${clinica.direccion}</p>
+                <p style="font-size: smaller;">Cl茅nica: ${clinica.nombre_clinica}</p>
+                <p style="font-size: 16px;">Direcci贸n: ${clinica.direccion}</p>
               </div>
 
               <div class="ag-courses-item_date-box">
@@ -276,43 +286,44 @@
               </c:forEach>
              	</c:forEach>
              </c:if>
-
         </div>
-      
+        <!-- fin cards citas pendientes -->
+
+        <!-- cards de fechas y horas que ya han pasado, tienen un formulario que solo ven los empleados para a帽adir un infrome y quien ha atendido esa cita -->
       		<c:if test="${citasPosteriores.size() >= 1}">
             	<h1 style="color: red;text-align: center;">Citas Anteriores</h1>
             </c:if>
             	
-<div class="ag-courses_box">
-  <c:set var="actual" value="0"/>
- <c:if test="${citasAnteriores.size() >= 1}">
-  <c:forEach var="cita" items="${citasAnteriores}">
-    <c:forEach var="clinica" items="${clinicas}">
-      <c:if test="${clinica.id_clinica eq cita.id_Clinica}">
-        <c:forEach var="cliente" items="${clientes}">
-          <c:if test="${cliente.dni eq cita.dni_Cliente}">
-            <div class="ag-courses_item">
-              <div class="ag-courses-item_link">
-                <div class="ag-courses-item_bg2"></div>
+          <div class="ag-courses_box">
+            <c:set var="actual" value="0"/>
+          <c:if test="${citasAnteriores.size() >= 1}">
+            <c:forEach var="cita" items="${citasAnteriores}">
+              <c:forEach var="clinica" items="${clinicas}">
+                <c:if test="${clinica.id_clinica eq cita.id_Clinica}">
+                  <c:forEach var="cliente" items="${clientes}">
+                    <c:if test="${cliente.dni eq cita.dni_Cliente}">
+                      <div class="ag-courses_item">
+                        <div class="ag-courses-item_link">
+                          <div class="ag-courses-item_bg2"></div>
 
-                <div class="ag-courses-item_title">
-                  <p>Nombre: ${cliente.nombre} ${cliente.apellidos}</p>
-                  <p style="font-size: smaller;">Cl韓ica: ${clinica.nombre_clinica}</p>
-                  <p style="font-size: 18px;">Tel閒ono/s:
-                 <c:forEach var="telefono" items="${telefonos}">
-                	 <c:if test="${telefono.dni eq cita.dni_Cliente}">
-               			 ${telefono.telefono} 
-                	 </c:if>
-               	 </c:forEach>
-               	 </p>
-                  <c:forEach var="historial" items="${historiales}">
-                    <c:if test="${historial.DNI eq cita.dni_Cliente && historial.fecha_Revision eq cita.fecha_Cita && historial.hora_Revision == horasAnteriores.get(actual)}">
-                    <c:forEach var="empleado" items="${empleados}">
-                    <c:if test="${empleado.dni_Emp eq historial.atendido}">
-					 	<p style="font-size: 16px;">Atendido por: ${empleado.nombre} ${empleado.apellidos}</p>
-					 	</c:if>
-					</c:forEach>
-                       
+                          <div class="ag-courses-item_title">
+                            <p>Nombre: ${cliente.nombre} ${cliente.apellidos}</p>
+                            <p style="font-size: smaller;">Cl铆nica: ${clinica.nombre_clinica}</p>
+                            <p style="font-size: 18px;">Tel茅fono/s:
+                          <c:forEach var="telefono" items="${telefonos}">
+                            <c:if test="${telefono.dni eq cita.dni_Cliente}">
+                              ${telefono.telefono} 
+                            </c:if>
+                          </c:forEach>
+                          </p>
+                            <c:forEach var="historial" items="${historiales}">
+                              <c:if test="${historial.DNI eq cita.dni_Cliente && historial.fecha_Revision eq cita.fecha_Cita && historial.hora_Revision == horasAnteriores.get(actual)}">
+                              <c:forEach var="empleado" items="${empleados}">
+                              <c:if test="${empleado.dni_Emp eq historial.atendido}">
+                      <p style="font-size: 16px;">Atendido por: ${empleado.nombre} ${empleado.apellidos}</p>
+                      </c:if>
+                    </c:forEach>
+                                
                        <p style="font-size: 16px;">Observaciones: ${historial.observaciones}</p>
                      
                     </c:if>
@@ -354,20 +365,20 @@
              		</c:if>
 
         </div>
+        <!-- fin cards de fechas y horas que ya han pasado -->
+
             </div>
       
       
     </main>
   </body>
+
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer-izquierda col-md-4 col-sm-6">
       <p class="about">
-        <span> Sobre Smiling</span> Ut congue augue non tellus bibendum, in
-        varius tellus condimentum. In scelerisque nibh tortor, sed rhoncus odio
-        condimentum in. Sed sed est ut sapien ultrices eleifend. Integer tellus
-        est, vehicula eu lectus tincidunt, ultricies feugiat leo. Suspendisse
-        tellus elit, pharetra in hendrerit ut, aliquam quis augue. Nam ut nibh
-        mollis, tristique ante sed, viverra massa.
+        <span> Sobre Smiling</span> 
+        En nuestra cl铆nica odontol贸gica, nos dedicamos a brindar la mejor atenci贸n dental para cada uno de nuestros pacientes. Contamos con un equipo altamente capacitado y comprometido en ofrecer servicios de calidad y personalizados para satisfacer las necesidades de cada uno de nuestros pacientes. Nuestra misi贸n es ayudar a nuestros pacientes a mantener una buena salud bucal y una sonrisa radiante. 隆Estamos encantados de servirle!
       </p>
 
       <div class="iconos">

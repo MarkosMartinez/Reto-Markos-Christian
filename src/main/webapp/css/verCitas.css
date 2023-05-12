@@ -8,20 +8,21 @@ body {
 main {
   position: relative;
   z-index: 1;
-  min-height: 75vh;
-}
-.listaCitas{
-	padding-top: 100px;
-	color: rgb(0, 132, 255);
-  	text-transform: uppercase;
-  	text-shadow: 1px 1px 1px white;
-	font-size: 40px;
-	text-align: center;
-	display: inline-block;
-	text-align: center;
 }
 
+/*estilo titulo de las citas pendientes*/
+.listaCitas {
+  padding-top: 100px;
+  color: rgb(0, 132, 255);
+  text-transform: uppercase;
+  text-shadow: 1px 1px 1px white;
+  font-size: 40px;
+  text-align: center;
+  display: inline-block;
+  text-align: center;
+}
 
+/*estilos de los avisos que aparecen depende de las acciones de los usuarios*/
 .check {
   border-radius: 5px;
   width: 190px;
@@ -30,7 +31,7 @@ main {
   position: absolute;
   display: flex;
   top: 100px;
-  left:-300px;
+  left: -300px;
   align-items: center;
   background-color: #08c41b;
   cursor: pointer;
@@ -48,7 +49,7 @@ main {
   position: absolute;
   display: flex;
   top: 100px;
-  left:-300px;
+  left: -300px;
   align-items: center;
   background-color: orange;
   cursor: pointer;
@@ -58,21 +59,20 @@ main {
   transition: all ease-in-out 0.5s;
 }
 
-.warning:hover{
+.warning:hover {
   background-color: rgb(222, 126, 0);
-  transition:0.5s;
+  transition: 0.5s;
 }
-
 
 .rotate {
   animation: rotate 2s linear infinite;
 }
 
-.alerta{
-	position: absolute;
-	top: 0px;
-	transition: all ease-in-out 0.5s;
-	animation: entrada 0.5s ease-in-out 0.5s forwards;
+.alerta {
+  position: absolute;
+  top: 0px;
+  transition: all ease-in-out 0.5s;
+  animation: entrada 0.5s ease-in-out 0.5s forwards;
 }
 
 @keyframes entrada {
@@ -96,7 +96,9 @@ main {
   position: absolute;
   right: 6px;
 }
+/*fin avisos*/
 
+/*estilo contenedor de las cards, con width 100% para que asi siempre ocupe el maximo tamaño d ela pagina no importa la resolucion*/
 .ag-format-container {
   width: 100%;
   margin: 0 auto;
@@ -104,6 +106,7 @@ main {
   z-index: -2;
 }
 
+/*estilo de cada card con flex-wrap para que se vayan bajando a diferentes filas depende de la resolucion de la pantalla*/
 .ag-courses_box {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -113,134 +116,117 @@ main {
   align-items: flex-start;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-
   padding: 50px 0;
 }
+
+/*estilo para los objetos (h1, p, input...) que estarán dentro de las cards*/
 .ag-courses_item {
   -ms-flex-preferred-size: calc(33.33333% - 30px);
   flex-basis: calc(33.33333% - 30px);
-
   margin: 0 15px 30px;
-
   overflow: hidden;
-
   border-radius: 28px;
 }
+
+/*estilo de la card para el color y subojbetos*/
 .ag-courses-item_link {
   display: block;
   padding: 30px 20px;
   background-color: rgba(245, 245, 245, 0.747);
   text-decoration: none;
-
   overflow: hidden;
-
   position: relative;
 }
+
+/*hovers y animaciones para el texto las cards*/
 .ag-courses-item_link:hover,
 .ag-courses-item_link:hover .ag-courses-item_date {
   text-decoration: none;
   color: rgb(255, 255, 255);
 }
-.ag-courses-item_link:hover .ag-courses-item_bg, .ag-courses-item_link:hover .ag-courses-item_bg2, .ag-courses-item_link:hover .ag-courses-item_bg3 {
+.ag-courses-item_link:hover .ag-courses-item_bg,
+.ag-courses-item_link:hover .ag-courses-item_bg2,
+.ag-courses-item_link:hover .ag-courses-item_bg3 {
   -webkit-transform: scale(10);
   -ms-transform: scale(10);
   transform: scale(14);
 }
+/*fin hovers y animaciones*/
+
+/*estilo para el titulo y texto de cada card*/
 .ag-courses-item_title {
   min-height: 87px;
   margin: 0 0 25px;
-
   overflow: hidden;
-
   font-size: 30px;
   color: rgb(0, 0, 0);
-
   z-index: 2;
   position: relative;
-
   transition: all ease-in-out 0.5s;
 }
 
+/*hovers y animaciones para las cards*/
 .ag-courses-item_link:hover .ag-courses-item_title {
   color: white;
   transition: all ease-in-out 0.5s;
 }
+
+/*estilo para el apartado de las fechas de las citas*/
 .ag-courses-item_date-box {
   font-size: 18px;
   color: limegreen;
-
   z-index: 2;
   position: relative;
 }
 
-.ag-courses-item_date-box2{
-	color: orange;
-	font-size: 18px;
-
+/*estilo para el apartado de las fechas de las citas anteriores*/
+.ag-courses-item_date-box2 {
+  color: orange;
+  font-size: 18px;
   z-index: 2;
   position: relative;
 }
 
+/*estilo para el apartado de las fechas general*/
 .ag-courses-item_date {
   font-weight: bold;
   color: #000000;
-
   -webkit-transition: color 0.5s ease;
   -o-transition: color 0.5s ease;
   transition: color 0.5s ease;
 }
+
+/*color de la parte superior derecha de casda card que al hacer hover se amplia y ocupa todo*/
 .ag-courses-item_bg {
   height: 128px;
   width: 128px;
   background-color: rgba(40, 106, 255, 1);
-
   z-index: 1;
   position: absolute;
   top: -75px;
   right: -75px;
-
   border-radius: 50%;
-
   -webkit-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
 
+/*color de la parte superior derecha de casda card que al hacer hover se amplia y ocupa todo en las cards de citas anteriores*/
 .ag-courses-item_bg2 {
   height: 128px;
   width: 128px;
   background-color: red;
-
   z-index: 1;
   position: absolute;
   top: -75px;
   right: -75px;
-
   border-radius: 50%;
-
   -webkit-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
 
-
-.ag-courses-item_bg3 {
-  height: 128px;
-  width: 128px;
-  background-color: green;
-
-  z-index: 1;
-  position: absolute;
-  top: -75px;
-  right: -75px;
-
-  border-radius: 50%;
-
-  -webkit-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
+/*responsive*/
 @media only screen and (max-width: 979px) {
   .ag-courses_item {
     -ms-flex-preferred-size: calc(50% - 30px);
@@ -274,7 +260,9 @@ main {
     font-size: 16px;
   }
 }
+/*fin responsive*/
 
+/*boton para eliminar la cita*/
 .primary-button {
   position: absolute;
   right: -20px;
@@ -286,7 +274,7 @@ main {
   border: 1px solid #0e1822;
   padding: 0.8rem 2.1rem;
   background-color: #0e1822;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'%3E%3Cdefs%3E%3Cstyle%3E .shape %7B fill: %23FF4655 /* fill: %230E1822; */ %7D %3C/style%3E%3C/defs%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpolygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");	
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'%3E%3Cdefs%3E%3Cstyle%3E .shape %7B fill: %23FF4655 /* fill: %230E1822; */ %7D %3C/style%3E%3C/defs%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpolygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
   background-size: 200%;
   background-position: 200%;
   background-repeat: no-repeat;
@@ -294,6 +282,7 @@ main {
   transition-property: background-position, border, color;
 }
 
+/*boton para editar el informe de la cita (solo empleados)*/
 .primary-button2 {
   position: absolute;
   right: -20px;
@@ -313,8 +302,10 @@ main {
   transition-property: background-position, border, color;
 }
 
+/*responsive*/
 @media (max-width: 640px) {
-  .primary-button, .primary-button2 {
+  .primary-button,
+  .primary-button2 {
     right: -40px;
     top: -10px;
   }
@@ -325,13 +316,13 @@ main {
   background-position: 40%;
 }
 
-.primary-button2:hover{
-	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'><defs><style> .shape %7B fill: %23018f41 /* fill: %23018f41; */ %7D </style></defs><g id='Layer_2' data-name='Layer 2'><g id='Layer_1-2' data-name='Layer 1'><polygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /></g></g></svg>%0A");
-	border: 1px solid #018f41;
-	color: white;
-  	background-position: 40%;
+.primary-button2:hover {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 531.28 200'><defs><style> .shape %7B fill: %23018f41 /* fill: %23018f41; */ %7D </style></defs><g id='Layer_2' data-name='Layer 2'><g id='Layer_1-2' data-name='Layer 1'><polygon class='shape' points='415.81 200 0 200 115.47 0 531.28 0 415.81 200' /></g></g></svg>%0A");
+  border: 1px solid #018f41;
+  color: white;
+  background-position: 40%;
 }
-
+/*fin responsive*/
 
 /*formulario para empleado tras atender cita*/
 .overlay {
@@ -388,11 +379,12 @@ main {
   overflow: auto;
 }
 
-@media screen and (max-width: 700px){
-  .box{
+/*responsive*/
+@media screen and (max-width: 700px) {
+  .box {
     width: 70%;
   }
-  .popup{
+  .popup {
     width: 70%;
   }
 }
@@ -405,7 +397,7 @@ textarea {
   width: 100%;
 }
 
-.botonFormulario{
+.botonFormulario {
   position: relative;
   border-radius: 6px;
   padding: 10px;
@@ -413,7 +405,9 @@ textarea {
   background-color: rgb(0, 153, 255);
   color: white;
 }
+/*fin formulario*/
 
+/*estilo para el boton que solo aparece cuando un cliente no tiene citas*/
 .cssbuttons-io-button {
   background: #04b352;
   color: white;
@@ -467,29 +461,31 @@ textarea {
 .cssbuttons-io-button:active .icon {
   transform: scale(0.95);
 }
+/*fin estilo para el boton que solo aparece cuando un cliente no tiene citas*/
 
+/*estilo del titulo*/
 select.clinica {
   background-color: transparent;
   border: none;
   font-size: 40px;
   margin-top: -6px;
   margin-left: 5px;
-  text-transform: uppercase;	
+  text-transform: uppercase;
   color: rgb(0, 132, 255);
   text-shadow: 1px 1px 1px white;
 }
 
-select option{
-	text-transform: uppercase;
+select option {
+  text-transform: uppercase;
 }
 
-@media(max-width:564px){
-	.listaCitas{
-		font-size: 1.5em;
-	}
-	
-	select.clinica{
-		font-size: 1.5em;
-	}
-	
+/*titulo responsive*/
+@media (max-width: 564px) {
+  .listaCitas {
+    font-size: 1.5em;
+  }
+
+  select.clinica {
+    font-size: 1.5em;
+  }
 }

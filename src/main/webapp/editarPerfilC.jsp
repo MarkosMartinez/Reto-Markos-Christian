@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+pageEncoding="UTF-8"%> <%@ taglib prefix = "c" uri
+="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -22,7 +23,8 @@
     <link rel="stylesheet" href="css/editarPerfil.css" />
   </head>
 
-<header>
+  <!--Inicio del menu de navegación-->
+  <header>
     <nav>
       <input type="checkbox" id="check" />
       <label for="check" class="botonmenu">
@@ -38,50 +40,78 @@
         <li><a href="RealizarCita">Pedir Cita</a></li>
         <li><a href="VerCitas">Consultar Citas</a></li>
         <c:if test="${tipoLogin eq 'empleado'}">
-        <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
+          <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
         </c:if>
         <c:if test="${director eq true}">
-        <li><a href="GestionarClinicas">Gestionar Clinicas</a></li>
+          <li><a href="GestionarClinicas">Gestionar Clinicas</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'empleado'}">
-        <li><a href="GestionarUsuarios">Gestionar Usuarios</a></li>
+          <li><a href="GestionarUsuarios">Gestionar Usuarios</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'cliente'}">
-        <li><a class="activo" href="EditarPerfil">Editar Perfil</a></li>
+          <li><a class="activo" href="EditarPerfil">Editar Perfil</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'empleado'}">
-        <li><a class="activo" href="EditarEmpleado">Editar Perfil</a></li>
+          <li><a class="activo" href="EditarEmpleado">Editar Perfil</a></li>
         </c:if>
         <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
       </ul>
     </nav>
   </header>
+  <!--Fin del menu de navegación-->
 
   <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <!--Javascript de bootstrap-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+
     <main>
-    
-     <c:if test="${aviso eq 'actualizado'}">
-        	<div class="alerta">
-	  <div class="alert alert-success check alert-dismissible fade show" role="alert">
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  <i class="fa-solid fa-circle-check fa-bounce fa-lg"></i> &nbsp; &nbsp;
-  <span>Perfil actualizado correctamente!</span>
-</div>
-</div>
-        </c:if>
-        
-        <c:if test="${aviso eq 'error'}">
+
+      <!--Avisos que aparecerán depende de las acciones del usuario-->
+      <c:if test="${aviso eq 'actualizado'}">
         <div class="alerta">
-        	  <div class="alert alert-warning warning alert-dismissible fade show" role="alert" style="background-color: red; box-shadow: none;">
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
- <i class="fa-solid fa-triangle-exclamation fa-bounce fa-lg"></i>
-  &nbsp; &nbsp;
-  <span>Error, esto no deberia de haber ocurrido!</span>
-</div>
+          <div
+            class="alert alert-success check alert-dismissible fade show"
+            role="alert"
+          >
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+            <i class="fa-solid fa-circle-check fa-bounce fa-lg"></i> &nbsp;
+            &nbsp;
+            <span>Perfil actualizado correctamente!</span>
+          </div>
         </div>
-        </c:if>
-    
+      </c:if>
+
+      <c:if test="${aviso eq 'error'}">
+        <div class="alerta">
+          <div
+            class="alert alert-warning warning alert-dismissible fade show"
+            role="alert"
+            style="background-color: red; box-shadow: none"
+          >
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+            <i class="fa-solid fa-triangle-exclamation fa-bounce fa-lg"></i>
+            &nbsp; &nbsp;
+            <span>Error, esto no deberia de haber ocurrido!</span>
+          </div>
+        </div>
+      </c:if>
+      <!--Fin avisos-->
+
+      <!--Contenedor para todo el formulario (principalmente hecho con las clases de bootstrap)-->
       <div class="container">
         <div class="row gutters">
           <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
@@ -109,87 +139,169 @@
           </div>
           <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
-            <form class="form-inline" action="EditarPerfil" method="POST">
-     		<input type="text" class="form-control" value="${cliente.dni}" required hidden readonly="readonly" name="dni">
-              <div class="card-body">
-                <div class="row gutters">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 class="mb-2 text-primary">Datos personales</h6>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="nombre">Nombre</label>
-                      <input type="text" class="form-control" id="nombre" value="${cliente.nombre}" name="nombre" required/>
+              <!--formulario para los datos del cliente-->
+              <form class="form-inline" action="EditarPerfil" method="POST">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="${cliente.dni}"
+                  required
+                  hidden
+                  readonly="readonly"
+                  name="dni"
+                />
+                <div class="card-body">
+                  <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <h6 class="mb-2 text-primary">Datos personales</h6>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="nombre"
+                          value="${cliente.nombre}"
+                          name="nombre"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="apellidos">Apellidos</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="apellidos"
+                          value="${cliente.apellidos}"
+                          name="apellidos"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="correo">Correo</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="correo"
+                          value="${cliente.correo}"
+                          name="correo"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="telefono">Añadir teléfono (opcional)</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="telefono"
+                          name="telefono"
+                          min="600000000"
+                          max="999999999"
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="apellidos">Apellidos</label>
-                      <input type="text" class="form-control" id="apellidos" value="${cliente.apellidos}" name="apellidos" required/>
-                    </div>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="correo">Correo</label>
-                      <input type="email" class="form-control" id="correo" value="${cliente.correo}" name="correo" required/>
-                    </div>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="telefono">Añadir teléfono (opcional)</label>
-                      <input type="number" class="form-control" id="telefono" name="telefono" min="600000000" max="999999999"/>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="row gutters mt-1">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <label for="telefonos">Teléfono/s:</label>
-                    <select name="telefonos" id="telefonos" size="2">
-                     <c:forEach var="telefono" items="${telefonos}">
-                      <option value="${telefono.telefono}">${telefono.telefono}</option>
-                     </c:forEach>
-                    </select>
-                    <p>* Selecciona uno y pulsar en "Actualizar" para eliminarlo</p>
-                  </div>
-                </div>
-                <div class="row gutters">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 class="mt-3 mb-2 text-primary">Cambiar contraseña</h6>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="contrasena">Introduce la contraseña actual</label>
-                      <c:if test="${tipoLogin eq 'empleado'}">
-                      	<input type="password" class="form-control" id="contrasena" readonly="readonly" disabled="disabled" name="contrasena"/>
-                      </c:if>	
-                      <c:if test="${tipoLogin eq 'cliente'}">
-                      	<input type="password" class="form-control" id="contrasena" name="contrasena"/>
-                      </c:if>
+                  <div class="row gutters mt-1">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <label for="telefonos">Teléfono/s:</label>
+                      <select name="telefonos" id="telefonos" size="2">
+                        <c:forEach var="telefono" items="${telefonos}">
+                          <option value="${telefono.telefono}">
+                            ${telefono.telefono}
+                          </option>
+                        </c:forEach>
+                      </select>
+                      <p>
+                        * Selecciona uno y pulsar en "Actualizar" para
+                        eliminarlo
+                      </p>
                     </div>
                   </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="nuevaCon">Nueva contraseña</label>
-                      <input type="password" class="form-control" id="nuevaCon" name="nuevaCon" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros"/>
+                  <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <h6 class="mt-3 mb-2 text-primary">Cambiar contraseña</h6>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="contrasena"
+                          >Introduce la contraseña actual</label
+                        >
+                        <c:if test="${tipoLogin eq 'empleado'}">
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="contrasena"
+                            readonly="readonly"
+                            disabled="disabled"
+                            name="contrasena"
+                          />
+                        </c:if>
+                        <c:if test="${tipoLogin eq 'cliente'}">
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="contrasena"
+                            name="contrasena"
+                          />
+                        </c:if>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="nuevaCon">Nueva contraseña</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="nuevaCon"
+                          name="nuevaCon"
+                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                          title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="confNuevaCon"
+                          >Confirmar nueva contraseña</label
+                        >
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="confNuevaCon"
+                          name="confNuevaCon"
+                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                          title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros"
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="confNuevaCon">Confirmar nueva contraseña</label>
-                      <input type="password" class="form-control" id="confNuevaCon" name="confNuevaCon" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros"/>
+                  <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <button
+                        type="submit"
+                        id="submit"
+                        class="btn btn-primary"
+                        style="margin-top: 30px"
+                      >
+                        Actualizar
+                      </button>
+                      <a
+                        href="EliminarCliente?dni=${cliente.dni}"
+                        class="btn btn-danger btnEliminar"
+                        >Eliminar Usuario</a
+                      >
                     </div>
                   </div>
                 </div>
-                <div class="row gutters">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <button type="submit" id="submit" class="btn btn-primary" style="margin-top: 30px">Actualizar</button>
-                    <a href="EliminarCliente?dni=${cliente.dni}" class="btn btn-danger btnEliminar">Eliminar Usuario</a>
-                  </div>
-                  
-                </div>
-              </div>
-             </form>
+              </form>
             </div>
           </div>
         </div>
@@ -197,15 +309,12 @@
     </main>
   </body>
 
+  <!--Footer-->
   <footer class="footer">
     <div class="footer-izquierda col-md-4 col-sm-6">
       <p class="about">
-        <span> Sobre Smiling</span> Ut congue augue non tellus bibendum, in
-        varius tellus condimentum. In scelerisque nibh tortor, sed rhoncus odio
-        condimentum in. Sed sed est ut sapien ultrices eleifend. Integer tellus
-        est, vehicula eu lectus tincidunt, ultricies feugiat leo. Suspendisse
-        tellus elit, pharetra in hendrerit ut, aliquam quis augue. Nam ut nibh
-        mollis, tristique ante sed, viverra massa.
+        <span> Sobre Smiling</span> 
+        En nuestra clínica odontológica, nos dedicamos a brindar la mejor atención dental para cada uno de nuestros pacientes. Contamos con un equipo altamente capacitado y comprometido en ofrecer servicios de calidad y personalizados para satisfacer las necesidades de cada uno de nuestros pacientes. Nuestra misión es ayudar a nuestros pacientes a mantener una buena salud bucal y una sonrisa radiante. ¡Estamos encantados de servirle!
       </p>
 
       <div class="iconos">

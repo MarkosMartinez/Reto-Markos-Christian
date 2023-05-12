@@ -1,3 +1,5 @@
+
+/*importando la fuente y el link para poder usar los iconos de font awesome*/
 @import url(https://fonts.googleapis.com/css?family=Oswald);
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css);
 
@@ -16,7 +18,6 @@
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
-/*Barra del menu (bastante responsive por ahora)*/
 
 * {
   margin: 0;
@@ -26,10 +27,12 @@
   font-family: "Oswald";
 }
 
+/*altura minima del main para que el footer siempre este abajo aunque no haya mucho con¡ntenido en la pag*/
 main{
   min-height: 80vh;  
 }
 
+/*Barra del menu (sin resposive)*/
 nav {
   background: linear-gradient(
     90deg,
@@ -89,6 +92,7 @@ nav ul li a {
   transition: all ease-in-out 0.5s;
 }
 
+/*mediante este check se bajará el menu cuando la pantalla sea pequeña*/
 #check {
   visibility: hidden;
 }
@@ -167,9 +171,9 @@ a {
     transform: rotate(-270deg);
   }
 }
+/*fin responsive menu*/
 
 /*footer*/
-
 .footer {
   position: relative;
   bottom: 0;
@@ -281,6 +285,7 @@ a {
   margin: 0;
 }
 
+/*hacer footer responsive*/
 @media (max-width: 767px) {
   .footer {
     font-size: 14px;

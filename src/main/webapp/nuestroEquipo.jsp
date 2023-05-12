@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+pageEncoding="UTF-8"%> <%@ taglib prefix = "c" uri =
+"http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/nuestroEquipo.css" />
   </head>
 
+  <!--Inicio del menu de navegación-->
   <header>
     <nav>
       <input type="checkbox" id="check" />
@@ -36,36 +37,40 @@
         <li><a href="RealizarCita">Pedir Cita</a></li>
         <li><a href="VerCitas">Consultar Citas</a></li>
         <c:if test="${tipoLogin eq 'empleado'}">
-        <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
+          <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
         </c:if>
         <c:if test="${director eq true}">
-        <li><a href="GestionarClinicas">Gestionar Clinicas</a></li>
+          <li><a href="GestionarClinicas">Gestionar Clinicas</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'empleado'}">
-        <li><a href="GestionarUsuarios">Gestionar Usuarios</a></li>
+          <li><a href="GestionarUsuarios">Gestionar Usuarios</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'cliente'}">
-        <li><a href="EditarPerfil">Editar Perfil</a></li>
+          <li><a href="EditarPerfil">Editar Perfil</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'empleado'}">
-        <li><a href="EditarEmpleado">Editar Perfil</a></li>
+          <li><a href="EditarEmpleado">Editar Perfil</a></li>
         </c:if>
         <c:if test="${tipoLogin ne 'ninguno'}">
-        <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
+          <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'ninguno'}">
-        	<li><a href="LoginYRegistro">Iniciar sesión/Registrarse</a></li>
+          <li><a href="LoginYRegistro">Iniciar sesión/Registrarse</a></li>
         </c:if>
       </ul>
     </nav>
   </header>
+  <!--Fin del menu de navegación-->
 
   <body>
     <main>
+      <!-- Titulo de la parte superior -->
       <h1 class="tituloSuperior">
         Equipo de la Clínica Dental Smiling <br />
         <span>PROFESIONALIDAD, RIGOR, SERIEDAD Y CERCANÍA</span>
       </h1>
+
+      <!-- Contenedor para la tarjeta de director -->
       <div class="tarjetas">
         <div class="tarjeta">
           <div class="wrapper">
@@ -79,6 +84,8 @@
           <img src="img/personal/directorHover.png" class="character" />
         </div>
       </div>
+
+      <!-- texto que aparece justo debajo en la misma posición que la tarjeta (director)-->
       <div class="texto-tarjeta">
         <h1>Director</h1>
         <p>
@@ -88,6 +95,7 @@
         </p>
       </div>
 
+      <!-- Contenedor para tarjetas de odontologos -->
       <div class="tarjetas salto d-flex justify-content-around">
         <div class="tarjeta">
           <div class="wrapper">
@@ -130,11 +138,18 @@
         </div>
       </div>
 
+      <!-- texto que aparece justo debajo en la misma posición que la tarjeta (odontologos)-->
       <div class="textosOdontologos d-flex justify-content-around">
         <div class="texto-tarjeta">
           <h1>Odontólogo</h1>
           <p>
-            Diego Ramirez es un odontólogo comprometido y apasionado que se dedica a proporcionar a sus pacientes una atención dental de alta calidad. Con años de experiencia en el campo, Diego es experto en una amplia gama de procedimientos dentales y utiliza las últimas tecnologías para garantizar los mejores resultados para sus pacientes.</p>
+            Diego Ramirez es un odontólogo comprometido y apasionado que se
+            dedica a proporcionar a sus pacientes una atención dental de alta
+            calidad. Con años de experiencia en el campo, Diego es experto en
+            una amplia gama de procedimientos dentales y utiliza las últimas
+            tecnologías para garantizar los mejores resultados para sus
+            pacientes.
+          </p>
         </div>
 
         <div class="texto-tarjeta">
@@ -147,6 +162,8 @@
           </p>
         </div>
       </div>
+
+      <!-- Contenedor tarjetas auxiliares y recepcionista-->
 
       <div class="tarjetas salto d-flex justify-content-around">
         <div class="tarjeta">
@@ -206,6 +223,7 @@
         </div>
       </div>
 
+      <!-- texto que aparece justo debajo en la misma posición que la tarjeta (recepcionista y auxiliares)-->
       <div class="textos d-flex justify-content-around">
         <div class="texto-tarjeta">
           <h1>Auxiliar dental</h1>
@@ -231,21 +249,30 @@
 
         <div class="texto-tarjeta">
           <h1>Auxiliar dental</h1>
-          <p>Ahmet Mustafa es un auxiliar dental dedicado y eficiente que trabaja en nuestra clínica dental. Su compromiso con el bienestar de los pacientes es evidente en su habilidad para proporcionar un apoyo inestimable a los odontólogos y su capacidad para gestionar la información de los pacientes de manera efectiva. </p>
+          <p>
+            Ahmet Mustafa es un auxiliar dental dedicado y eficiente que trabaja
+            en nuestra clínica dental. Su compromiso con el bienestar de los
+            pacientes es evidente en su habilidad para proporcionar un apoyo
+            inestimable a los odontólogos y su capacidad para gestionar la
+            información de los pacientes de manera efectiva.
+          </p>
         </div>
       </div>
     </main>
   </body>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer-izquierda col-md-4 col-sm-6">
       <p class="about">
-        <span> Sobre Smiling</span> Ut congue augue non tellus bibendum, in
-        varius tellus condimentum. In scelerisque nibh tortor, sed rhoncus odio
-        condimentum in. Sed sed est ut sapien ultrices eleifend. Integer tellus
-        est, vehicula eu lectus tincidunt, ultricies feugiat leo. Suspendisse
-        tellus elit, pharetra in hendrerit ut, aliquam quis augue. Nam ut nibh
-        mollis, tristique ante sed, viverra massa.
+        <span> Sobre Smiling</span>
+        En nuestra clínica odontológica, nos dedicamos a brindar la mejor
+        atención dental para cada uno de nuestros pacientes. Contamos con un
+        equipo altamente capacitado y comprometido en ofrecer servicios de
+        calidad y personalizados para satisfacer las necesidades de cada uno de
+        nuestros pacientes. Nuestra misión es ayudar a nuestros pacientes a
+        mantener una buena salud bucal y una sonrisa radiante. ¡Estamos
+        encantados de servirle!
       </p>
 
       <div class="iconos">

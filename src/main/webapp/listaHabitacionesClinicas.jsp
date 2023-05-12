@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="modelo.DTO.Clinica"%>
+pageEncoding="UTF-8"%> <%@ taglib prefix = "c" uri =
+"http://java.sun.com/jsp/jstl/core" %> <%@ page import="modelo.DTO.Clinica"%>
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -24,8 +23,8 @@
     <link rel="stylesheet" href="css/listaHabitacionesClinicas.css" />
   </head>
 
-  
-<header>
+  <!--Inicio del menu de navegación-->
+  <header>
     <nav>
       <input type="checkbox" id="check" />
       <label for="check" class="botonmenu">
@@ -41,128 +40,262 @@
         <li><a href="RealizarCita">Pedir Cita</a></li>
         <li><a href="VerCitas">Consultar Citas</a></li>
         <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
-        <li><a class="activo" href="GestionarClinicas">Gestionar Clinicas</a></li>
+        <li>
+          <a class="activo" href="GestionarClinicas">Gestionar Clinicas</a>
+        </li>
         <li><a href="GestionarUsuarios">Gestionar Usuarios</a></li>
         <li><a href="EditarEmpleado">Editar Perfil</a></li>
         <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
       </ul>
     </nav>
   </header>
+  <!--Fin del menu de navegación-->
 
   <body>
+    <!--Javasript bootstrap (se usa solo para la "X" de los avisos)-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-    
     <main>
-    
-    <c:if test="${aviso eq 'habitacioncreada'}">
-		<div class="alerta">
-			<div class="alert alert-success check alert-dismissible fade show" role="alert">
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				<i class="fa-solid fa-tooth fa-bounce fa-xl"></i> &nbsp; &nbsp;
-				<span>Habitacion creada correctamente!</span>
-			</div>
-		</div>
-    </c:if>
-    
-    <c:if test="${aviso eq 'clinicacreada'}">
-		<div class="alerta">
-			<div class="alert alert-success check checkclinica alert-dismissible fade show" role="alert">
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				<i class="fa-solid fa-building-circle-check fa-beat fa-lg"></i> &nbsp; &nbsp;
-				<span>Clinica creada correctamente!</span>
-			</div>
-		</div>
-    </c:if>
-    
-    <c:if test="${aviso eq 'clinicaeliminada'}">
-		<div class="alerta">
-			<div class="alert alert-success check checkclinica alert-dismissible fade show" role="alert">
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				<i class="fas fa-trash fa-shake fa-lg" style="color: #ffffff;"></i> &nbsp; &nbsp;
-				<span>Clinica eliminada correctamente!</span>
-			</div>
-		</div>
-    </c:if>
-    
-    <c:if test="${aviso eq 'habitacioneliminada'}">
-		<div class="alerta">
-			<div class="alert alert-success check alert-dismissible fade show" role="alert">
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				<i class="fas fa-trash fa-shake fa-lg" style="color: #ffffff;"></i> &nbsp; &nbsp;
-				<span>Habitacion eliminada correctamente!</span>
-			</div>
-		</div>
-    </c:if>
-        
-    <c:if test="${aviso eq 'error'}">
-    	<div class="alerta">
-    		<div class="alert alert-warning warning alert-dismissible fade show" role="alert" style="background-color: red; box-shadow: none;">
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				<i class="fa-solid fa-triangle-exclamation fa-bounce fa-lg"></i>
-				&nbsp; &nbsp;
-				<span>Error, esto no deberia de haber ocurrido!</span>
-			</div>
-    	</div>
-   </c:if>
-    
+      <!--Avisos que aparecen depende las acciones del usuario-->
+      <c:if test="${aviso eq 'habitacioncreada'}">
+        <div class="alerta">
+          <div
+            class="alert alert-success check alert-dismissible fade show"
+            role="alert"
+          >
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+            <i class="fa-solid fa-tooth fa-bounce fa-xl"></i> &nbsp; &nbsp;
+            <span>Habitacion creada correctamente!</span>
+          </div>
+        </div>
+      </c:if>
+
+      <c:if test="${aviso eq 'clinicacreada'}">
+        <div class="alerta">
+          <div
+            class="alert alert-success check checkclinica alert-dismissible fade show"
+            role="alert"
+          >
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+            <i class="fa-solid fa-building-circle-check fa-beat fa-lg"></i>
+            &nbsp; &nbsp;
+            <span>Clinica creada correctamente!</span>
+          </div>
+        </div>
+      </c:if>
+
+      <c:if test="${aviso eq 'clinicaeliminada'}">
+        <div class="alerta">
+          <div
+            class="alert alert-success check checkclinica alert-dismissible fade show"
+            role="alert"
+          >
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+            <i class="fas fa-trash fa-shake fa-lg" style="color: #ffffff"></i>
+            &nbsp; &nbsp;
+            <span>Clinica eliminada correctamente!</span>
+          </div>
+        </div>
+      </c:if>
+
+      <c:if test="${aviso eq 'habitacioneliminada'}">
+        <div class="alerta">
+          <div
+            class="alert alert-success check alert-dismissible fade show"
+            role="alert"
+          >
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+            <i class="fas fa-trash fa-shake fa-lg" style="color: #ffffff"></i>
+            &nbsp; &nbsp;
+            <span>Habitacion eliminada correctamente!</span>
+          </div>
+        </div>
+      </c:if>
+
+      <c:if test="${aviso eq 'error'}">
+        <div class="alerta">
+          <div
+            class="alert alert-warning warning alert-dismissible fade show"
+            role="alert"
+            style="background-color: red; box-shadow: none"
+          >
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+            <i class="fa-solid fa-triangle-exclamation fa-bounce fa-lg"></i>
+            &nbsp; &nbsp;
+            <span>Error, esto no deberia de haber ocurrido!</span>
+          </div>
+        </div>
+      </c:if>
+      <!--Fin de avisos-->
+
       <section>
-        <div class="tituloYopcion" style="max-width: 100%; margin: auto; display: flex; justify-content: center; align-items: center;">
+        <!--Titulo de la parte superior con un select para el director con el que podrá cambiar de clinica para ver las habitaciones de otra-->
+        <div
+          class="tituloYopcion"
+          style="
+            max-width: 100%;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
           <h1 class="titulo">Lista de habitaciones de</h1>
-          <form action="GestionarClinicas" method="POST" style="display: inline-block; margin-top: -61px;">
-          <input type="text" value="modclinica" name="tipo" readonly="readonly" hidden required="required">
-	          <select class="opcionGestion" name="clinica" onchange="this.form.submit()">
-		          <c:forEach var="clinica" items="${clinicas}">
-		          	<c:if test="${clinica.id_clinica eq empleadoLogueado.getId_Clinica()}">
-					   <option selected="selected" value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
-					</c:if>
-					<c:if test="${clinica.id_clinica ne empleadoLogueado.getId_Clinica()}">
-					   <option value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
-					</c:if>
-		          </c:forEach>
-	          </select>
+          <form
+            action="GestionarClinicas"
+            method="POST"
+            style="display: inline-block; margin-top: -61px"
+          >
+            <input
+              type="text"
+              value="modclinica"
+              name="tipo"
+              readonly="readonly"
+              hidden
+              required="required"
+            />
+            <select
+              class="opcionGestion"
+              name="clinica"
+              onchange="this.form.submit()"
+            >
+              <c:forEach var="clinica" items="${clinicas}">
+                <c:if
+                  test="${clinica.id_clinica eq empleadoLogueado.getId_Clinica()}"
+                >
+                  <option selected="selected" value="${clinica.id_clinica}">
+                    ${clinica.nombre_clinica}
+                  </option>
+                </c:if>
+                <c:if
+                  test="${clinica.id_clinica ne empleadoLogueado.getId_Clinica()}"
+                >
+                  <option value="${clinica.id_clinica}">
+                    ${clinica.nombre_clinica}
+                  </option>
+                </c:if>
+              </c:forEach>
+            </select>
           </form>
         </div>
 
+        <!--Contenedor para los botones de añadir y eliminar clinicas-->
         <div class="botonesAñaEli">
-            <div class="dropdown" style="margin-right: 10px; position: relative; z-index: 1;">
-                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                  Añadir Clínica <i class="fa-solid fa-building-circle-check"></i>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <li>
-                    <form action="GestionarClinicas" method="POST" style="padding: 10px;">
-                   	 <input type="text" value="addClinica" name="tipo" readonly="readonly" hidden required="required">
-                      <label for="nombre">Nombre:</label>
-                      <input type="text" id="nombre" name="nombre" required="required" >
-                      <br><br>
-                      <label for="direccion">Direccion:</label>
-                      <input type="text" id="direccion" name="direccion" required="required" >
-                      <br><br>
-                      <label for="telefono">Teléfono:</label>
-                      <input type="number" id="telefono" name="telefono" min="600000000" required="required" >
-                      <br><br>
-                      <button type="submit" class="btn btn-primary">Añadir</button>
-                    </form>
-                  </li>
-                </ul>
-              </div>
-    
-              <div>
-                <a href="EliminarClinica?id=${empleadoLogueado.getId_Clinica()}" class="btn btn-danger">Eliminar Clínica <i class="fa-solid fa-building-circle-xmark"></i></a>
-              </div>
-              
+          <div
+            class="dropdown"
+            style="margin-right: 10px; position: relative; z-index: 1"
+          >
+            <button
+              class="btn btn-success dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Añadir Clínica <i class="fa-solid fa-building-circle-check"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li>
+                <form
+                  action="GestionarClinicas"
+                  method="POST"
+                  style="padding: 10px"
+                >
+                  <input
+                    type="text"
+                    value="addClinica"
+                    name="tipo"
+                    readonly="readonly"
+                    hidden
+                    required="required"
+                  />
+                  <label for="nombre">Nombre:</label>
+                  <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    required="required"
+                  />
+                  <br /><br />
+                  <label for="direccion">Direccion:</label>
+                  <input
+                    type="text"
+                    id="direccion"
+                    name="direccion"
+                    required="required"
+                  />
+                  <br /><br />
+                  <label for="telefono">Teléfono:</label>
+                  <input
+                    type="number"
+                    id="telefono"
+                    name="telefono"
+                    min="600000000"
+                    required="required"
+                  />
+                  <br /><br />
+                  <button type="submit" class="btn btn-primary">Añadir</button>
+                </form>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <a
+              href="EliminarClinica?id=${empleadoLogueado.getId_Clinica()}"
+              class="btn btn-danger"
+              >Eliminar Clínica <i class="fa-solid fa-building-circle-xmark"></i
+            ></a>
+          </div>
         </div>
 
+        <!--Parte superior de la tabla con los campos de las habitaciones-->
         <div class="tbl-header">
           <table cellpadding="0" cellspacing="0" border="0">
             <thead>
               <tr>
-              	<c:if test="${orden ne 'DESC'}">
-                <th><a href="GestionarClinicas?o=DESC" class="linkorden">Nº Habitación ⬇</a></th>
+                <c:if test="${orden ne 'DESC'}">
+                  <th>
+                    <a href="GestionarClinicas?o=DESC" class="linkorden"
+                      >Nº Habitación ⬇</a
+                    >
+                  </th>
                 </c:if>
                 <c:if test="${orden eq 'DESC'}">
-                <th><a href="GestionarClinicas?o=ASC" class="linkorden">Nº Habitación ⬆</a></th>
+                  <th>
+                    <a href="GestionarClinicas?o=ASC" class="linkorden"
+                      >Nº Habitación ⬆</a
+                    >
+                  </th>
                 </c:if>
                 <th>Especialidad</th>
                 <th>Eliminar</th>
@@ -170,53 +303,88 @@
             </thead>
           </table>
         </div>
+
+        <!-- Contenido de la tabla -->
         <div class="tbl-content">
           <table cellpadding="0" cellspacing="0" border="0">
             <tbody>
               <c:forEach var="habitacion" items="${habitaciones}">
-	              <tr>
-	                <td>${habitacion.num_Habitacion}</td>
-	                <td>${habitacion.especialidad }</td>
-	                <td>
-	                  <a href="EliminarHabitacion?id=${habitacion.id_Habitacion}" class="btn btn-danger"
-	                    ><i class="fa-solid fa-trash-can" style="color: #ffffff"></i
-	                  ></a>
-	                </td>
-	              </tr>
+                <tr>
+                  <td>${habitacion.num_Habitacion}</td>
+                  <td>${habitacion.especialidad }</td>
+                  <td>
+                    <a
+                      href="EliminarHabitacion?id=${habitacion.id_Habitacion}"
+                      class="btn btn-danger"
+                      ><i
+                        class="fa-solid fa-trash-can"
+                        style="color: #ffffff"
+                      ></i
+                    ></a>
+                  </td>
+                </tr>
               </c:forEach>
             </tbody>
           </table>
         </div>
 
+        <!-- Boton para añadir una habitacion a la clinica que este seleccionada en el select -->
         <a href="#añadir">
           <button class="button" style="vertical-align: middle">
             <span>ㅤAñadirㅤ</span>
           </button>
         </a>
 
+        <!-- Formulario popup que aparece cuando se quiere añadir una habitacion a la clinica -->
         <div id="añadir" class="overlay">
           <div class="popup">
             <h2 style="color: rgb(0, 132, 255)">Añadir habitación</h2>
             <a class="close" href="#">&times;</a>
             <div class="content">
               <form action="GestionarClinicas" method="POST">
-              <input type="text" value="addHabitacion" name="tipo" readonly="readonly" hidden required="required">
+                <input
+                  type="text"
+                  value="addHabitacion"
+                  name="tipo"
+                  readonly="readonly"
+                  hidden
+                  required="required"
+                />
                 <label for="numHabitacion">Número de habitacion:</label>
-                <input type="number" name="numHabitacion" required id="numHabitacion" min="0"/>
+                <input
+                  type="number"
+                  name="numHabitacion"
+                  required
+                  id="numHabitacion"
+                  min="0"
+                />
                 <br /><br />
                 <label for="especialidad">Especialidad:</label>
-                <input type="text" name="especialidad" required id="especialidad" />
+                <input
+                  type="text"
+                  name="especialidad"
+                  required
+                  id="especialidad"
+                />
                 <br /><br />
                 <label for="clinica">Clinica:</label>
                 <select name="clinica" id="clinica" required="required">
                   <c:forEach var="clinica" items="${clinicas}">
-		          	<c:if test="${clinica.id_clinica eq empleadoLogueado.getId_Clinica()}">
-					   <option selected="selected" value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
-					</c:if>
-					<c:if test="${clinica.id_clinica ne empleadoLogueado.getId_Clinica()}">
-					   <option value="${clinica.id_clinica}">${clinica.nombre_clinica}</option>
-					</c:if>
-		          </c:forEach>
+                    <c:if
+                      test="${clinica.id_clinica eq empleadoLogueado.getId_Clinica()}"
+                    >
+                      <option selected="selected" value="${clinica.id_clinica}">
+                        ${clinica.nombre_clinica}
+                      </option>
+                    </c:if>
+                    <c:if
+                      test="${clinica.id_clinica ne empleadoLogueado.getId_Clinica()}"
+                    >
+                      <option value="${clinica.id_clinica}">
+                        ${clinica.nombre_clinica}
+                      </option>
+                    </c:if>
+                  </c:forEach>
                 </select>
                 <br /><br />
                 <button type="submit" class="botonFormulario">Enviar</button>
@@ -224,19 +392,22 @@
             </div>
           </div>
         </div>
+        <!-- Fin formulario -->
       </section>
     </main>
   </body>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer-izquierda col-md-4 col-sm-6">
       <p class="about">
-        <span> Sobre Smiling</span> Ut congue augue non tellus bibendum, in
-        varius tellus condimentum. In scelerisque nibh tortor, sed rhoncus odio
-        condimentum in. Sed sed est ut sapien ultrices eleifend. Integer tellus
-        est, vehicula eu lectus tincidunt, ultricies feugiat leo. Suspendisse
-        tellus elit, pharetra in hendrerit ut, aliquam quis augue. Nam ut nibh
-        mollis, tristique ante sed, viverra massa.
+        <span> Sobre Smiling</span> En nuestra clínica odontológica, nos
+        dedicamos a brindar la mejor atención dental para cada uno de nuestros
+        pacientes. Contamos con un equipo altamente capacitado y comprometido en
+        ofrecer servicios de calidad y personalizados para satisfacer las
+        necesidades de cada uno de nuestros pacientes. Nuestra misión es ayudar
+        a nuestros pacientes a mantener una buena salud bucal y una sonrisa
+        radiante. ¡Estamos encantados de servirle!
       </p>
 
       <div class="iconos">

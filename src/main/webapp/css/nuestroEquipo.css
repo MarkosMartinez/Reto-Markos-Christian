@@ -1,28 +1,31 @@
-
-body{
+body {
   background: url("../img/fondoNuestroEquipo.png") fixed no-repeat;
   background-size: cover;
 }
 
-.tituloSuperior{
+/*Estilos titulo superior*/
+.tituloSuperior {
   padding-top: 100px;
   text-align: center;
   color: #1a39b8;
 }
 
-.tituloSuperior span{
+.tituloSuperior span {
   font-size: 0.5em;
   color: rgb(13, 90, 255);
   z-index: -2;
   position: relative;
 }
 
-.tarjetas{
+/*Estilos contenedor con clases "tarjets" dentro*/
+.tarjetas {
   margin-top: -100px;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
+
+/*Estilos para cada tarjeta*/
 .tarjeta {
   width: 300px;
   height: 300px;
@@ -34,40 +37,41 @@ body{
   margin: 250px 0 10px 0;
 }
 
-
-.botonmenu{
+.botonmenu {
   margin-right: 15%;
 }
-@media(max-width:905px){
-  .tarjetas.salto{
+
+/*Hacer las tarjetas wrap para que cuando la pantalla se haga más pequeña se cambien de fila y se quiten los textos de todas menos el de director*/
+@media (max-width: 905px) {
+  .tarjetas.salto {
     flex-wrap: wrap;
   }
 
-  .textos{
+  .textos {
     display: none;
     visibility: hidden;
   }
 }
 
-@media(max-width: 765px){
-
-  .tarjeta{
+@media (max-width: 765px) {
+  .tarjeta {
     margin-left: 10px;
     margin-right: 10px;
   }
 }
 
-@media(max-width: 639px){
-
-  .footer{
+/*hacer que los textos de los odontologos desaparezcan y el footer ocupe un poco más*/
+@media (max-width: 639px) {
+  .footer {
     width: 115%;
   }
-  .textosOdontologos{
+  .textosOdontologos {
     display: none;
     visibility: hidden;
   }
 }
 
+/*estilos de las tarjetas y sus imagenes, tanto las de fondo como las de hover, incluido el nombre ya que también es una imagen*/
 .cover-image {
   width: 100%;
   height: 100%;
@@ -153,7 +157,7 @@ body{
   transform: translate3d(0%, -30%, 100px);
 }
 
-.texto-tarjeta h1{
+.texto-tarjeta h1 {
   color: rgb(0, 119, 255);
 }
 
@@ -164,3 +168,4 @@ body{
   margin-top: 10px;
   color: white;
 }
+/*fin estilos tarjetas*/

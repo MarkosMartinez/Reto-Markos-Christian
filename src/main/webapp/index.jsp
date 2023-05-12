@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+pageEncoding="UTF-8"%> <%@ taglib prefix = "c" uri =
+"http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="css/menu.css" />
   </head>
 
-<header>
+  <!--Inicio del menu de navegación-->
+  <header>
     <nav>
       <input type="checkbox" id="check" />
       <label for="check" class="botonmenu">
@@ -39,31 +40,34 @@
         <li><a href="RealizarCita">Pedir Cita</a></li>
         <li><a href="VerCitas">Consultar Citas</a></li>
         <c:if test="${tipoLogin eq 'empleado'}">
-        <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
+          <li><a href="EditarEquipamiento">Editar Equipamiento</a></li>
         </c:if>
         <c:if test="${director eq true}">
-        <li><a href="GestionarClinicas">Gestionar Clinicas</a></li>
+          <li><a href="GestionarClinicas">Gestionar Clinicas</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'empleado'}">
-        <li><a href="GestionarUsuarios">Gestionar Usuarios</a></li>
+          <li><a href="GestionarUsuarios">Gestionar Usuarios</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'cliente'}">
-        <li><a href="EditarPerfil">Editar Perfil</a></li>
+          <li><a href="EditarPerfil">Editar Perfil</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'empleado'}">
-        <li><a href="EditarEmpleado">Editar Perfil</a></li>
+          <li><a href="EditarEmpleado">Editar Perfil</a></li>
         </c:if>
         <c:if test="${tipoLogin ne 'ninguno'}">
-        <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
+          <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'ninguno'}">
-        	<li><a href="LoginYRegistro">Iniciar sesión/Registrarse</a></li>
+          <li><a href="LoginYRegistro">Iniciar sesión/Registrarse</a></li>
         </c:if>
       </ul>
     </nav>
   </header>
+  <!--Fin del menu de navegación-->
 
+  <!--Inicio del body-->
   <body>
+    <!--div para la imagen de fondo, el texto principal y las olas con animación-->
     <div>
       <section class="imgPrincipal">
         <br />
@@ -76,9 +80,7 @@
           nos importa.
         </h1>
         <a href="RealizarCita">
-          <button class="btn-cita">
-            Pide tu cita ya pulsando aqui!
-        </button>
+          <button class="btn-cita">Pide tu cita ya pulsando aqui!</button>
         </a>
       </section>
       <svg
@@ -118,11 +120,11 @@
         </g>
       </svg>
     </div>
+    <!--fin de div para la imagen de fondo, el texto principal y las olas con animación-->
 
+    <!--Inicio del main con texto presentando la clínica centrado-->
     <main>
-      <h1 style="color: rgb(0, 102, 255)">
-        Clínica Dental Smiling
-      </h1>
+      <h1 style="color: rgb(0, 102, 255)">Clínica Dental Smiling</h1>
       <br />
 
       <div class="textoMain">
@@ -144,6 +146,7 @@
         </p>
       </div>
 
+      <!--Comienzo de contenedores con columnas para poner una imagen junto a un texto al otro lado y que cada fila se invierta el orden-->
       <div class="contenedorTextoImg">
         <div
           class="columns image"
@@ -231,17 +234,22 @@
           </div>
         </div>
       </div>
+      <!--Fin de contenedores con columnas para poner una imagen junto a un texto al otro lado y que cada fila se invierta el orden-->
     </main>
   </body>
+
+  <!--footer-->
   <footer class="footer">
     <div class="footer-izquierda col-md-4 col-sm-6">
       <p class="about">
-        <span> Sobre Smiling</span> Ut congue augue non tellus bibendum, in
-        varius tellus condimentum. In scelerisque nibh tortor, sed rhoncus odio
-        condimentum in. Sed sed est ut sapien ultrices eleifend. Integer tellus
-        est, vehicula eu lectus tincidunt, ultricies feugiat leo. Suspendisse
-        tellus elit, pharetra in hendrerit ut, aliquam quis augue. Nam ut nibh
-        mollis, tristique ante sed, viverra massa.
+        <span> Sobre Smiling</span>
+        En nuestra clínica odontológica, nos dedicamos a brindar la mejor
+        atención dental para cada uno de nuestros pacientes. Contamos con un
+        equipo altamente capacitado y comprometido en ofrecer servicios de
+        calidad y personalizados para satisfacer las necesidades de cada uno de
+        nuestros pacientes. Nuestra misión es ayudar a nuestros pacientes a
+        mantener una buena salud bucal y una sonrisa radiante. ¡Estamos
+        encantados de servirle!
       </p>
 
       <div class="iconos">

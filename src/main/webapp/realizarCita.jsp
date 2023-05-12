@@ -1,8 +1,8 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="modelo.DTO.Clinica"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
@@ -29,8 +29,9 @@
     <link rel="stylesheet" href="css/pedirCita.css">
 
 </head>
-
-<header>
+  
+  <!--Inicio del menu de navegaci贸n-->
+  <header>
     <nav>
       <input type="checkbox" id="check" />
       <label for="check" class="botonmenu">
@@ -64,16 +65,18 @@
         <li><a href="LoginYRegistro">Cerrar Sesion</a></li>
         </c:if>
         <c:if test="${tipoLogin eq 'ninguno'}">
-        	<li><a href="LoginYRegistro">Iniciar sesi髇/Registrarse</a></li>
+        	<li><a href="LoginYRegistro">Iniciar sesi贸n/Registrarse</a></li>
         </c:if>
       </ul>
     </nav>
   </header>
+  <!--Fin del menu de navegaci贸n-->
 
 <body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <main>
     
+      <!-- Avisos que aparecer谩n depende de las acciones del usuario -->
     <c:if test="${aviso eq 'demasiadascitas'}">
       	<div class="alerta">
 			     <div class="alert alert-danger danger alert-dismissible fade show" role="alert">
@@ -107,19 +110,20 @@
 			</div>
 		 </div>
         </c:if>
-        
+        <!-- Fin avisos -->
         <fmt:formatDate value="${hoy}" pattern="dd/MM/yyyy" />
         <%Date hoy = new Date();%>
 		<c:set var="hoy" value="<%= hoy %>" />
         
         
         <section style="padding-top: 100px;">
+          <!-- Contenedor para el formulario de pedir la cita -->
             <div class="form-box1">
                 <div class="form-value">
                     <form class="form-inline" action="RealizarCita" method="POST">
                         <h2>Pedir cita</h2>
                         <div class="inputbox">
-                            <label for="clinica">Cl韓ica</label>
+                            <label for="clinica">Cl锟絥ica</label>
 						      <c:if test = "${clinica == null}">
 						       <select name="ID_Clinica" required="required" style="margin-left: 70px; margin-bottom: 2px; background-color: rgb(255, 255, 255); color: rgb(0, 140, 255);">
 							</c:if>
@@ -134,12 +138,12 @@
                         <div class="inputbox">
                             <i class="fas fa-id-card"></i>
                             <c:if test = "${dni == null}">
-						       <input type="text" id="dni" name="dni" placeholder="xxxxxxxA" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 n鷐eros y una letra" minlength="9" maxlength="9">
+						       <input type="text" id="dni" name="dni" placeholder="xxxxxxxA" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 n锟絤eros y una letra" minlength="9" maxlength="9">
 						       <label style="margin-top:-30px" for="dni">DNI</label>
 						       
 							</c:if>
 							<c:if test = "${dni != null}">
-						      	 <input type="text" name="dni" value="${dni}" required="required" readonly pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 n鷐eros y una letra" minlength="9" maxlength="9">
+						      	 <input type="text" name="dni" value="${dni}" required="required" readonly pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 n锟絤eros y una letra" minlength="9" maxlength="9">
 						       	<label style="margin-top:-30px">DNI</label>
 							</c:if>
                         </div>
@@ -169,20 +173,17 @@
                     </form>
                 </div>
             </div>
+            <!-- fin contenedor y formulario -->
         </section>
     </main>
     
 </body>
 
+<!-- Footer -->
 <footer class="footer">
     <div class="footer-izquierda col-md-4 col-sm-6">
       <p class="about">
-        <span> Sobre Smiling</span> Ut congue augue non tellus bibendum, in
-        varius tellus condimentum. In scelerisque nibh tortor, sed rhoncus odio
-        condimentum in. Sed sed est ut sapien ultrices eleifend. Integer tellus
-        est, vehicula eu lectus tincidunt, ultricies feugiat leo. Suspendisse
-        tellus elit, pharetra in hendrerit ut, aliquam quis augue. Nam ut nibh
-        mollis, tristique ante sed, viverra massa.
+        <span> Sobre Smiling</span> En nuestra cl铆nica odontol贸gica, nos dedicamos a brindar la mejor atenci贸n dental para cada uno de nuestros pacientes. Contamos con un equipo altamente capacitado y comprometido en ofrecer servicios de calidad y personalizados para satisfacer las necesidades de cada uno de nuestros pacientes. Nuestra misi贸n es ayudar a nuestros pacientes a mantener una buena salud bucal y una sonrisa radiante. 隆Estamos encantados de servirle!
       </p>
 
       <div class="iconos">

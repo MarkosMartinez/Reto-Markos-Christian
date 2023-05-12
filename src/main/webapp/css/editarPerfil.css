@@ -1,55 +1,59 @@
 @charset "ISO-8859-1";
+/*este CSS es usado tanto por editarPerfilC.jsp como por EditarPerfilE.jsp ya que son paginas practicamente iguales*/
+
+/*img de fondo*/
 body {
   background: fixed url("../img/fondoEditarPerfil.jpg") no-repeat;
   background-size: cover;
 }
 
-.container{
-    padding-top: 140px;
-    padding-bottom: 10px;
+.container {
+  padding-top: 140px;
+  padding-bottom: 10px;
 }
 
+/*estilo para la foto*/
 .editarPerfil .foto {
-    margin: 0 0 1rem 0;
-    padding-bottom: 1rem;
-    text-align: center;
+  margin: 0 0 1rem 0;
+  padding-bottom: 1rem;
+  text-align: center;
 }
 
-.logoDos img{
-    width: 100%;
- }
-
+.logoDos img {
+  width: 100%;
+}
 
 .editarPerfil .foto h5.titulo {
-    margin: 0 0 0.5rem 0;
+  margin: 0 0 0.5rem 0;
 }
 .editarPerfil .foto h6.user-email {
-    margin: 0;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: #9fa8b9;
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #9fa8b9;
 }
 .editarPerfil .texto {
-    margin: 2rem 0 0 0;
-    text-align: center;
+  margin: 2rem 0 0 0;
+  text-align: center;
 }
 .editarPerfil .texto h5 {
-    margin: 0 0 15px 0;
-    color: #007ae1;
+  margin: 0 0 15px 0;
+  color: #007ae1;
 }
 .editarPerfil .texto p {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 .form-control {
-    border: 1px solid #cfd1d8;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    font-size: .825rem;
-    background: #ffffff;
-    color: #2e323c;
+  border: 1px solid #cfd1d8;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  font-size: 0.825rem;
+  background: #ffffff;
+  color: #2e323c;
 }
 
+/*estilos para avisos*/
 .check {
   z-index: 99;
   border-radius: 5px;
@@ -59,7 +63,7 @@ body {
   position: absolute;
   display: flex;
   top: 100px;
-  left:-300px;
+  left: -300px;
   align-items: center;
   background-color: #08c41b;
   cursor: pointer;
@@ -78,7 +82,7 @@ body {
   position: absolute;
   display: flex;
   top: 100px;
-  left:-300px;
+  left: -300px;
   align-items: center;
   background-color: orange;
   cursor: pointer;
@@ -88,21 +92,20 @@ body {
   transition: all ease-in-out 0.5s;
 }
 
-.warning:hover{
+.warning:hover {
   background-color: rgb(222, 126, 0);
-  transition:0.5s;
+  transition: 0.5s;
 }
-
 
 .rotate {
   animation: rotate 2s linear infinite;
 }
 
-.alerta{
-	position: absolute;
-	top: 0px;
-	transition: all ease-in-out 0.5s;
-	animation: entrada 0.5s ease-in-out 0.5s forwards;
+.alerta {
+  position: absolute;
+  top: 0px;
+  transition: all ease-in-out 0.5s;
+  animation: entrada 0.5s ease-in-out 0.5s forwards;
 }
 
 @keyframes entrada {
@@ -119,6 +122,7 @@ body {
   transition: 0.5s;
 }
 
+
 .close-btn {
   font-size: 20px;
   font-weight: bold;
@@ -126,8 +130,10 @@ body {
   position: absolute;
   right: 6px;
 }
+/*estilos para avisos*/
 
-.btnEliminar{
-	margin-left: 4px;
-	margin-top: 30px;
+/*mini estilo para el boton Eliminar el cual elimina el usuario*/
+.btnEliminar {
+  margin-left: 4px;
+  margin-top: 30px;
 }

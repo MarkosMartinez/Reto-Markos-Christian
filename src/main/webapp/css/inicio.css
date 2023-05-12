@@ -1,5 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Oswald);
-
 * {
   margin: 0;
   padding: 0;
@@ -12,8 +10,11 @@
 main {
   position: relative;
   z-index: 1;
+  text-align: center;
+  margin-top: 30px;
 }
 
+/*imagen de fondo*/
 .imgPrincipal {
   background: linear-gradient(
       90deg,
@@ -27,6 +28,7 @@ main {
   background-size: cover;
 }
 
+/*estilos para el texto pincipal de slogan*/
 .slogan {
   color: white;
   position: absolute;
@@ -39,6 +41,7 @@ main {
   color: rgba(40, 106, 255, 1);
 }
 
+/*boton para ir a pedir cita*/
 .btn-cita {
   position: absolute;
   top: 440px;
@@ -57,38 +60,45 @@ main {
   font-weight: 500;
   transition: 0.8s;
   background-size: 280% auto;
-  background-image: linear-gradient(325deg, var(--btn-bg-2) 0%, var(--btn-bg-1) 55%, var(--btn-bg-2) 90%);
+  background-image: linear-gradient(
+    325deg,
+    var(--btn-bg-2) 0%,
+    var(--btn-bg-1) 55%,
+    var(--btn-bg-2) 90%
+  );
   border: none;
   border-radius: var(--radii);
   color: var(--btn-bg-color);
-  box-shadow: 0px 0px 20px rgba(71, 114, 255, 0.5), 0px 5px 5px -1px rgba(58, 125, 233, 0.25), inset 4px 4px 8px rgba(175, 230, 255, 0.5), inset -4px -4px 8px rgba(19, 95, 216, 0.35);
+  box-shadow: 0px 0px 20px rgba(71, 114, 255, 0.5),
+    0px 5px 5px -1px rgba(58, 125, 233, 0.25),
+    inset 4px 4px 8px rgba(175, 230, 255, 0.5),
+    inset -4px -4px 8px rgba(19, 95, 216, 0.35);
 }
 
 .btn-cita:hover {
   background-position: right top;
 }
 
-.btn-cita:is(:focus, :focus-within,:active) {
+.btn-cita:is(:focus, :focus-within, :active) {
   outline: none;
   box-shadow: 0 0 0 3px var(--btn-bg-color), 0 0 0 6px var(--btn-bg-2);
 }
 
-
-
-@media(max-width: 1150px){
-  .btn-cita{
+/*hacer que el boton de pedir cita sea responsive y se eva bien*/
+@media (max-width: 1150px) {
+  .btn-cita {
     right: 380px;
   }
 }
 
-@media(max-width: 970PX){
-  .btn-cita{
+@media (max-width: 970px) {
+  .btn-cita {
     margin-top: 50px;
     right: 100px;
   }
 }
 
-/*olas (para nada robadas)*/
+/*olas*/
 .waves {
   position: relative;
   width: 100%;
@@ -125,7 +135,7 @@ main {
     transform: translate3d(85px, 0, 0);
   }
 }
-/*Shrinking for mobile*/
+/*minimo de altura para movil*/
 @media (max-width: 768px) {
   .waves {
     height: 40px;
@@ -135,13 +145,7 @@ main {
 /*fin olas*/
 
 body {
-	
   position: relative;
-}
-
-main {
-  text-align: center;
-  margin-top: 30px;
 }
 
 .textoMain {
@@ -149,6 +153,7 @@ main {
   margin: 0 auto;
 }
 
+/*contenedores con columnas para imagen-texto/texto-imagen*/
 .contenedorTextoImg {
   display: flex;
   flex-wrap: wrap;
@@ -184,6 +189,8 @@ main {
   text-align: justify;
 }
 
+/*hacer responsive los contenedores texto-img y viceversa para que cuando la pantalla sea de 858px o menos 
+se baje el texto y quede la imagen con su texto correspondiente debajo*/
 @media (max-width: 858px) {
   .contenedorTextoImg {
     flex-flow: row wrap;
@@ -209,14 +216,15 @@ main {
     margin-bottom: 5px;
   }
 
+  /*cambios en algunas posiciones, tamaños... para que quede todo bien en pantallas pequeñas*/
   .slogan {
     margin-left: 24px;
     font-size: 25px;
   }
 
-.btn-donate{
-  right: 70px;
-}
+  .btn-donate {
+    right: 70px;
+  }
 
   .textoMain {
     width: 60%;

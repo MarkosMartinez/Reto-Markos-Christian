@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="java.util.Date"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -29,8 +29,10 @@
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/Login.css">
  
-  <title>Iniciar sesión / Registrarse</title>
+  <title>Iniciar sesiÃ³n / Registrarse</title>
 </head>
+
+  <!--Inicio del menu de navegaciÃ³n-->
 
 <header>
     <nav>
@@ -47,12 +49,14 @@
         <li><a href="Tratamientos">Tratamientos</a></li>
         <li><a href="RealizarCita">Pedir Cita</a></li>
         <li><a href="VerCitas">Consultar Citas</a></li>
-       	<li><a class="activo" href="LoginYRegistro">Iniciar sesión/Registrarse</a></li>
+       	<li><a class="activo" href="LoginYRegistro">Iniciar sesiÃ³n/Registrarse</a></li>
       </ul>
     </nav>
   </header>
+  <!--Fin del menu de navegaciÃ³n-->
 
 <body>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <main>    
     
@@ -60,6 +64,7 @@
         <%Date hoy = new Date();%>
 		<c:set var="hoy" value="<%= hoy %>" />
     
+    <!-- Avisos que aparecerÃ¡n depende de las acciones del usuario -->
 			    <c:if test="${aviso eq 'error'}">
 				<div class="alerta">
 			     <div class="alert alert-danger danger alert-dismissible fade show" role="alert">
@@ -77,7 +82,7 @@
 			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 			 <i class="fa-solid fa-key fa-flip fa-lg"></i>
 			  &nbsp; &nbsp;
-			  <span>Contraseñas no validas!</span>
+			  <span>ContraseÃ±as no validas!</span>
 			</div>
 		 </div>
 			 </c:if>
@@ -93,32 +98,37 @@
 			</div>
 		 </div>
 			 </c:if>	 
-        
+          <!--Fin de avisos-->
+
         <section style="padding-top: 100px;">
+          <!-- Primer contenedor para el formulario de inicar sesion -->
             <div class="form-box1">
                 <div class="form-value">
                      <form action="LoginYRegistro" method="POST">
                      <input type="text" value="login" name="tipo" hidden>
-                        <h2>Iniciar sesión</h2>
+                        <h2>Iniciar sesiÃ³n</h2>
                         <div class="inputbox">
                             <i class="fas fa-id-card"></i>
                             <c:if test = "${dnilogin == null}">
-					         	<input type="text" name="dni" id="dnilogin"required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" minlength="9" maxlength="9">
+					         	<input type="text" name="dni" id="dnilogin"required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 nÃºmeros y una letra" minlength="9" maxlength="9">
 						      </c:if>
 						      <c:if test = "${dnilogin != null}">
-					         	 <input type="text" name="dni" id=dnilogin" value="${dnilogin}" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" minlength="9" maxlength="9">
+					         	 <input type="text" name="dni" id="dnilogin" value="${dnilogin}" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 nÃºmeros y una letra" minlength="9" maxlength="9">
 						     </c:if>
                             <label for="dnilogin">DNI</label>
                         </div>
                         <div class="inputbox">
                             <i class="fas fa-lock"></i>
                             <input type="password" name="pass" id="pass" required="required">
-                            <label for="pass">Contraseña</label>
+                            <label for="pass">ContraseÃ±a</label>
                         </div>
                         <button class="boton" type="submit">Login</button>
                     </form>
                 </div>
             </div>
+            <!-- Fin primer contenedor y formulario -->
+
+            <!-- Contenedor y formulario para registrarse -->
             <div class="form-box2">
                 <div class="form-value">
                     <form action="LoginYRegistro" method="POST">
@@ -128,10 +138,10 @@
                         <div class="inputbox">
                             <i class="fas fa-id-card"></i>
                             <c:if test = "${dni == null}">
-					         	<input type="text" name="dni" id="dni" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" minlength="9" maxlength="9">
+					         	<input type="text" name="dni" id="dni" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 nÃºmeros y una letra" minlength="9" maxlength="9">
 						      </c:if>
 						      <c:if test = "${dni != null}">
-					         	 <input type="text" name="dni" id="dni" value="${dni}" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" minlength="9" maxlength="9">
+					         	 <input type="text" name="dni" id="dni" value="${dni}" required="required" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 nÃºmeros y una letra" minlength="9" maxlength="9">
 						     </c:if>
                             <label for="dni">DNI</label>
                         </div>
@@ -184,22 +194,23 @@
 					      <c:if test = "${telefono != -1}">
 				         	 <input type="tel" name="telefono" id= "telefono" value="${telefono}" required="required">
 					      </c:if>
-                            <label for="telefono">Teléfono</label>
+                            <label for="telefono">TelÃ©fono</label>
                         </div>                 
                         <div class="inputbox">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="pass" id="passregister" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros">
-                            <label for="passregister">Contraseña</label>
+                            <input type="password" name="pass" id="passregister" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseÃ±a debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros">
+                            <label for="passregister">ContraseÃ±a</label>
                         </div>
                         <div class="inputbox">
                             <i class="fas fa-lock"></i>
-                            <input type="password" name="confpass" id="confpass" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseña debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros">
-                            <label for="confpass">Confirmar Contraseña</label>
+                            <input type="password" name="confpass" id="confpass" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="La contraseÃ±a debe de tener una longitud minima de 6 caracteres, con mayusculas, minusculas y numeros">
+                            <label for="confpass">Confirmar ContraseÃ±a</label>
                         </div>
                         <button class="boton" type="submit">Registrarse</button>
                     </form>
                 </div>
             </div>
+            <!-- Fin contenedor y formulario para registrarse -->
         </section>  
 
         

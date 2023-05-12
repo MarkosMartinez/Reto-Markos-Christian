@@ -1,4 +1,6 @@
 @charset "ISO-8859-1";
+
+/*parallax de brackets*/
 .brackets {
   background: url("../img/brackets.jpg") fixed no-repeat center;
   background-size: cover;
@@ -8,6 +10,7 @@
   align-items: center;
 }
 
+/*parallax de endodoncia*/
 .endodoncia {
   background: url("../img/endodoncia.jpg") fixed no-repeat center;
   background-size: cover;
@@ -17,6 +20,7 @@
   align-items: center;
 }
 
+/*parallax de protesis*/
 .protesis {
   background: url("../img/protesis.jpg") fixed no-repeat center;
   background-size: cover;
@@ -26,6 +30,7 @@
   align-items: center;
 }
 
+/*parallax de odontologia preventiva*/
 .odonPreventiva {
   background: url("../img/odonPreventiva.jpg") fixed no-repeat center;
   background-size: cover;
@@ -35,6 +40,7 @@
   align-items: center;
 }
 
+/*titulos que se muestran en el centro de cada contenedor de parallax*/
 .titulos {
   display: flex;
   flex-direction: column;
@@ -42,6 +48,7 @@
   padding-top: 300px;
 }
 
+/*estilo y media query para los titulos*/
 .titulos h1 {
   font-size: 7em;
   color: rgb(4, 104, 255);
@@ -52,6 +59,8 @@
     font-size: 2.3em;
   }
 }
+
+/*estilo para las descripciones de cada apartado*/
 .titulos p {
   margin-top: 10px;
   width: 350px;
@@ -65,8 +74,7 @@
   box-shadow: 2px 2px 5px rgb(14, 14, 14);
 }
 
-/*boton de Leer más*/
-
+/*boton de Leer más que muestra la descripcion solo al hacer hover o es posible hacer click para que se mantenga mostrandose*/
 .descripcion {
   border: none;
   background: none;
@@ -76,6 +84,7 @@
   opacity: 1;
 }
 
+/*estilo de la descripcion*/
 .descripcion span {
   padding-bottom: 7px;
   letter-spacing: 4px;
