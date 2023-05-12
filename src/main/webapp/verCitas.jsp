@@ -259,7 +259,7 @@
                	  </c:if>
                 </c:forEach>
                 </p>
-                <p style="font-size: smaller;">Clénica: ${clinica.nombre_clinica}</p>
+                <p style="font-size: smaller;">Clínica: ${clinica.nombre_clinica}</p>
                 <p style="font-size: 16px;">Dirección: ${clinica.direccion}</p>
               </div>
 
