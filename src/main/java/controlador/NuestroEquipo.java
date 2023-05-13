@@ -28,6 +28,7 @@ public class NuestroEquipo extends HttpServlet {
     }
 
 	/**
+	 * Sirve para poder visualizar la pagina de nuestroEquipamiento.jsp actualizando el header en caso de estar logueado o no.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

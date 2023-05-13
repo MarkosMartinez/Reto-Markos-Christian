@@ -29,6 +29,7 @@ public class EliminarHabitacion extends HttpServlet {
     }
 
 	/**
+	 * Obtiene el id de la habitacion a eliminar, y en caso de ser valido y tener permisos, elimina la habitacion.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,10 +45,10 @@ public class EliminarHabitacion extends HttpServlet {
 				ModeloHabitacion mhabitacion = new ModeloHabitacion(con);
 				String id = request.getParameter("id");
 				if(id != null) {
-				boolean eliminado = mhabitacion.eliminarHabitacion(Integer.parseInt(id));
-				con.cerrar();
+					boolean eliminado = mhabitacion.eliminarHabitacion(Integer.parseInt(id));
+					con.cerrar();
 				if(eliminado) {
-				response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=habitacioneliminada");
+					response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=habitacioneliminada");
 				}else {
 					response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=error"); 
 				}

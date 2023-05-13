@@ -19,6 +19,17 @@ public class ModeloCita {
 		this.con  = con;
 	}
 
+	
+	/**
+	 * Recibe los atributos necesarios para insertar una cita en la tablas "citas" de la base de datos
+	 * 
+	 * @param id_Clinica este atributo se utilizara para saber a que clínica pertenecera la cita
+	 * @param dni este es el dni del cliente que ha realizado la cita
+	 * @param fecha esta fecha identificara que dia ha solicitado la cita el cliente
+	 * @param hora esta hora identificara a que hora ha solicitado la cita el cliente
+	 * @return Por defecto devolverá un atributo boolean llamado "creado" con el valor "true", pero en caso de que se haya intentado introducir un 
+	 * dato inválido en la base de datos el valor de este cambiará a "false" y se devolverá así
+	 */
 	public boolean crearCita(int id_Clinica, String dni, java.util.Date fecha, LocalTime hora) {
 		PreparedStatement insertar;
 		boolean creado = true;
@@ -37,6 +48,18 @@ public class ModeloCita {
 		return creado;
 	}
 
+	/**
+	 * Este metodo sirve para saber la cantidad de habitaciones de una clinica y de esta forma saber cuantas citas son posibles
+	 * en esa clinica, con esa fecha y esa misma hora
+	 * 
+	 * @param id_Clinica es el ID de la clinica en la que ha solicitado el cliente la cita
+	 * @param fecha es la fecha a la que ha solicitado el cliente la cita
+	 * @param hora es la hora a la que ha solicitado el cliente la cita
+	 * @param cantidadDeHabitaciones es la cantidad de habitaciones que hay en esa clinica
+	 * @return Hay un atributo de tipo boolean llamado "disponible" que comienza con el valor "false", si la cantidad de citas con 
+	 * los mismos datos superan la cantidad de habitaciones se mantendra con ese valor, en caso de que haya disponible una habitacion
+	 * su valor se volvera "true" y sera este el que es devuelto
+	 */
 	public boolean disponible(int id_Clinica, java.util.Date fecha, LocalTime hora, int cantidadDeHabitaciones) {
 		
 		int numCitas = 0;
@@ -60,14 +83,25 @@ public class ModeloCita {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		
-        if(numCitas < cantidadDeHabitaciones) {
-        	disponible = true;
-        }
-        
+			
+	        if(numCitas < cantidadDeHabitaciones) {
+	        	disponible = true;
+	        }
+	        
 		return disponible;
 	}
 
+	/**
+	 * Elimina una cita pendiente de un cliente
+	 * 
+	 * @param id_clinica es el ID de la clinica en la que el cliente tiene una cita y la cual va a ser borrada
+	 * @param dni es el DNI del cliente que solicita eliminar la cita
+	 * @param fecha es la fecha en la que el cliente tiene la cita
+	 * @param hora es la hora en la que tiene el cliente la cita
+	 * @return hay un atributo boolean llamado "eliminado" con el valor por defecto "false", si la cita se elimina correctamente
+	 * su valor cambia a "true" y se devuelve, en cambio si hay algun error de permisos o de red y no se elimina la cita su valor
+	 * seguira "false" y sera devuelto asi
+	 */
 	public boolean borrarCita(int id_clinica, String dni, java.util.Date fecha, LocalTime hora) {
 
 	    boolean eliminado = false;
@@ -87,6 +121,12 @@ public class ModeloCita {
 	}
 
 
+	/**
+	 * Obtiene las citas posteriores a la fecha y hora actuales
+	 * 
+	 * @param id_Clinica es el ID de la clinica de la que se obtienen las citas posteriores
+	 * @return devuelve un ArrayList con todas las citas posteriores obtenidas
+	 */
 	public ArrayList<Cita> citasPosteriores(int id_Clinica) {
 		ArrayList<Cita> citas = new ArrayList<>();
 		
@@ -110,6 +150,12 @@ public class ModeloCita {
 		return citas;
 	}
 
+	/**
+	 * Obtiene las citas anteriores a la fecha y hora actuales
+	 * 
+	 * @param id_Clinica es el ID de la clinica de la que se obtienen las citas anteriores
+	 * @return devuelve un ArrayList con todas las citas anteriores obtenidas
+	 */
 	public ArrayList<Cita> citasAnteriores(int id_Clinica) {
 		ArrayList<Cita> citas = new ArrayList<>();
 	
@@ -133,6 +179,12 @@ public class ModeloCita {
 		return citas;
 	}
 
+	/**
+	 * Obtiene todas las citas posteriores a la fecha y hora actuales de un cliente especifico
+	 * 
+	 * @param dni es el DNI del cliente del cual se quiere obtener las citas
+	 * @return devuelve un ArrayList con todas las citas pendientes del cliente
+	 */
 	public ArrayList<Cita> getCitasClientePosteriores(String dni) {
 		ArrayList<Cita> citas = new ArrayList<>();
 	
@@ -158,6 +210,12 @@ public class ModeloCita {
 		return citas;
 	}
 	
+	/**
+	 * Obtiene todas las citas anteriores a la fecha y hora actuales de un cliente especifico
+	 * 
+	 * @param dni es el DNI del cliente del cual se quiere obtener las citas
+	 * @return devuelve un ArrayList con todas las citas anteriores del cliente
+	 */
 	public ArrayList<Cita> getCitasClienteAnteriores(String dni) {
 		ArrayList<Cita> citas = new ArrayList<>();
 		
@@ -183,6 +241,20 @@ public class ModeloCita {
 		return citas;
 	}
 
+	/**
+	 * Obtiene los datos e una cita anterior junto al empleado que ha antendido la cita y un informe escrito por este mismo y lo
+	 * inserta en la tabla "historiales_clientes" de la base de datos
+	 * 
+	 * @param editardni es el DNI del cliente que ha acudido a la cita
+	 * @param editarfecha es la fecha en la que se llevo a cabo la cita
+	 * @param editarhora es la hora a la que se llevo a cabo la cita
+	 * @param editarempleado es el DNI del empleado que atendio la cita
+	 * @param informe es el informe escrito por el empleado en relacion a la cita
+	 * @param ID_Clinica es la clinica en la que que se llevo a cabo la cita
+	 * @return hay un atributo de tipo "boolean" con el valor por defecto "false", si la insercion de los datos en la tabla historiales_clientes
+	 * es correcta su valor cambiara a "true" y ser a devuelto con ese valor, en caso de que ocurra algun error su valor se mantendra en "false"
+	 * y sera devuuelto asi
+	 */
 	public Boolean actualizarCita(String editardni, java.util.Date editarfecha, LocalTime editarhora, String editarempleado, String informe, int ID_Clinica) {
 		boolean actualizado = false;
 		Time hora = Time.valueOf(editarhora);
@@ -220,12 +292,15 @@ public class ModeloCita {
 			}
 		}
 		
-		
-
-		
 		return actualizado;
 	}
 
+	/**
+	 * sirve para eliminar todas las citas de una clinica
+	 * @param id es el ID de la clinica de la cual se desean eliminar las citas
+	 * @return si el borrado de las citas es correcto se devuelve un boolean "true", si es incorrecto se devuelve 
+	 * como "false"
+	 */
 	public boolean borrarCitas(int id) {
 		boolean eliminado = true;
 	    PreparedStatement pstDelete;

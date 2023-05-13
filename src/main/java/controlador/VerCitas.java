@@ -42,9 +42,11 @@ public class VerCitas extends HttpServlet {
     }
 
 	/**
+	 * Sirve para obtener las citas y poder visualizarlas en la pagina verCitas.jsp.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession session = request.getSession();
 		Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 		Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
@@ -139,6 +141,7 @@ public class VerCitas extends HttpServlet {
 	}
 
 	/**
+	 * Sirve para poder recibir y ejecutar los metodos para cancelar y modificar las citas
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -150,32 +153,32 @@ public class VerCitas extends HttpServlet {
 		Conector con  = new Conector();
 		 con.conectar();
 		if(tipo.equals("formcita")) {
-		Date editarfecha = null;
-		try {
-			editarfecha = new SimpleDateFormat("yyyy-MM-dd").parse(fechaSinFormato);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		 LocalTime editarhora = LocalTime.parse(request.getParameter("editarhora"));
-		 String editarempleado = request.getParameter("editarempleado");
-		 String informe = request.getParameter("informe");
-		 String equipamiento = request.getParameter("equipamiento"); /*null y on*/
-		 
-		 ModeloCita mcita = new ModeloCita(con);
-		 Boolean actualizado = false;
-		 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe, empleadoLogueado.getId_Clinica());
-		 if(actualizado) {
-		 if(equipamiento == null) {
-			 con.cerrar();
-			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citaactualizada");
-		 }else if(equipamiento.equals("on")) {
-			 con.cerrar();
-			 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento");
-		 }
-		 }else {
-			 con.cerrar();
-			 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
-		 }
+			Date editarfecha = null;
+			try {
+				editarfecha = new SimpleDateFormat("yyyy-MM-dd").parse(fechaSinFormato);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			 LocalTime editarhora = LocalTime.parse(request.getParameter("editarhora"));
+			 String editarempleado = request.getParameter("editarempleado");
+			 String informe = request.getParameter("informe");
+			 String equipamiento = request.getParameter("equipamiento"); /*null y on*/
+			 
+			 ModeloCita mcita = new ModeloCita(con);
+			 Boolean actualizado = false;
+			 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe, empleadoLogueado.getId_Clinica());
+				 if(actualizado) {
+					 if(equipamiento == null) {
+						 con.cerrar();
+						 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citaactualizada");
+					 }else if(equipamiento.equals("on")) {
+						 con.cerrar();
+						 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento");
+					 }
+				 }else {
+					 con.cerrar();
+					 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
+				 }
 		}else if (tipo.equals("modclinica")) {
 			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));

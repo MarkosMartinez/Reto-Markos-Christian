@@ -15,6 +15,12 @@ public class ModeloHabitacion {
 		this.con = con;
 	}
 
+	/**
+	 * Obtiene la cantidad de habitaciones que tiene una clinica
+	 * 
+	 * @param id_Clinica es el ID de la clinica de la que se quiere obtener la cantidad de habitaciones
+	 * @return devuelve un "int" con el total de habitaciones de la clinica
+	 */
 	public int getCantHabitaciones(int id_Clinica) {
 		int cantidadDeHabitaciones = 0;
 		PreparedStatement getCantHabitacion;
@@ -32,6 +38,15 @@ public class ModeloHabitacion {
 		return cantidadDeHabitaciones;
 	}
 
+	/**
+	 * Sirve para obtener la lista de habitaciones de una clinica con el orden especificado
+	 * 
+	 * @param id_Clinica es el ID de la clinica de la que se quiere obtener las habitaciones
+	 * @param ordenes el orden en el que se solicita que se muestren las habitaciones (el orden va por el "numero 
+	 * de habitacion") de forma ascendente o descendente 
+	 * @return devuelve un ArrayList con las habitaciones de la clinica que se ha solicitado en el orden en el que
+	 * se ha pedido
+	 */
 	public ArrayList<Habitacion> getHabitaciones(int id_Clinica, String orden) {
 		ArrayList<Habitacion> habitaciones = new ArrayList<>();
 		
@@ -60,6 +75,12 @@ public class ModeloHabitacion {
 		return habitaciones;
 	}
 
+	/**
+	 * Sirve para eliminar una habitacion
+	 * @param id es el ID de la habitacion que se va a eliminar
+	 * @return si la habitacion se elimina correctamente devuelve un boolean "eliminado" con el valor "true",
+	 * en caso de que suceda algun problema en la eliminacion lo devolvera con el valor false"
+	 */
 	public boolean eliminarHabitacion(int id) {
 		 boolean eliminado = false;
 		    PreparedStatement pstDelete;
@@ -74,6 +95,13 @@ public class ModeloHabitacion {
 		    return eliminado;
 	}
 
+	/**
+	 * Sirve para crear una nueva habitacion 
+	 * @param nuevaHabitacion es un atributo de tipo "Habitacion" que contiene todos los atributos necesarios para insertarse
+	 * en la base de datos, asi como el numero de habitacion, su especialidad y el ID de la clinica a la que pertenecera
+	 * @return si la habitacion se inserta correctamente devuelve un boolean "creado" con el valor "true",
+	 * en caso de que suceda algun problema en la insercion lo devolvera con el valor false"
+	 */
 	public boolean crearHabitacion(Habitacion nuevaHabitacion) {
 		 boolean creado = false;
 		    PreparedStatement pstInsert;
@@ -90,6 +118,13 @@ public class ModeloHabitacion {
 		    return creado;
 	}
 
+	/**
+	 * Sirve para que no haya dos habitaciones con el mismo numero de habitacion en la misma clinica
+	 * @param nuevaHabitacion es un atributo de tipo "Habitacion" que lleva el numeor de habitacion y el ID de la 
+	 * clinica de la nueva habitacion
+	 * @return si no se encuentra esa habitacion en la clinica devuelve un boolean llamado "disponible" con el
+	 * valor "true", en caso de que esa habitacion ya exista en esa clinica lo devolvera con el valor false"
+	 */
 	public boolean comprobarDisponibilidad(Habitacion nuevaHabitacion) {
 	    boolean disponible = true;
 
@@ -112,6 +147,13 @@ public class ModeloHabitacion {
 	    return disponible;
 	}
 
+	/**
+	 * Elimina todas las habitaciones de la clinica que se especifique
+	 * @param id es el ID de la clinica de la cual se quieren borrar todas las habitaciones
+	 * @return si las habitaciones se eliminan correctamente devuelve un boolean con el valor
+	 * "true", en casod e que suceda algun problema en su eliminacion lo devolvera con el 
+	 * valor "false" 
+	 */
 	public boolean eliminarHabitaciones(int id) {
 		boolean eliminado = true;
 	    PreparedStatement pstDelete;

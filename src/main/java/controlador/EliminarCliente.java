@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import modelo.DAO.Conector;
 import modelo.DAO.ModeloCliente;
-import modelo.DAO.ModeloHistorial_Cliente;
 import modelo.DTO.Cliente;
 import modelo.DTO.Empleado;
 
@@ -30,6 +29,8 @@ public class EliminarCliente extends HttpServlet {
     }
 
 	/**
+	 * Se utiliza para a los clientes, se llama a este servlet desde una etiqueta "a" de html de la pagina "Editar cliente" o "Gestionar Usuarios", se elimina el cliente de la bbdd y 
+	 * se redirige de vuelta a la pagina anterior
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

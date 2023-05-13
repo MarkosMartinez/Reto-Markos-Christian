@@ -28,6 +28,7 @@ public class Tratamientos extends HttpServlet {
     }
 
 	/**
+	 * Sirve para obtener el tipo de loguin (en caso de estar logueado) y poder visualizar el header de la pagina tratameintos.jsp de una manera u otra.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

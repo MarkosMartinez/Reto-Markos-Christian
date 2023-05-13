@@ -34,6 +34,7 @@ public class EditarPerfil extends HttpServlet {
     }
 
 	/**
+	 * Sirve para abrir la pagina en la que se permite editar los datos de un empleado
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -88,6 +89,7 @@ public class EditarPerfil extends HttpServlet {
 	}
 
 	/**
+	 *Recibe los datos que se hayan camibiado del empleado mediante el formulario y lo actualiza en la bbdd
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

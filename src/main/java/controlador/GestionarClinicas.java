@@ -33,6 +33,7 @@ public class GestionarClinicas extends HttpServlet {
     }
 
 	/**
+	 * Sirve para obtener y enviar la lista de clinicas y habitaciones poder gestionarlos en al pagina.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -76,6 +77,7 @@ public class GestionarClinicas extends HttpServlet {
 	}
 
 	/**
+	 * Obtiene los datos de habitaciones y clinicas nuevas, y en caso de tener los datos correctamente, los crea. Ademas tambien permite cambiar el modo de vista entre clinicas y habitaciones. 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -98,7 +100,7 @@ public class GestionarClinicas extends HttpServlet {
 			String especialidad = request.getParameter("especialidad");
 			String idClinica = request.getParameter("clinica");
 			
-			boolean añadido = false;
+			boolean anadido = false;
 			
 			Habitacion nuevaHabitacion = new Habitacion();
 			nuevaHabitacion.setNum_Habitacion(Integer.parseInt(numHabitacion));
@@ -108,10 +110,10 @@ public class GestionarClinicas extends HttpServlet {
 			ModeloHabitacion mhabitacion = new ModeloHabitacion(con);
 			boolean disponible = mhabitacion.comprobarDisponibilidad(nuevaHabitacion);
 			if(disponible)
-			añadido = mhabitacion.crearHabitacion(nuevaHabitacion);
+			anadido = mhabitacion.crearHabitacion(nuevaHabitacion);
 			
 			con.cerrar();
-			if(añadido){
+			if(anadido){
 				response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=habitacioncreada");
 			}else {
 				response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=error");

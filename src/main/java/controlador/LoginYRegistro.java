@@ -36,6 +36,7 @@ public class LoginYRegistro extends HttpServlet {
     }
 
 	/**
+	 * Sirve para poder cargar la pagina del login y registro y en caso de que este logueado, cerrar sesion.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -60,7 +61,7 @@ public class LoginYRegistro extends HttpServlet {
 		if(request.getParameter("telefono") == null) {
 			telefono = -1;
 		}else {
-		telefono = Integer.parseInt(request.getParameter("telefono"));
+			telefono = Integer.parseInt(request.getParameter("telefono"));
 		}
 		
 		request.setAttribute("dnilogin", dnilogin);
@@ -75,6 +76,7 @@ public class LoginYRegistro extends HttpServlet {
 	}
 
 	/**
+	 * Sirve para poder recivir los datos del registro y login. Y dependiendo de si los datos son validos o no, redirige a una pagina u otra.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -127,6 +129,7 @@ public class LoginYRegistro extends HttpServlet {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+			
 			String password = DigestUtils.sha1Hex(passSinEncriptar);
 			ModeloCliente mcliente = new ModeloCliente(con);
 			if(passSinEncriptar.equals(passConfirmar)) {

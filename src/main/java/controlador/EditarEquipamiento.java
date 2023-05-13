@@ -33,6 +33,7 @@ public class EditarEquipamiento extends HttpServlet {
 	}
 
 	/**
+	 * Sirve para ver la pagina de editar el equipamiento, en la cual se podra actualizar el valor de cada uno e insertar nuevo equipamiento
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -94,6 +95,7 @@ public class EditarEquipamiento extends HttpServlet {
 	}
 
 	/**
+	 * Permite insertar el nuevo equipamiento o actualizar el ya existente (en caso de ser director en cualquiera de las clinicas exixtentes)
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

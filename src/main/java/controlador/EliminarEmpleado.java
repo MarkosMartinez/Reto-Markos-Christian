@@ -28,6 +28,8 @@ public class EliminarEmpleado extends HttpServlet {
     }
 
 	/**
+	 * Se utiliza para eliminar un empleado (solo el director puede), se llama a este servlet desde una etiqueta "a" de html de la pagina "Gestionar Usuarios", se elimina el empleado de la bbdd y 
+	 * se redirige de vuelta a la pagina de gestionar los usuarios
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

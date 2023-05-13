@@ -29,6 +29,7 @@ public class Principal extends HttpServlet {
     }
 
 	/**
+	 * Sirve para poder conectarse al SSH en caso de no estarlo, y ademas visualiza la pagina principal, con el header actualizado dependiendo de si esta logueado o no.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { //EMPEZAR SIEMPRE DESDE AQUI PARA EVITAR ERRORES CON LA BBDD
