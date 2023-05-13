@@ -40,6 +40,7 @@ public class GestionarUsuarios extends HttpServlet {
     }
 
 	/**
+	 * Sirve para cargar la pagina de gestionar usuarios, y en caso de ser directos tambien cargara a los empleados.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -95,6 +96,7 @@ public class GestionarUsuarios extends HttpServlet {
 	}
 
 	/**
+	 * Sirve para obtener y cambiar el modo de vista entre empleados/clientes ademas de insertar los datos de un nuevo empleado en caso de ser validos.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -39,6 +39,7 @@ public class RealizarCita extends HttpServlet {
     }
 
 	/**
+	 * Sirve para poder ver la pagina de realizar las citas, y en caso de que previamente no se haya podido realizar, para poder mostrar avisos de error y autocompletar algunos campos.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -82,6 +83,7 @@ public class RealizarCita extends HttpServlet {
 	}
 
 	/**
+	 * Sirve para recivir y realizar las citas en caso de que los datos introducidos sean validos. Sino actualizara la pagina mostrando un aviso de error.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

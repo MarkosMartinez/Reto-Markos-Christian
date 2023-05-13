@@ -33,6 +33,7 @@ public class GestionarClinicas extends HttpServlet {
     }
 
 	/**
+	 * Sirve para obtener y enviar la lista de clinicas y habitaciones poder gestionarlos en al pagina.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -76,6 +77,7 @@ public class GestionarClinicas extends HttpServlet {
 	}
 
 	/**
+	 * Obtiene los datos de habitaciones y clinicas nuevas, y en caso de tener los datos correctamente, los crea. Ademas tambien permite cambiar el modo de vista entre clinicas y habitaciones. 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
