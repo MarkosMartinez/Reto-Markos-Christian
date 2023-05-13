@@ -15,6 +15,10 @@ public class ModeloPuesto {
 		this.con = con;
 	}
 
+	/**
+	 * Este metodo devuelve todos los puestos de la Base de datos.
+	 * @return Devuelve un ArrayList con todos los puestos.
+	 */
 	public ArrayList<Puesto> getPuestos() {
 		ArrayList<Puesto> puestos = new ArrayList<>();
 	
@@ -22,12 +26,12 @@ public class ModeloPuesto {
 		try {
 			gettear = this.con.getCon().prepareStatement("SELECT * FROM `puestos`");
 			ResultSet resultado=gettear.executeQuery();
-			while(resultado.next()) {
-				Puesto puesto = new Puesto();
-				puesto.setId_Puesto(resultado.getInt("ID_Puesto"));
-				puesto.setNombre_Puesto(resultado.getString("Nombre_Puesto"));
-				puestos.add(puesto);
-			}
+				while(resultado.next()) {
+					Puesto puesto = new Puesto();
+					puesto.setId_Puesto(resultado.getInt("ID_Puesto"));
+					puesto.setNombre_Puesto(resultado.getString("Nombre_Puesto"));
+					puestos.add(puesto);
+				}
 			gettear.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

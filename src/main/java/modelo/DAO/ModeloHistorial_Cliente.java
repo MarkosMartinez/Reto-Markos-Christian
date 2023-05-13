@@ -16,6 +16,10 @@ public class ModeloHistorial_Cliente {
 		this.con = con;
 	}
 
+	/**
+	 * Este metodo devuelve todos los historiales de los clientes.
+	 * @return Devuelve un ArrayList con todos los historiales de los clientes.
+	 */
 	public ArrayList<Historial_Cliente> getHistoriales() {
 		ArrayList<Historial_Cliente> historiales = new ArrayList<>();
 		
@@ -23,26 +27,21 @@ public class ModeloHistorial_Cliente {
 		try {
 			pSt = this.con.getCon().prepareStatement("SELECT * FROM historiales_clientes;");
 			ResultSet resultado = pSt.executeQuery();
-			while(resultado.next()) {
-				Historial_Cliente historial = new Historial_Cliente();
-				historial.setDNI(resultado.getString("DNI"));
-				historial.setFecha_Revision(resultado.getDate("Fecha_Revision"));
-				historial.setHora_Revision(LocalTime.parse(resultado.getString("Hora_Revision")));
-				historial.setObservaciones(resultado.getString("Observaciones"));
-				historial.setAtendido(resultado.getString("Atendido"));
-				historiales.add(historial);
-			}
+				while(resultado.next()) {
+					Historial_Cliente historial = new Historial_Cliente();
+					historial.setDNI(resultado.getString("DNI"));
+					historial.setFecha_Revision(resultado.getDate("Fecha_Revision"));
+					historial.setHora_Revision(LocalTime.parse(resultado.getString("Hora_Revision")));
+					historial.setObservaciones(resultado.getString("Observaciones"));
+					historial.setAtendido(resultado.getString("Atendido"));
+					historiales.add(historial);
+				}
 			pSt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return historiales;
-	}
-
-	public boolean eliminarHistorial(String dniAEliminar) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }
