@@ -100,7 +100,7 @@ public class GestionarClinicas extends HttpServlet {
 			String especialidad = request.getParameter("especialidad");
 			String idClinica = request.getParameter("clinica");
 			
-			boolean añadido = false;
+			boolean anadido = false;
 			
 			Habitacion nuevaHabitacion = new Habitacion();
 			nuevaHabitacion.setNum_Habitacion(Integer.parseInt(numHabitacion));
@@ -110,10 +110,10 @@ public class GestionarClinicas extends HttpServlet {
 			ModeloHabitacion mhabitacion = new ModeloHabitacion(con);
 			boolean disponible = mhabitacion.comprobarDisponibilidad(nuevaHabitacion);
 			if(disponible)
-			añadido = mhabitacion.crearHabitacion(nuevaHabitacion);
+			anadido = mhabitacion.crearHabitacion(nuevaHabitacion);
 			
 			con.cerrar();
-			if(añadido){
+			if(anadido){
 				response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=habitacioncreada");
 			}else {
 				response.sendRedirect(request.getContextPath() + "/GestionarClinicas?aviso=error");
