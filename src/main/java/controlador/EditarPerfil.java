@@ -170,7 +170,7 @@ public class EditarPerfil extends HttpServlet {
 					Telefonos telefono = new Telefonos();
 					telefono.setDni(dni);
 					telefono.setTelefono(Integer.parseInt(nuevoTelefono));
-					mcliente.addTel(dni, telefono);
+					mcliente.addTel(telefono);
 				}
 				Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
 				if(clienteLogueado != null) {

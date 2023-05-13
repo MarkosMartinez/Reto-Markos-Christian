@@ -31,8 +31,8 @@ public class Conector {
 		String host = "91.200.117.27"; // Remote host to connect to
 		String user = "1daw3"; // Remote shell username
 		String password = "1daw3"; // Remote shell password
-		int lport = 49161; // Local port to create
-		int rport = 49161; // Destination port
+		int lport = 3306; // Local port to create
+		int rport = 3306; // Destination port
 		String rhost = "192.168.100.170"; // Destination address
 
 		java.util.Properties config = new java.util.Properties();
@@ -65,7 +65,7 @@ public class Conector {
 		// MySQL Connection settings
 		String dbuserName = "smiling"; // mysql username
 		String dbpassword = "smiling"; // mysql password
-		String url = "jdbc:mysql://localhost:49161/smilingbbdd"; // connect to local end of SSL tunnel
+		String url = "jdbc:mysql://localhost:3306/smilingbbdd"; // connect to local end of SSL tunnel
 		String driverName = "com.mysql.cj.jdbc.Driver";
 
 		try {

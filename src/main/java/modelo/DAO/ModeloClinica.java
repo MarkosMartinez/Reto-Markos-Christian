@@ -20,7 +20,7 @@ public class ModeloClinica {
 
 		PreparedStatement pSt;
 		try {
-			pSt = this.con.getCon().prepareStatement("SELECT * FROM clinica");
+			pSt = this.con.getCon().prepareStatement("SELECT * FROM clinicas");
 			ResultSet resultado = pSt.executeQuery();
 			while(resultado.next()) {
 				Clinica clinica = new Clinica();
@@ -43,7 +43,7 @@ public class ModeloClinica {
 		    boolean creado = false;
 		    PreparedStatement pstInsert;
 		    try {
-		        pstInsert = this.con.getCon().prepareStatement("INSERT INTO `clinica`(`Nombre_Clinica`, `Direccion`, `Telefono`) VALUES (?, ?, ?)");
+		        pstInsert = this.con.getCon().prepareStatement("INSERT INTO `clinicas`(`Nombre_Clinica`, `Direccion`, `Telefono`) VALUES (?, ?, ?)");
 		        pstInsert.setString(1, nuevaClinica.getNombre_clinica());
 		        pstInsert.setString(2, nuevaClinica.getDireccion());
 		        pstInsert.setInt(3, nuevaClinica.getTelefono());
@@ -59,7 +59,7 @@ public class ModeloClinica {
 			boolean eliminado = true;
 		    PreparedStatement pstDelete;
 		    try {
-		        pstDelete = this.con.getCon().prepareStatement("DELETE FROM clinica WHERE ID_Clinica = ?");
+		        pstDelete = this.con.getCon().prepareStatement("DELETE FROM clinicas WHERE ID_Clinica = ?");
 		        pstDelete.setInt(1, id);
 		        pstDelete.execute();
 		    } catch (SQLException e) {

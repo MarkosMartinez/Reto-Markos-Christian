@@ -137,7 +137,7 @@ public class LoginYRegistro extends HttpServlet {
 					
 					Cliente cliente = new Cliente();
 					Telefonos oTelefono = new Telefonos(dni, telefono);
-					mcliente.addTel(dni, oTelefono);
+					mcliente.addTel(oTelefono);
 					
 					cliente.setDni(dni);
 					cliente.setNombre(nombre);

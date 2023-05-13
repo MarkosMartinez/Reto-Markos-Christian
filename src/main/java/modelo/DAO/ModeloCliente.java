@@ -115,12 +115,12 @@ public class ModeloCliente {
 		return encontrado;
 	}
 
-	public void addTel(String dni, Telefonos oTelefono) {
+	public void addTel(Telefonos oTelefono) {
 		PreparedStatement insertar;
 
 			try {
 				insertar = this.con.getCon().prepareStatement("INSERT INTO `telefonos`(`DNI`, `Telefono`) VALUES (?, ?)");
-				insertar.setString(1, dni);
+				insertar.setString(1, oTelefono.getDni());
 				insertar.setInt(2, oTelefono.getTelefono());
 				insertar.execute();
 			} catch (SQLException e) {
