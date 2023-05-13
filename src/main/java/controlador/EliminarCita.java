@@ -33,6 +33,8 @@ public class EliminarCita extends HttpServlet {
     }
 
 	/**
+	 * Se utiliza para cancelar las citas pendientes de los clientes, se llama a este servlet desde una etiqueta "a" de html de la pagina "Ver citas", se elimina la cita de la bbdd y 
+	 * se redirige de vuelta a la pagina de ver las citas
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

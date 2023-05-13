@@ -34,6 +34,8 @@ public class EliminarClinica extends HttpServlet {
     }
 
 	/**
+	 * Se utiliza para eliminar una clinica (solo el director puede), se llama a este servlet desde una etiqueta "a" de html de la pagina "Gestionar clinicas", se elimina la clinica de la bbdd y 
+	 * se redirige de vuelta a la pagina de gestionar las clinicas
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

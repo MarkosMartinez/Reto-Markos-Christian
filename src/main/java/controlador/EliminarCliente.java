@@ -30,6 +30,8 @@ public class EliminarCliente extends HttpServlet {
     }
 
 	/**
+	 * Se utiliza para a los clientes, se llama a este servlet desde una etiqueta "a" de html de la pagina "Editar cliente" o "Gestionar Usuarios", se elimina el cliente de la bbdd y 
+	 * se redirige de vuelta a la pagina anterior
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
