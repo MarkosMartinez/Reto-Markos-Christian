@@ -195,6 +195,7 @@ pageEncoding="UTF-8"%> <%@ taglib prefix = "c" uri =
                           class="form-control"
                           required
                         >
+                        <c:if test="${director eq true}">
                           <c:forEach var="puesto" items="${puestos}">
                             <c:if
                               test="${puesto.id_Puesto eq empleado.id_Puesto}"
@@ -209,11 +210,33 @@ pageEncoding="UTF-8"%> <%@ taglib prefix = "c" uri =
                             <c:if
                               test="${puesto.id_Puesto ne empleado.id_Puesto}"
                             >
-                              <option value="${puesto.id_Puesto}">
+	                              <option value="${puesto.id_Puesto}">
+	                                ${puesto.nombre_Puesto}
+	                              </option>
+                            </c:if>
+                          </c:forEach>
+                          </c:if>
+                          <c:if test="${director eq false}">
+                          <c:forEach var="puesto" items="${puestos}">
+                            <c:if
+                              test="${puesto.id_Puesto eq empleado.id_Puesto}"
+                            >
+                              <option
+                                selected="selected"
+                                value="${puesto.id_Puesto}"
+                              >
                                 ${puesto.nombre_Puesto}
                               </option>
                             </c:if>
+                            <c:if
+                              test="${puesto.id_Puesto ne empleado.id_Puesto}"
+                            >
+	                              <option disabled="disabled" value="${puesto.id_Puesto}">
+	                                ${puesto.nombre_Puesto}
+	                              </option>
+                            </c:if>
                           </c:forEach>
+                          </c:if>
                         </select>
                       </div>
                     </div>
@@ -226,6 +249,7 @@ pageEncoding="UTF-8"%> <%@ taglib prefix = "c" uri =
                           class="form-control"
                           required
                         >
+                        <c:if test="${director eq true}">
                           <c:forEach var="clinica" items="${clinicas}">
                             <c:if
                               test="${clinica.id_clinica eq empleado.id_Clinica}"
@@ -245,6 +269,28 @@ pageEncoding="UTF-8"%> <%@ taglib prefix = "c" uri =
                               </option>
                             </c:if>
                           </c:forEach>
+                         </c:if>
+                        <c:if test="${director eq false}">
+                          <c:forEach var="clinica" items="${clinicas}">
+                            <c:if
+                              test="${clinica.id_clinica eq empleado.id_Clinica}"
+                            >
+                              <option
+                                selected="selected"
+                                value="${clinica.id_clinica}"
+                              >
+                                ${clinica.nombre_clinica}
+                              </option>
+                            </c:if>
+                            <c:if
+                              test="${clinica.id_clinica ne empleado.id_Clinica}"
+                            >
+                              <option disabled="disabled" value="${clinica.id_clinica}">
+                                ${clinica.nombre_clinica}
+                              </option>
+                            </c:if>
+                          </c:forEach>
+                         </c:if>
                         </select>
                       </div>
                     </div>

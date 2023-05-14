@@ -147,8 +147,11 @@
 				      <c:if test="${director eq 'true' && equip.stock <= 0}">
 				      <td><a type="button" style="margin-right: 6px;" href="" class="btn btn-danger disabled">-1</a><a type="button" href="EditarEquipamiento?d=${equip.id_Equipamiento}" class="btn btn-danger eliminar"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></a></td>
 				      </c:if>
-				      <c:if test="${director eq 'false'}">
+				      <c:if test="${director eq 'false' && equip.stock > 0}">
 				      <td><a type="button" href="EditarEquipamiento?c=${cantidad}&v=${equip.stock-1}" class="btn btn-danger">-1</a></td>
+				      </c:if>
+				       <c:if test="${director eq 'false' && equip.stock <= 0}">
+				      <td><a type="button" href="" class="btn btn-danger disabled">-1</a></td>
 				      </c:if>
 				      <c:set var="cantidad" value="${cantidad + 1}"/>
 				    </tr>

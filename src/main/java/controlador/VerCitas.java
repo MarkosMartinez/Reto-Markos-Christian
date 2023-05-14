@@ -164,21 +164,25 @@ public class VerCitas extends HttpServlet {
 			 String informe = request.getParameter("informe");
 			 String equipamiento = request.getParameter("equipamiento"); /*null y on*/
 			 
-			 ModeloCita mcita = new ModeloCita(con);
+			 ModeloHistorial_Cliente mhistorial = new ModeloHistorial_Cliente(con);
 			 Boolean actualizado = false;
-			 actualizado = mcita.actualizarCita(editardni, editarfecha, editarhora, editarempleado, informe, empleadoLogueado.getId_Clinica());
+			 actualizado = mhistorial.evitarDuplicado(editardni, editarfecha, editarhora);
+			 if(actualizado) {
+			 actualizado = mhistorial.insertarCita(editardni, editarfecha, editarhora, editarempleado, informe, empleadoLogueado.getId_Clinica());
+			 	con.cerrar();
 				 if(actualizado) {
 					 if(equipamiento == null) {
-						 con.cerrar();
 						 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citaactualizada");
 					 }else if(equipamiento.equals("on")) {
-						 con.cerrar();
 						 response.sendRedirect(request.getContextPath() + "/EditarEquipamiento");
 					 }
 				 }else {
 					 con.cerrar();
 					 response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
 				 }
+		}else {
+			con.cerrar();
+		}
 		}else if (tipo.equals("modclinica")) {
 			ModeloEmpleado mempleado = new ModeloEmpleado(con);
 			int idNuevaClinica = Integer.parseInt(request.getParameter("clinica"));

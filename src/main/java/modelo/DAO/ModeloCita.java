@@ -241,59 +241,6 @@ public class ModeloCita {
 		return citas;
 	}
 
-	/**
-	 * Obtiene los datos e una cita anterior junto al empleado que ha antendido la cita y un informe escrito por este mismo y lo
-	 * inserta en la tabla "historiales_clientes" de la base de datos
-	 * 
-	 * @param editardni es el DNI del cliente que ha acudido a la cita
-	 * @param editarfecha es la fecha en la que se llevo a cabo la cita
-	 * @param editarhora es la hora a la que se llevo a cabo la cita
-	 * @param editarempleado es el DNI del empleado que atendio la cita
-	 * @param informe es el informe escrito por el empleado en relacion a la cita
-	 * @param ID_Clinica es la clinica en la que que se llevo a cabo la cita
-	 * @return hay un atributo de tipo "boolean" con el valor por defecto "false", si la insercion de los datos en la tabla historiales_clientes
-	 * es correcta su valor cambiara a "true" y ser a devuelto con ese valor, en caso de que ocurra algun error su valor se mantendra en "false"
-	 * y sera devuuelto asi
-	 */
-	public Boolean actualizarCita(String editardni, java.util.Date editarfecha, LocalTime editarhora, String editarempleado, String informe, int ID_Clinica) {
-		boolean actualizado = false;
-		Time hora = Time.valueOf(editarhora);
-		
-		PreparedStatement pSt;
-		
-		try {
-			pSt = this.con.getCon().prepareStatement("INSERT INTO historiales_clientes(DNI, Fecha_Revision, Hora_Revision, Observaciones, Atendido, ID_Clinica) VALUES (?, ?, ?, ?, ?, ?)");
-			pSt.setString(1, editardni);
-			pSt.setDate(2, new java.sql.Date(editarfecha.getTime()));			
-			pSt.setTime(3, hora);
-			pSt.setString(4, informe);
-			pSt.setString(5, editarempleado);
-			pSt.setInt(6, ID_Clinica);
-			int filasAfectadas = pSt.executeUpdate();
-			if (filasAfectadas > 0) {
-			actualizado = true;
-			}
-		}catch (SQLException e) {
-			/*e.printStackTrace();*/
-		}
-		
-		if (!actualizado) {
-			try {
-				pSt = this.con.getCon().prepareStatement("UPDATE historiales_clientes SET Observaciones = ?, Atendido = ? WHERE DNI = ? AND Fecha_Revision = ? AND Hora_Revision = ?");
-				pSt.setString(1, informe);
-				pSt.setString(2, editarempleado);
-				pSt.setString(3, editardni);
-				pSt.setDate(4, new java.sql.Date(editarfecha.getTime()));
-				pSt.setTime(5, hora);
-				pSt.executeUpdate();
-				actualizado = true;
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return actualizado;
-	}
 
 	/**
 	 * sirve para eliminar todas las citas de una clinica

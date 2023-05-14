@@ -13,7 +13,7 @@ DROP TABLE empleados cascade;
 DROP TABLE equipamiento cascade;
 DROP TABLE habitaciones cascade;
 DROP TABLE citas cascade;
-DROP TABLE clinica cascade;
+DROP TABLE clinicas cascade;
 DROP TABLE telefonos cascade;
 DROP TABLE clientes cascade;
 DROP TABLE puestos cascade;
@@ -51,7 +51,7 @@ CREATE TABLE clientes (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 tablespace ClinicaOdontologica;
 
-CREATE TABLE clinica (
+CREATE TABLE clinicas (
   ID_Clinica int(11) NOT NULL,
   Nombre_Clinica varchar(255) NOT NULL,
   Direccion varchar(255) NOT NULL,
@@ -123,7 +123,7 @@ COMMIT;
 /*PERMISOS ROL DEL CLIENTE*/
 GRANT INSERT, SELECT, UPDATE, ALTER ON smilingbbdd.clientes TO Clientes;
 GRANT SELECT ON smilingbbdd.empleados TO Clientes;
-GRANT SELECT ON smilingbbdd.clinica TO Clientes;
+GRANT SELECT ON smilingbbdd.clinicas TO Clientes;
 GRANT SELECT ON smilingbbdd.historiales_clientes TO Clientes;
 GRANT INSERT, SELECT, UPDATE, ALTER ON smilingbbdd.citas TO Clientes;
 GRANT INSERT, SELECT, UPDATE, ALTER ON smilingbbdd.telefonos TO Clientes;
@@ -132,7 +132,7 @@ FLUSH PRIVILEGES;
 COMMIT;
 
 /*UNIQUES*/
-ALTER TABLE clinica ADD CONSTRAINT uniqueClinica UNIQUE (ID_Clinica);
+ALTER TABLE clinicas ADD CONSTRAINT uniqueClinica UNIQUE (ID_Clinica);
 
 ALTER TABLE equipamiento ADD CONSTRAINT uniqueEquipamiento UNIQUE (ID_Equipamiento);
 
@@ -141,7 +141,7 @@ ALTER TABLE habitaciones ADD CONSTRAINT uniqueHabitaciones UNIQUE (ID_Habitacion
 /*Creando los Primary Keys*/
 ALTER TABLE clientes ADD CONSTRAINT `pk_clientes` PRIMARY KEY (`DNI`);
 
-ALTER TABLE clinica ADD CONSTRAINT `pk_clinica` PRIMARY KEY (`Direccion`);
+ALTER TABLE clinicas ADD CONSTRAINT `pk_clinicas` PRIMARY KEY (`Direccion`);
 
 ALTER TABLE empleados ADD CONSTRAINT pk_empleados PRIMARY KEY (DNI_Emp);
 
@@ -159,7 +159,7 @@ ALTER TABLE telefonos ADD CONSTRAINT pk_telefonos PRIMARY KEY (DNI, Telefono);
 
 COMMIT;
 /*AUTO INCREMENTS*/
-ALTER TABLE clinica
+ALTER TABLE clinicas
   MODIFY ID_Clinica int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
   
 ALTER TABLE equipamiento
@@ -172,15 +172,15 @@ ALTER TABLE puestos
   MODIFY ID_Puesto int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
   
 /*FOREIGN KEYS*/
-ALTER TABLE habitaciones ADD CONSTRAINT fk_habitacionesClinica FOREIGN KEY (ID_Clinica) REFERENCES clinica(ID_Clinica);
+ALTER TABLE habitaciones ADD CONSTRAINT fk_habitacionesClinica FOREIGN KEY (ID_Clinica) REFERENCES clinicas(ID_Clinica);
 
-ALTER TABLE equipamiento ADD CONSTRAINT fk_equipamientoClinica FOREIGN KEY (ID_Clinica) REFERENCES clinica(ID_Clinica);
+ALTER TABLE equipamiento ADD CONSTRAINT fk_equipamientoClinica FOREIGN KEY (ID_Clinica) REFERENCES clinicas(ID_Clinica);
 
-ALTER TABLE empleados ADD CONSTRAINT fk_empleadosClinica FOREIGN KEY (ID_Clinica) REFERENCES clinica(ID_Clinica);
+ALTER TABLE empleados ADD CONSTRAINT fk_empleadosClinica FOREIGN KEY (ID_Clinica) REFERENCES clinicas(ID_Clinica);
 
 ALTER TABLE empleados ADD CONSTRAINT fk_empleadosPuesto FOREIGN KEY (ID_Puesto) REFERENCES puestos(ID_Puesto);
 
-ALTER TABLE citas ADD CONSTRAINT fk_citasClinica FOREIGN KEY (ID_Clinica) REFERENCES clinica(ID_Clinica);
+ALTER TABLE citas ADD CONSTRAINT fk_citasClinica FOREIGN KEY (ID_Clinica) REFERENCES clinicas(ID_Clinica);
 
 ALTER TABLE citas ADD CONSTRAINT fk_citasClientes FOREIGN KEY (DNI_Cliente) REFERENCES clientes(DNI);
 
@@ -231,7 +231,7 @@ END //
 DELIMITER ;
 
 /*Insertando ejemplos*/
-INSERT INTO clinica (ID_Clinica, Nombre_Clinica, Direccion, Telefono) VALUES
+INSERT INTO clinicas (ID_Clinica, Nombre_Clinica, Direccion, Telefono) VALUES
 (1, 'EtxaiDent SM', 'Calle Mayor 789', '688718520'),
 (2, 'CamaRisas SM', 'Avenida del Sol 456', '617616657');
 
@@ -257,7 +257,10 @@ INSERT INTO clientes (DNI, Nombre, Apellidos, Correo, Contraseña, Fecha_Nacimie
 INSERT INTO puestos (ID_Puesto, Nombre_Puesto) VALUES
 (1, 'Director'),
 (2, 'Odontólogo'),
-(3, 'Auxiliar dental');
+(3, 'Auxiliar dental'),
+(4, 'Recepcionista'),
+(5, 'Higienista Dental'),
+(6, 'Endodoncista');
 
 INSERT INTO empleados (DNI_Emp, Nombre, Apellidos, Correo, Contraseña, Fecha_Nacimiento, ID_Puesto, ID_Clinica) VALUES
 ('12345678B', 'Julen', 'Cano', 'jcano@gmail.com', 'bb8a8b5f24a7e79bdc67e09538d97f6996c27961', '2004-11-17', 1, 1),
@@ -267,15 +270,15 @@ INSERT INTO habitaciones (ID_Habitacion, Num_Habitacion, Especialidad, ID_Clinic
 (1, 1, 'Ortodoncias', 1),
 (2, 2, 'Prueba', 1),
 (3, 3, 'Limpiezas', 1),
-(4, 2, 'Rayos-X', 2),
-(5, 1, 'Habitacion Nº1', 2);
+(4, 4, 'Rayos-X', 1),
+(5, 2, 'Rayos-X', 2),
+(6, 1, 'Habitacion Nº1', 2);
 
 INSERT INTO citas (ID_Clinica, DNI_Cliente, Fecha_Cita, Hora_Cita) VALUES
 (1, '11111111A', '2023-04-22', '12:00:00'),
 (1, '11111111A', '2023-05-02', '10:50:00'),
 (1, '11111111A', '2023-10-15', '12:30:00'),
-(1, '11111111A', '2023-05-11', '17:30:00'),
-(1, '77777777V', '2023-05-11', '11:30:00'),
+(1, '11111111A', '2023-05-14', '16:30:00'),
 (1, '12345678A', '2023-04-19', '11:11:00'),
 (1, '12345678A', '2023-04-24', '12:00:00'),
 (1, '12345678A', '2023-10-15', '12:00:00'),
@@ -283,15 +286,17 @@ INSERT INTO citas (ID_Clinica, DNI_Cliente, Fecha_Cita, Hora_Cita) VALUES
 (1, '12345678A', '2023-10-15', '12:03:00'),
 (2, '12345678A', '2023-05-03', '11:40:00'),
 (2, '12345678A', '2023-10-15', '12:02:00'),
-(2, '77777777V', '2023-04-12', '03:33:00'),
-(1, '77777777V', '2023-04-12', '03:34:00');
+(2, '77777777V', '2023-04-15', '13:45:00'),
+(1, '77777777V', '2023-04-12', '09:34:00');
 
 INSERT INTO historiales_clientes (DNI, Fecha_Revision, Hora_Revision, Observaciones, Atendido, ID_Clinica) VALUES
-('12345678A', '2023-04-19', '11:11:00', 'Se le ha roto el diente', '12345678C', '1'),
+('12345678A', '2023-04-19', '11:11:00', 'Se le ha roto el la paleta izquierda', '12345678C', '1'),
+('12345678A', '2023-04-24', '12:00:00', 'Se le ha roto el la paleta derecha', '12345678C', '1'),
 ('11111111A', '2023-04-22', '12:00:00', 'Limpieza Dental', '12345678C', '1'),
-('12345678A', '2023-05-03', '11:40:00', 'Tiene caries', '12345678B', '2'),
-('77777777V', '2023-04-12', '03:34:00', 'Se le ha puesto un empaste en la paleta', '12345678B', '1');
-
+('11111111A', '2023-05-02', '10:50:00', 'Tiene caries', '12345678B', '1'),
+('12345678A', '2023-05-03', '11:40:00', 'Empaste en el colmillo', '12345678B', '2'),
+('77777777V', '2023-04-15', '13:45:00', 'Se le ha puesto un empaste en la muela', '12345678C', '2'),
+('77777777V', '2023-04-12', '09:34:00', 'Se le ha puesto un empaste en la paleta', '12345678B', '1');
 
 INSERT INTO telefonos (DNI, Telefono) VALUES
 ('11111111A', 610951578),

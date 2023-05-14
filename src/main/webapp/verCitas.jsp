@@ -127,7 +127,7 @@
 					</select>
                 <br><br>
                 <label for="informe">Observaciones e informe:</label><br>
-                <textarea name="informe" id="informe" cols="80" rows="4"></textarea>
+                <textarea name="informe" id="informe" cols="80" maxlength="253" rows="4"></textarea>
                 <br><br>
                 <label for="equipamiento">Uso de equipamiento</label>
                 <input type="checkbox" id="equipamiento" name="equipamiento">

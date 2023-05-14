@@ -120,6 +120,8 @@ public class EditarPerfil extends HttpServlet {
 			clienteModificado.setCorreo(correo);
 			clienteModificado.setDni(dni);
 			
+			if(nuevaCon == null)
+				nuevaCon = "";
 			
 			if(nuevaCon != "" || contrasena != "" || confNuevaCon != "") {
 				if(empleadoLogueado != null) {
@@ -143,7 +145,7 @@ public class EditarPerfil extends HttpServlet {
 				}
 				}
 			}
-			
+			if(modificado) {
 			if(telefonos != null) {
 				boolean eliminartel = mcliente.comprobarTelefonos(dni);
 				if(!eliminartel)
@@ -154,6 +156,7 @@ public class EditarPerfil extends HttpServlet {
 				boolean telefonodisponible = mcliente.comprobarDisponibilidadTelefono(dni, Integer.parseInt(nuevoTelefono));
 				if(!telefonodisponible)
 					modificado = false;
+			}
 			}
 			
 			if(modificado) {

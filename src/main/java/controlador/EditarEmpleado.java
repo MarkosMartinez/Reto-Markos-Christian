@@ -68,7 +68,7 @@ public class EditarEmpleado extends HttpServlet {
 			ModeloClinica mclinica = new ModeloClinica(con);
 			ArrayList<Puesto> puestos = mpuesto.getPuestos();
 			ArrayList<Clinica> clinicas = mclinica.getClinicas();
-			
+			request.setAttribute("director", director);
 			request.setAttribute("empleado", empleado);
 			request.setAttribute("clinicas", clinicas);
 			request.setAttribute("puestos", puestos);
@@ -142,7 +142,7 @@ public class EditarEmpleado extends HttpServlet {
 				empleadoLogueado.setId_Clinica(Integer.parseInt(idClinica));
 				empleadoLogueado.setId_Puesto(Integer.parseInt(idPuesto));
 				session.setAttribute("empleadoLogueado", empleadoLogueado);
-				response.sendRedirect(request.getContextPath() + "/EditarEmpleado?dni=" + dni + "&aviso=actualizado");
+				response.sendRedirect(request.getContextPath() + "/EditarEmpleado?aviso=actualizado");
 			}else {
 				response.sendRedirect(request.getContextPath() + "/EditarEmpleado?dni=" + dni + "&aviso=actualizado");
 			}

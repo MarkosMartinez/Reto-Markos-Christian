@@ -110,30 +110,30 @@ public class RealizarCita extends HttpServlet {
 			 ModeloCita modeloCita = new ModeloCita(con);
 			 ModeloHabitacion modeloHabitacion = new ModeloHabitacion(con);
 			 int cantidadDeHabitaciones = modeloHabitacion.getCantHabitaciones(id_Clinica);
-			 if(modeloCita.disponible(id_Clinica, fecha, hora, cantidadDeHabitaciones)) {
+			if(modeloCita.disponible(id_Clinica, fecha, hora, cantidadDeHabitaciones)) {
 			 boolean creado = modeloCita.crearCita(id_Clinica, dni, fecha, hora);
-			if(creado) {
-			HttpSession session = request.getSession();
-			Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
-			Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
-				if(clienteLogueado == null) {
-					if(empleadoLogueado == null) {
-						con.cerrar();
-						response.sendRedirect(request.getContextPath() + "/Principal");
+				if(creado) {
+				HttpSession session = request.getSession();
+				Cliente clienteLogueado = (Cliente) session.getAttribute("clienteLogueado");
+				Empleado empleadoLogueado = (Empleado) session.getAttribute("empleadoLogueado");
+					if(clienteLogueado == null) {
+						if(empleadoLogueado == null) {
+							con.cerrar();
+							response.sendRedirect(request.getContextPath() + "/Principal");
+						}else {
+							con.cerrar();
+							response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citacreada");
+						}
 					}else {
 						con.cerrar();
 						response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citacreada");
 					}
-				}else {
-					con.cerrar();
-					response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=citacreada");
-				}
-			 }else{
-				 con.cerrar();
-				 response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=demasiadascitas&clinica=" + id_Clinica + "&dni=" + dni + "&fecha=" + fechaSinFormato + "&hora=" + hora);
-			 }
+				 }else{
+					 con.cerrar();
+					 response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=demasiadascitas&clinica=" + id_Clinica + "&dni=" + dni + "&fecha=" + fechaSinFormato + "&hora=" + hora);
+				 }
 			 }else {
-					response.sendRedirect(request.getContextPath() + "/VerCitas?aviso=error");
+					response.sendRedirect(request.getContextPath() + "/RealizarCita?aviso=demasiadascitas&clinica=" + id_Clinica + "&dni=" + dni + "&fecha=" + fechaSinFormato + "&hora=" + hora);
 			 }
 		}
 		

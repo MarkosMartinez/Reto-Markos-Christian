@@ -192,7 +192,7 @@
 				         	<input type="number" min="600000000" id="telefono" max="999999999" name="telefono" required="required">
 					      </c:if>
 					      <c:if test = "${telefono != -1}">
-				         	 <input type="tel" name="telefono" id= "telefono" value="${telefono}" required="required">
+				         	 <input type="number" min="600000000" id="telefono" max="999999999" name="telefono" value="${telefono}" required="required">
 					      </c:if>
                             <label for="telefono">Teléfono</label>
                         </div>                 
