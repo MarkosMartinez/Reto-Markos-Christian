@@ -9,8 +9,10 @@ ENV LC_ALL=es_ES.UTF-8
 # Instalar locales para soporte de español
 RUN apt-get update && \
     apt-get install -y locales && \
+    sed -i 's/# es_ES.UTF-8 UTF-8/es_ES.UTF-8 UTF-8/' /etc/locale.gen && \
     locale-gen es_ES.UTF-8 && \
-    update-locale LANG=es_ES.UTF-8
+    update-locale LANG=es_ES.UTF-8 && \
+    rm -rf /var/lib/apt/lists/*
 
 # Configurar directorio de trabajo
 WORKDIR /app
@@ -36,6 +38,7 @@ ENV DOCKER_ENV=true
 # Instalar locales para soporte de español
 RUN apt-get update && \
     apt-get install -y locales && \
+    sed -i 's/# es_ES.UTF-8 UTF-8/es_ES.UTF-8 UTF-8/' /etc/locale.gen && \
     locale-gen es_ES.UTF-8 && \
     update-locale LANG=es_ES.UTF-8 && \
     rm -rf /var/lib/apt/lists/*

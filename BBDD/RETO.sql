@@ -1,23 +1,3 @@
-/*Eliminar todo!*/
-DROP ROLE ClinicaRol;
-DROP ROLE Clientes;
-DROP USER smiling;
-DROP USER cliente;
-
-DROP TRIGGER FechaNacimientoAnterior;
-DROP TRIGGER FechaNacimientoAnteriorEmpl;
-DROP PROCEDURE totalCosteEquipamiento;
-
-DROP TABLE historiales_clientes cascade;
-DROP TABLE empleados cascade;
-DROP TABLE equipamiento cascade;
-DROP TABLE habitaciones cascade;
-DROP TABLE citas cascade;
-DROP TABLE clinicas cascade;
-DROP TABLE telefonos cascade;
-DROP TABLE clientes cascade;
-DROP TABLE puestos cascade;
-DROP TABLESPACE ClinicaOdontologica;
 
 /*Creando TableSpace, Rol, Usuarios*/
 CREATE TABLESPACE ClinicaOdontologica Engine=InnoDB;
