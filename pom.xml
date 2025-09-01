@@ -4,6 +4,10 @@
   <artifactId>Reto-3EVA</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
     <dependencies>
     <!-- Servlet API -->
     <dependency>
