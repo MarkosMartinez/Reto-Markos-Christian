@@ -1,0 +1,42 @@
+# Build artifacts (except final WAR)
+target/classes/
+target/generated-sources/
+target/maven-archiver/
+target/surefire-reports/
+target/test-classes/
+*.jar
+*.class
+# Allow the final WAR file
+!target/Reto-3EVA-0.0.1-SNAPSHOT.war
+
+# IDE files
+.classpath
+.project
+.settings/
+.vscode/
+*.iml
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# Docker files (no need to copy them into the image)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
