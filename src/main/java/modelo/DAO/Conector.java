@@ -16,10 +16,18 @@ public class Conector {
 	private Session session;
 
 	/**
-	 * Siirve para conectarse al SSH y en caso de estar ya conectado, evitar volver a conectarse.
+	 * Sirve para conectarse al SSH y en caso de estar ya conectado, evitar volver a conectarse.
+	 * En Docker, el SSH no es necesario ya que conectamos directamente a la base de datos.
 	 * @param request
 	 */
 	public void ssh(HttpServletRequest request) {
+		// Skip SSH in Docker environment
+		String dockerEnv = System.getenv("DOCKER_ENV");
+		if ("true".equals(dockerEnv)) {
+			System.out.println("-- Docker environment detected, skipping SSH tunnel");
+			return;
+		}
+		
 		HttpSession sessionssh = request.getSession();
 		if(sessionssh.getAttribute("ssh") == null) {
 			String host = "91.200.117.27"; // Remote host to connect to
@@ -57,24 +65,35 @@ public class Conector {
 
 	/**
 	 * Sirve para conectarse a la base de datos en MySQL.
+	 * Soporta variables de entorno para configuración Docker.
 	 */
 	public void conectar() {
-		// MySQL Connection settings
-		String dbuserName = "smiling"; // mysql username
-		String dbpassword = "smiling"; // mysql password
-		String url = "jdbc:mysql://localhost:3306/smilingbbdd"; // connect to local end of SSL tunnel
+		// Configuración de base de datos - soporta variables de entorno para Docker
+		String dbHost = System.getenv("DB_HOST");
+		String dbPort = System.getenv("DB_PORT");
+		String dbName = System.getenv("DB_NAME");
+		String dbuserName = System.getenv("DB_USER");
+		String dbpassword = System.getenv("DB_PASSWORD");
+		
+		// Valores por defecto si no están las variables de entorno (ambiente original)
+		if (dbHost == null) dbHost = "localhost";
+		if (dbPort == null) dbPort = "3306";
+		if (dbName == null) dbName = "smilingbbdd";
+		if (dbuserName == null) dbuserName = "smiling";
+		if (dbpassword == null) dbpassword = "smiling";
+		
+		String url = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName + "?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Europe/Madrid";
 		String driverName = "com.mysql.cj.jdbc.Driver";
 
 		try {
 			// mysql database connectivity
 			Class.forName(driverName);
-			/*System.out.println("-- Mysql connect to " + url + " " + dbuserName + " " + dbpassword);*/
+			System.out.println("-- Conectando a MySQL: " + url + " con usuario: " + dbuserName);
 			conexion = DriverManager.getConnection(url, dbuserName, dbpassword);
 
-			/*System.out.println("-- Database connection established");
-
-			System.out.println("DONE");*/
+			System.out.println("-- Conexión a base de datos establecida correctamente");
 		} catch (Exception e) {
+			System.err.println("Error al conectar a la base de datos:");
 			e.printStackTrace();
 		}
 	}

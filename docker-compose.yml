@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # Base de datos MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: reto-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: clinica_odontologica
+      MYSQL_USER: clinica_user
+      MYSQL_PASSWORD: clinica_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./BBDD/RETO.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - reto-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+      interval: 30s
+
+  # Aplicación web
+  webapp:
+    build: .
+    container_name: reto-webapp
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      # Variables para configuración de la base de datos
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: clinica_odontologica
+      DB_USER: clinica_user
+      DB_PASSWORD: clinica_pass
+      # Variables para UTF-8
+      LANG: es_ES.UTF-8
+      LC_ALL: es_ES.UTF-8
+    networks:
+      - reto-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      timeout: 10s
+      retries: 5
+      interval: 30s
+      start_period: 60s
+
+volumes:
+  mysql_data:
+
+networks:
+  reto-network:
+    driver: bridge
