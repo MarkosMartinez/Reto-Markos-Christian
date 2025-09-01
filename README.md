@@ -7,31 +7,50 @@ Esta es una aplicación web Java para gestión de clínicas odontológicas desar
 ### Prerrequisitos
 - Docker
 - Docker Compose
+- Maven (para compilación local)
 
-### Instrucciones de Despliegue
+### 🚀 Despliegue Rápido
 
-1. **Clonar el repositorio:**
-   ```bash
-   git clone <repository-url>
-   cd Reto-Markos-Christian
-   ```
+#### Opción 1: Script Automático
+```bash
+# Clonar el repositorio
+git clone <repository-url>
+cd Reto-Markos-Christian
 
-2. **Construir y ejecutar con Docker Compose:**
-   ```bash
-   docker-compose up --build
-   ```
+# Ejecutar script de construcción y despliegue automático
+./build-and-run.sh
+```
 
-3. **Acceder a la aplicación:**
-   - Aplicación web: http://localhost:8080
-   - Base de datos MySQL: localhost:3306
+#### Opción 2: Paso a Paso
+```bash
+# Clonar el repositorio  
+git clone <repository-url>
+cd Reto-Markos-Christian
+
+# 1. Compilar la aplicación con Maven
+mvn clean package -DskipTests
+
+# 2. Iniciar los contenedores
+docker compose up --build
+```
+
+> **⚠️ Importante**: Es necesario compilar la aplicación con Maven antes de construir la imagen Docker para evitar problemas de certificados SSL en el contenedor.
+
+### 🔗 Acceso a la Aplicación
+- **Aplicación Web**: http://localhost:8080
+- **Base de Datos MySQL**: localhost:3306
+  - Usuario: `clinica_user`
+  - Contraseña: `clinica_pass`
+  - Base de datos: `clinica_odontologica`
 
 ### Servicios Docker
 
 #### 🌐 Aplicación Web (webapp)
 - **Puerto:** 8080
-- **Tecnologías:** Java 17, Tomcat 10, Maven
+- **Tecnologías:** Java 17, Tomcat 9.0, Maven
 - **Encoding:** UTF-8 (soporte completo para caracteres españoles como ñ)
 - **Healthcheck:** Verificación automática de disponibilidad
+- **Compatibilidad:** Java EE (javax.* packages) con Tomcat 9.x
 
 #### 🗄️ Base de Datos (mysql)
 - **Puerto:** 3306
